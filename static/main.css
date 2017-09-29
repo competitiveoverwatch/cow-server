@@ -1,0 +1,359 @@
+/* Step positioning */
+.stepsouter{
+  text-align: center;
+}
+.stepsinner{
+  display: inline-block;
+  text-align: left;
+}
+
+/* Step Circle */
+.circle.active {
+  background: #666
+}
+.circle.inactive {
+  background: #bbb
+}
+.circle.done {
+  background: #4cbb17
+}
+.circle {
+  border-radius: 0.7em;
+  -moz-border-radius: 0.7em;
+  -webkit-border-radius: 0.7em;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.4em;
+  margin-right: 5px;
+  text-align: center;
+  width: 1.4em; 
+}
+
+/* Step */
+.step {
+  margin-top: 8px;
+  width: 280px;
+}
+
+/* Links / Link Text*/
+a {
+  text-decoration: none;
+  color: #042E54;
+}
+a:hover {
+	text-decoration: underline;
+	color: #000;
+}
+.link {
+  display: inline-block;
+}
+.link.inactive {
+  color: #bbb
+}
+
+
+
+
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+body {
+  margin-top: 64px;
+  font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+form {
+  display: inline;
+}
+
+/***** Tooltip *****/
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+	cursor: default;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #666;
+    color: #fff;
+    text-align: center;
+    padding: 2px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    top: 130%;
+    left: 50%; 
+	margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;  /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #666 transparent;
+}
+
+/***** Form *****/
+
+input.linksubmit {
+     background:none!important;
+     border:none; 
+     padding:0!important;
+     font: inherit;
+     /*border is optional*/
+     cursor: pointer;
+      text-decoration: none;
+      color: #042E54;
+}
+
+input.linksubmit:hover {
+	text-decoration: underline;
+	color: #000;
+	
+}
+
+.select-style {
+    margin-left: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fafafa;
+    font-size: 14px;
+	float: right;
+	width: 64px;
+}
+
+.select-style select {
+    padding: 5px 8px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+}
+
+.textstyle {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+	vertical-align: middle;
+    font-size: 12px;
+    background: #fafafa;
+	color: #666;
+	width: 240px;
+	padding: 0 4px 0 4px;
+}
+
+.consolename {
+	text-align:center;
+	margin-top: 8px;
+	display: none;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #ccc;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #ccc;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #ccc;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #ccc;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #ccc;
+}
+
+.select-style select:focus {
+    outline: none;
+}
+
+
+div.updated {
+	margin-top: 64px;
+	color: #4cbb17;
+	text-align: center;
+}
+
+div.error {
+	margin-top: 64px;
+	color: #ed4337;
+	text-align: center;
+}
+
+
+img.rank {
+	width: 32px;
+	vertical-align: middle;
+	height: auto;
+}
+
+div.preview {
+	text-align: center;
+}
+
+
+
+.info {
+  font-size: 12px;
+  color: #bbb;
+  text-align:left;
+  margin-left: 32px
+}
+.customize {
+  font-size: 12px;
+  color: #bbb;
+  text-align:center;
+  margin-bottom: 4px
+}
+
+.sr {
+  font-size: 12px;
+  color: #666;
+  text-align:left;
+  display: inline-block;
+}
+
+
+
+
+
+/* Loading */
+
+div#loading {
+    display: none;
+    cursor: wait;
+    }
+
+.spinner {
+  margin: 100px auto 0;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #042E54;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
+
+.rankselection {
+	text-align:center;
+	margin-top:32px;
+}
+
+.rankselection input{
+    margin:0;padding:0;
+    -webkit-appearance:none;
+       -moz-appearance:none;
+            appearance:none;
+}
+
+.rankoption{
+    cursor:pointer;
+    background-size:contain;
+    background-repeat:no-repeat;
+    display:inline-block;
+    width:32px;height:32px;
+    -webkit-transition: all 100ms ease-in;
+       -moz-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+    -webkit-filter: brightness(0.2) grayscale(1) opacity(.6);
+       -moz-filter: brightness(0.2) grayscale(1) opacity(.6);
+            filter: brightness(0.2) grayscale(1) opacity(.6);
+}
+
+.unavailable{
+    background-size:contain;
+    display:inline-block;
+    width:32px;height:32px;
+    -webkit-filter: brightness(0.2) grayscale(1) opacity(.15);
+       -moz-filter: brightness(0.2) grayscale(1) opacity(.15);
+            filter: brightness(0.2) grayscale(1) opacity(.15);
+}
+
+.rankoption:hover{
+    -webkit-filter: brightness(1) grayscale(.1) opacity(1);
+       -moz-filter: brightness(1) grayscale(.1) opacity(1);
+            filter: brightness(1) grayscale(.1) opacity(1);
+}
+
+.rankselection input:active +.rankoption{opacity: .9;}
+
+.rankselection input:checked +.rankoption{
+    -webkit-filter: none;
+       -moz-filter: none;
+            filter: none;
+}
+
+.bronze {
+	background-image:url("rank-1.png");
+}
+.silver {
+	background-image:url("rank-2.png");
+}
+.gold {
+	background-image:url("rank-3.png");
+}
+.platinum {
+	background-image:url("rank-4.png");
+}
+.diamond {
+	background-image:url("rank-5.png");
+}
+.master {
+	background-image:url("rank-6.png");
+}
+.grandmaster {
+	background-image:url("rank-7.png");
+}

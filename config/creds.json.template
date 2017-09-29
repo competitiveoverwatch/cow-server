@@ -1,0 +1,15 @@
+{
+    "redditClientId": "",
+    "redditClientSecret": "",
+	"redditRedirectURI": "",
+	
+    "redditBotClientId": "",
+    "redditBotClientSecret": "",
+    "redditBotUserName": "",
+    "redditBotPassword": "",
+    "redditBotRedirectURI": "",
+	
+    "blizzardClientId": "",
+    "blizzardClientSecret": "",
+    "blizzardRedirectURI": ""
+}
