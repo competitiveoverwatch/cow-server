@@ -157,3 +157,5 @@ $RECYCLE.BIN/
 # Custom ignores
 
 /config/creds.json
+*.pem
+*.cert
