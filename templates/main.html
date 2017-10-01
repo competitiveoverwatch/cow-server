@@ -1,198 +1,222 @@
-<html>
+<html lang="en">
 	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="theme-color" content="#E8E8E9">
+		<meta name="description" content="r/CompetitiveOverwatch Rank Verification">
+
 		{% if session.get('updated') %}
-			<meta http-equiv="refresh" content="3;url=https://www.reddit.com/r/Competitiveoverwatch" />
+			<meta http-equiv="refresh" content="3;url=https://competitiveoverwatch.reddit.com" />
 		{% endif %}
+
+		<title>r/CompetitiveOverwatch Rank Verification</title>
+
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		
 		<script>
-		$(document).ready(function(){
-			$("#fetchrank_btn").click(function(){
-				$("#loading").show();
-				$("#content").hide();   
-			});
-			
-			$("#platformselect").change(function(){
-				if ($("#platformselect").val() == "psn") {
-					$("#psnname").show(); 
-					$("#xblname").hide(); 
-				} else if ($("#platformselect").val() == "xbl") {
-					$("#psnname").hide(); 
-					$("#xblname").show(); 
+			function ready(fn) {
+				if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
+					fn();
 				} else {
-					$("#psnname").hide(); 
-					$("#xblname").hide(); 
+					document.addEventListener('DOMContentLoaded', fn);
 				}
+			}
+
+			ready(function() {
+				const userLocale = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
+
+				if (userLocale === "en-GB") {
+					window.region_select.value = "eu";
+
+				} else if (userLocale === "en-US") {
+					window.region_select.value = "us";
+				}
+
+				window.fetchrank_button.addEventListener('click', function() {
+					window.loading.style.display = 'block';
+				});
+				
+				window.platform_select.addEventListener('change', function() {
+					const platform = window.platform_select.value
+
+					window.psnname.style.display = (platform === "psn")? "inline-block" : "none";
+					window.xblname.style.display = (platform === "xbl")? "inline-block" : "none";
+				});
+
+
 			});
-		});
 		</script>
+
+		<link rel="preconnect" href="https://competitiveoverwatch.reddit.com">
+		<link rel="preconnect" href="https://www.reddit.com/api/v1/authorize">
 	</head>
 	<body>
-		<div id="loading">
-			<div class="spinner">
-				<div class="bounce1"></div>
-				<div class="bounce2"></div>
-				<div class="bounce3"></div>
-			</div>
-		</div>
-		<div id="content">
-			<div class='stepsouter'>
-				<div class='stepsinner'>
-					<!-- Step 1 - Reddit login -->
-					<div class='step'>
-						<div class="circle {%if session.get('step', 1) > 1 %}done{% else %}active{% endif %}">1</div>
-						{% if session.get('step', 1) == 1 %}
-						<a class="link" href='{{redditLink}}'>Sign in with Reddit &blacktriangleright;</a>
-						{% elif session.get('step', 1) > 1 %}
-						<a class="link" href='{{redditLink}}'>Sign in with Reddit</a>
-						{% else %}
-						<div class="link inactive">Sign in with Reddit</div>
-						{% endif %}
-					</div>
-					<div class='info'>
-						{% if session.get('step', 1) > 1 %}
-							{% if session.get('redditname') %}u/{{session.get('redditname', 'Unknown')}}{% else %}&nbsp;{% endif %}
-						{% endif %}
-						&nbsp;
-					</div>
-					
-					<!-- Step 2 - Blizzard login -->
-					<div class='step'>
-						<div class="circle {%if session.get('step', 1) > 2 %}done{% elif session.get('step', 1) == 2 %}active{% else %}inactive{% endif %}">2</div>
-						<form action="/redditflair/blizzardredirect" method="get">
-							{% if session.get('step', 1) == 2 %}
-							<input type="submit" value="Sign in with Blizzard &blacktriangleright;" class="linksubmit">
-							<select class="select-style" name="region">
-							{% elif session.get('step', 1) > 2 %}
-							<input type="submit" value="Sign in with Blizzard" class="linksubmit">
-							<select class="select-style" name="region">
-							{% else %}
-							<div class="link inactive">Sign in with Blizzard</div>
-							<select class="select-style" name="region" disabled>
-							{% endif %}
-								<option value="us" {%if session.get('region')=='us' %}selected{% endif %}>US</option>
-								<option value="eu" {%if session.get('region')=='eu' %}selected{% endif %}>EU</option>
-								<option value="apac" {%if session.get('region')=='apac' %}selected{% endif %}>APAC</option>
-							</select>
-						</form>
-					</div>
-					<div class='info'>
-						{% if session.get('step', 1) > 2 %}
-							{% if session.get('battletag') %}{{session.get('battletag')}} - {%if session.get('region') %}{{session.get('region').upper()}}{% endif %}{% else %}&nbsp;{% endif %}
-						{% endif %}
-						&nbsp;
-					</div>
-					
-					<!-- Step 3 - Fetch rank -->
-					<div class='step'>
-						<div class="circle {%if session.get('step', 1) > 3 %}done{% elif session.get('step', 1) == 3 %}active{% else %}inactive{% endif %}">3</div>
-						<form action="/redditflair/fetchrank" method="get">
-							{% if session.get('step', 1) == 3 %}
-							<input type="submit" value="Fetch my rank &blacktriangleright;" class="linksubmit" id="fetchrank_btn">
-							<select class="select-style" name="platform" id="platformselect" >
-							{% elif session.get('step', 1) > 3 %}
-							<input type="submit" value="Fetch my rank" class="linksubmit" id="fetchrank_btn">
-							<select class="select-style" name="platform" id="platformselect" >
-							{% else %}
-							<div class="link inactive">Fetch my rank</div>
-							<select class="select-style" name="platform" id="platformselect" disabled>
-							{% endif %}
-								<option value="pc" {%if session.get('platform')=='PC' %}selected{% endif %}>PC</option>
-								<option value="xbl" {%if session.get('platform')=='Xbox' %}selected{% endif %} >Xbox</option>
-								<option value="psn" {%if session.get('platform')=='PS4' %}selected{% endif %} >PS4</option>
-							</select>
-							<div class="consolename" id="psnname">
-								<input class="textstyle" type="text" placeholder="PSN Name" name="psnname">
-							</div>
-							<div class="consolename" id="xblname">
-								<input class="textstyle" type="text" placeholder="Xbox Live Name" name="xblname">
-							</div>
-						</form>
-					</div>
-					<div class='info'>
-						&nbsp;
-					</div>
-					
-					<!-- Step 3 - Update flair -->
-					<form action="/redditflair/updateflair" method="get">
-					<div class='step'>
-						<div class="circle {%if session.get('step', 1) > 4 %}done{% elif session.get('step', 1) == 4 %}active{% else %}inactive{% endif %}">4</div>
-						{% if session.get('step', 1) == 4 %}
-						<input type="submit" value="Update my flair &blacktriangleright;" class="linksubmit">
-						{% elif session.get('step', 1) > 4 %}
-						<input type="submit" value="Update my flair" class="linksubmit">
-						{% else %}
-						<div class="link inactive">Update my flair</div>
-						{% endif %}
-					</div>	
-					
-					{% if session.get('step', 1) == 4%}				
-					<div class="rankselection">
-						<div class='customize'>
-						Customize your flair
-						</div>
-						{% if session.get('ranknum', 0) > 0 %}
-						<input id="bronze" type="radio" name="rankselect" value="1" {% if session.get('ranknum', 0) == 1 %}checked="checked"{% endif %} /><label for="bronze" class="rankoption bronze"></label>
-						{% else %}
-						<div class="bronze unavailable"></div>
-						{% endif %}
-						{% if session.get('ranknum', 0) > 1 %}
-						<input id="silver" type="radio" name="rankselect" value="2" {% if session.get('ranknum', 0) == 2 %}checked="checked"{% endif %} /><label for="silver" class="rankoption silver"></label>
-						{% else %}
-						<div class="silver unavailable"></div>
-						{% endif %}
-						{% if session.get('ranknum', 0) > 2 %}
-						<input id="gold" type="radio" name="rankselect" value="3" {% if session.get('ranknum', 0) == 3 %}checked="checked"{% endif %} /><label for="gold" class="rankoption gold"></label>
-						{% else %}
-						<div class="gold unavailable"></div>
-						{% endif %}
-						{% if session.get('ranknum', 0) > 3 %}
-						<input id="platinum" type="radio" name="rankselect" value="4" {% if session.get('ranknum', 0) == 4 %}checked="checked"{% endif %} /><label for="platinum" class="rankoption platinum"></label>
-						{% else %}
-						<div class="platinum unavailable"></div>
-						{% endif %}
-						{% if session.get('ranknum', 0) > 4 %}
-						<input id="diamond" type="radio" name="rankselect" value="5" {% if session.get('ranknum', 0) == 5 %}checked="checked"{% endif %} /><label for="diamond" class="rankoption diamond"></label>
-						{% else %}
-						<div class="diamond unavailable"></div>
-						{% endif %}
-						{% if session.get('ranknum', 0) > 5 %}
-						<input id="master" type="radio" name="rankselect" value="6" {% if session.get('ranknum', 0) == 6 %}checked="checked"{% endif %} /><label for="master" class="rankoption master"></label>
-						{% else %}
-						<div class="master unavailable"></div>
-						{% endif %}
-						{% if session.get('ranknum', 0) > 6 %}
-						<input id="grandmaster" type="radio" name="rankselect" value="7" {% if session.get('ranknum', 0) == 7 %}checked="checked"{% endif %} /><label for="grandmaster" class="rankoption grandmaster"></label>
-						{% else %}
-						<div class="grandmaster unavailable"></div>
-						{% endif %}
-					</div>
-					
-					
-					<div class="preview">
-						<input class="textstyle" type="text" placeholder="Custom Text" name="customtext" {% if session.get('rank') %}value="{{session.get('rank')}}{% if session.get('platform') %} ({{session.get('platform')}}){% endif %}"{% endif %}>
-					</div>
+		<header role="banner">
+			<h1>Competitive Overwatch Rank Verification</h1>
+			<h2>Keep your <a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> rank flair up to date.</h2>
+		</header>
+			
+		<main role="main">
+			<ol>
+				{% set step = session.get('step', 1) %}
+
+				<!-- Step 1 - Reddit login -->
+				<li class="step {{ 'complete' if step > 1 }}">
+					<span role="img" aria-label="Step 1 {{ 'complete' if step > 1 }}" class="circle">1</span>
+
+					{% if step == 1 %}
+						<a class="button" href='{{redditLink}}'>Sign in with Reddit</a>
+
+					{% elif step > 1 %}
+						{% set redditUsername = session.get('redditname', 'Unknown') %}
+
+						<p class="info">Reddit account to flair: <a href="https://reddit.com/user/{{redditUsername}}" title="Reddit user {{redditUsername}}">u/{{redditUsername}}</a></p>
+
+						<a class="button" href='{{redditLink}}' title="Change Reddit Account">Change Account</a>
 					{% endif %}
+				</li>
+				
+				<!-- Step 2 - Blizzard login -->
+				<li class="step {{ 'complete' if step > 2 }} {{ 'disabled' if step < 2 }}">
+					<span role="img" aria-label="Step 2 {{ 'complete' if step > 2 }}" class="circle">2</span>
+
+					<form action="/redditflair/blizzardredirect" method="get">
+
+						{% if step > 2 and session.get('battletag') and session.get('region')  %}
+							{% set battletag, region = session.get('battletag'), session.get('region') %}
+
+							<p class="info">Overwatch account: {{battletag}}</p>
+						{% endif %}
+
+						<select
+							name="region"
+							id="region_select"
+							title="Overwatch Region"
+							{% if step < 2 %}
+								disabled
+							{% endif %}>
+								{% for region in ["us", "eu", "apac"] %}
+									<option value="{{ region }}" {% if session.get('region') == region %} selected {% endif %}>{{ region.upper() }}</option>
+								{% endfor %}
+						</select>
+
+						{% if step <= 2 %}
+							<input type="submit" value="Sign in with Blizzard" {% if step < 2 %} disabled {% endif %} />
+						{% endif %}
+
+						{% if step > 2 %}
+							<input type="submit" value="Change Account" title="Change Reddit Account" />
+						{% endif %}
 					</form>
-				</div>
-			</div>
+				</li>
+				
+				<!-- Step 3 - Fetch rank -->
+				<li class="step {{ 'complete' if step > 3 }} {{ 'disabled' if step < 3 }}">
+					<span role="img" aria-label="Step 3 {{ 'complete' if step > 3 }}" class="circle">3</span>
+
+					<form action="/redditflair/fetchrank" method="get">
+						<select
+							name="platform"
+							id="platform_select"
+							title="Overwatch Platform"
+							{% if step < 3 %}
+								disabled
+							{% endif %}>
+								{% for platform in [("pc", "PC"), ("psn", "PS4"), ("xbl", "Xbox")] %}
+									<option
+										value="{{ platform[0] }}"
+										{% if session.get('platform') == platform %}
+											selected
+										{% endif %}>{{ platform[1] }}</option>
+								{% endfor %}
+						</select>
+
+						<input type="submit" value="Fetch Rank" title="Fetch Overwatch Rank" id="fetchrank_button">
+
+						<input
+							type="text"
+							autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+							pattern="[a-zA-Z0-9_-]{3,16}"
+							class="console_username"
+							id="psnname"
+							name="psnname"
+							placeholder="PSN Online ID" >
+
+						<input
+							type="text"
+							autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+							pattern="[a-zA-Z0-9 ]{1,15}"
+							class="console_username"
+							id="xblname"
+							name="xblname"
+							placeholder="Xbox Live Gamertag">
+					</form>
+				</li>
+				
+				<!-- Step 4 - Update flair -->
+				<li class="step {{ 'complete' if session.get('updated') }} {{ 'disabled' if step < 4 }}">
+					<form action="/redditflair/updateflair" method="get">
+						<span role="img" aria-label="Step 4 {{ 'complete' if session.get('updated') }}" class="circle">4</span>
+					
+						{% if step == 4%}				
+							<div class="rankpicker">
+								{% set ranks = ["bronze","silver","gold","platinum","diamond","master","grandmaster"] %}
+								{% set rankNum = session.get('ranknum', 0) %}
+
+								{% for rank in ranks %}
+									{% if loop.index <= rankNum %}
+										<input
+											type="radio"
+											name="rank"
+											id="{{rank}}"
+											value="{{rank}}"
+											{% if rankNum == loop.index %}
+												checked
+											{% endif %} />
+
+										<label
+											for="{{rank}}"
+											class="rankoption {{rank}}">{{rank|title}}</label>
+									{% endif %}
+								{% endfor %}
+							</div>
+							
+							{% set rank, plaform = session.get('rank'), session.get('platform') %}
+								
+							<input
+								type="text"
+								placeholder="Custom Flair Text"
+								name="customflairtext"
+								{% if rank or platform %}
+									{% set suffix = " (" ~ platform ~ ")" %}
+									value="{{ rank|title }}{{ suffix if platform else '' }}"
+								{% endif %} />
+						{% endif %}
+
+						<input type="submit" value="Update Flair" title="Update Reddit Flair">
+					</form>
+				</li>
+			</ol>
 			
 			{% if session.get('updated') %}
-			<div class='updated'>
-				Your flair was updated! You will be redirected to <a href="https://www.reddit.com/r/CompetitiveOverwatch/">r/Competitiveoverwatch</a> in a few seconds.
-			</div>
+				<p class='updated'>
+					Your flair was updated! You'll be redirected back to <a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> in a few seconds.
+				</p>
 			{% endif %}
+
 			{% if session.get('rateexceed')  %}
-			<div class='error'>
-				Please wait a few minutes before requesting your rank again.
-			</div>
+				<p class='error'>
+					Please wait a few minutes before requesting your rank again.
+				</p>
 			{% endif %}
-			{% if session.get('step', 1) == 3 and session.get('rank','') == "error" %}
-			<div class='error'>
-				An error occurred. No rank was found on your playoverwatch.com profile pages.
-			</div>
+
+			{% if step == 3 and session.get('rank','') == "error" %}
+				<p class='error'>
+					We couldn't find a rank for your profile. Try again soon or contact the mod team.
+				</p>
 			{% endif %}
-		</div>
+		</main>
 	</body>
 </html>

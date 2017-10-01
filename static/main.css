@@ -1,359 +1,302 @@
-/* Step positioning */
-.stepsouter{
-  text-align: center;
-}
-.stepsinner{
-  display: inline-block;
-  text-align: left;
-}
-
-/* Step Circle */
-.circle.active {
-  background: #666
-}
-.circle.inactive {
-  background: #bbb
-}
-.circle.done {
-  background: #4cbb17
-}
-.circle {
-  border-radius: 0.7em;
-  -moz-border-radius: 0.7em;
-  -webkit-border-radius: 0.7em;
-  color: #ffffff;
-  display: inline-block;
-  font-weight: bold;
-  line-height: 1.4em;
-  margin-right: 5px;
-  text-align: center;
-  width: 1.4em; 
-}
-
-/* Step */
-.step {
-  margin-top: 8px;
-  width: 280px;
-}
-
-/* Links / Link Text*/
-a {
-  text-decoration: none;
-  color: #042E54;
-}
-a:hover {
-	text-decoration: underline;
-	color: #000;
-}
-.link {
-  display: inline-block;
-}
-.link.inactive {
-  color: #bbb
-}
-
-
-
-
-
-.header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+/* Basic styles */
+html {
+  font-size: 10px;
+  overflow-x: hidden;
 }
 
 body {
-  margin-top: 64px;
-  font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  background-color: #E8E8E9;
+  font-family: -apple-system, BlinkMacSystemFont,  "Roboto", "Helvetica Neue", Helvetica, "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Arial, sans-serif;
+  font-size: 1.6rem;
+  overflow-x: hidden;
+  padding: 4rem;
+}
+
+@media (max-width: 755px) {
+  body {
+    padding: 4rem 0;
+  }
+}
+
+a {
+  color: #0097D2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  line-height: 1.2;
+}
+
+header {
+  margin: 0 auto;
+  text-align: center;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  width: 90%;
+}
+
+/* Main heading */
+h1 {
+  color: hsl(0, 0%, 7%);
+  font-size: 2.6rem;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+/* Subheading */
+h2 {
+  color: #042E54;
+  margin-top: 2.6rem;
+}
+
+/* Content container box */
+main {
+  background: #FFF;
+  border-radius: .4rem;
+  margin: 3.9rem auto 0 auto;
+  min-width: 62rem;
+  padding: 1rem 2.6rem 2.6rem 2.6rem;
+  width: 50%;
+}
+
+@media (max-width: 755px) {
+  main {
+    min-width: 0;
+    padding: 2.5% 5% 5% 5%;
+    width: auto;
+  }
+}
+
+ul, ol {
+  list-style-type: none;
+}
+
+.step {
+  color: #042E54;
+  margin-top: 2.6rem;
+  opacity: 1;
+  pointer-events: all
+}
+
+.step.disabled {
+  opacity: .18;
+  pointer-events: none;
+}
+
+/* Step number/check circle */
+.circle {
+  background: #042E54;
+  border-radius: 100%;
+  color: #FFF;
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 500;
+  height: 3.2rem;
+  line-height: 3.1rem;
+  margin-right: 2.6rem;
+  pointer-events: none;
+  text-align: center;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  width: 3.2rem;
+}
+
+.step.complete .circle {
+  background: #042E54 url('./check.svg') no-repeat center;
+  font-size: 0;
+}
+
+/* Some steps use a form with a submit input instead of a regular link */
+.button, input[type=submit] {
+  background: #042E54;
+  border-radius: .2rem;
+  color: #FFF;
+  display: inline-block;
+  padding: 1rem 2.6rem;
+  transition: background .1s ease-in-out;
+  -webkit-transition: background .1s ease-in-out;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+}
+
+.button:hover, input[type=submit]:hover {
+  background: hsl(0, 0%, 7%);
+  text-decoration: none;
+}
+
+input[type=submit] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  margin: 0;
+}
+
+/* Extra info on Reddit and Blizzard steps listing account usernames */
+.info {
+  color: #003152;
+  display: inline-block;
+  margin-right: 2.6rem;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (max-width: 755px) {
+  .info {
+    display: block;
+    margin-right: 6rem;
+    margin-top: 1.3rem;
+  }
 }
 
 form {
-  display: inline;
-}
-
-/***** Tooltip *****/
-
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-	cursor: default;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: #666;
-    color: #fff;
-    text-align: center;
-    padding: 2px 0;
-    border-radius: 6px;
-    position: absolute;
-    z-index: 1;
-    top: 130%;
-    left: 50%; 
-	margin-left: -60px;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-}
-
-.tooltip .tooltiptext::after {
-    content: " ";
-    position: absolute;
-    bottom: 100%;  /* At the top of the tooltip */
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent #666 transparent;
+  display: inline-block;
 }
 
 /***** Form *****/
-
-input.linksubmit {
-     background:none!important;
-     border:none; 
-     padding:0!important;
-     font: inherit;
-     /*border is optional*/
-     cursor: pointer;
-      text-decoration: none;
-      color: #042E54;
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #688298;
+  border: none;
+  border-radius: .2rem;
+  color: #FFF;
+  display: inline-block;
+  font-size: 95%;
+  padding: 1rem;
+  transition: background 0.1s ease-in-out;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
 }
 
-input.linksubmit:hover {
-	text-decoration: underline;
-	color: #000;
-	
+select:hover {
+  background: #042E54;
 }
 
-.select-style {
-    margin-left: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    overflow: hidden;
-    background: #fafafa;
-    font-size: 14px;
-	float: right;
-	width: 64px;
+input[type=text] {
+  border-radius: .2rem;
+  border: .1rem solid #ccc;
+  color: #666;
+  font-size: inherit;
+  padding: .9rem;
+  vertical-align: middle;
 }
 
-.select-style select {
-    padding: 5px 8px;
-    border: none;
-    box-shadow: none;
-    background: transparent;
-    background-image: none;
-    -webkit-appearance: none;
-}
-
-.textstyle {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-	vertical-align: middle;
-    font-size: 12px;
-    background: #fafafa;
-	color: #666;
-	width: 240px;
-	padding: 0 4px 0 4px;
-}
-
-.consolename {
-	text-align:center;
-	margin-top: 8px;
+.console_username {
 	display: none;
-}
-
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:    #ccc;
-}
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color:    #ccc;
-   opacity:  1;
-}
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color:    #ccc;
-   opacity:  1;
-}
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color:    #ccc;
-}
-::-ms-input-placeholder { /* Microsoft Edge */
-   color:    #ccc;
-}
-
-.select-style select:focus {
-    outline: none;
-}
-
-
-div.updated {
-	margin-top: 64px;
-	color: #4cbb17;
-	text-align: center;
-}
-
-div.error {
-	margin-top: 64px;
-	color: #ed4337;
-	text-align: center;
-}
-
-
-img.rank {
-	width: 32px;
-	vertical-align: middle;
-	height: auto;
-}
-
-div.preview {
-	text-align: center;
-}
-
-
-
-.info {
-  font-size: 12px;
-  color: #bbb;
-  text-align:left;
-  margin-left: 32px
-}
-.customize {
-  font-size: 12px;
-  color: #bbb;
-  text-align:center;
-  margin-bottom: 4px
 }
 
 .sr {
   font-size: 12px;
   color: #666;
-  text-align:left;
+  text-align: left;
   display: inline-block;
 }
 
-
-
-
-
-/* Loading */
-
-div#loading {
-    display: none;
-    cursor: wait;
-    }
-
-.spinner {
-  margin: 100px auto 0;
-  width: 70px;
-  text-align: center;
-}
-
-.spinner > div {
-  width: 18px;
-  height: 18px;
-  background-color: #042E54;
-
-  border-radius: 100%;
+.rankpicker {
   display: inline-block;
-  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  vertical-align: middle;
 }
 
-.spinner .bounce1 {
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
+/* Hide the actual radio buttons. Users click the label, which is styled to have the rank icon image. */
+.rankpicker input[type=radio] {
+  display: none;
 }
 
-.spinner .bounce2 {
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
+.rankoption {
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  display: inline-block;
+  -webkit-filter: brightness(0.2) grayscale(1);
+  filter: brightness(0.2) grayscale(1);
+  font-size: 0;
+  height: 3.2rem;
+  opacity: 0.6;
+  transition: all 0.1s ease-in-out;
+  transition-property: filter, opacity;
+  vertical-align: top;
+  width: 3.2rem;
 }
 
-@-webkit-keyframes sk-bouncedelay {
-  0%, 80%, 100% { -webkit-transform: scale(0) }
-  40% { -webkit-transform: scale(1.0) }
+.rankpicker input[type=radio]:checked + .rankoption {
+  opacity: 1;
 }
 
-@keyframes sk-bouncedelay {
-  0%, 80%, 100% { 
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  } 40% { 
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
-  }
+.rankoption[disabled] {
+  background-size: contain;
+  display: inline-block;
+  -webkit-filter: brightness(0.2) grayscale(1);
+  filter: brightness(0.2) grayscale(1);
+  opacity: 0.15;
+  height: 3.2rem;
+  width: 3.2rem;
 }
 
-.rankselection {
-	text-align:center;
-	margin-top:32px;
+.rankoption:hover {
+  -webkit-filter: brightness(1) grayscale(.1);
+  filter: brightness(1) grayscale(.1);
+  opacity: 1;
 }
 
-.rankselection input{
-    margin:0;padding:0;
-    -webkit-appearance:none;
-       -moz-appearance:none;
-            appearance:none;
-}
-
-.rankoption{
-    cursor:pointer;
-    background-size:contain;
-    background-repeat:no-repeat;
-    display:inline-block;
-    width:32px;height:32px;
-    -webkit-transition: all 100ms ease-in;
-       -moz-transition: all 100ms ease-in;
-            transition: all 100ms ease-in;
-    -webkit-filter: brightness(0.2) grayscale(1) opacity(.6);
-       -moz-filter: brightness(0.2) grayscale(1) opacity(.6);
-            filter: brightness(0.2) grayscale(1) opacity(.6);
-}
-
-.unavailable{
-    background-size:contain;
-    display:inline-block;
-    width:32px;height:32px;
-    -webkit-filter: brightness(0.2) grayscale(1) opacity(.15);
-       -moz-filter: brightness(0.2) grayscale(1) opacity(.15);
-            filter: brightness(0.2) grayscale(1) opacity(.15);
-}
-
-.rankoption:hover{
-    -webkit-filter: brightness(1) grayscale(.1) opacity(1);
-       -moz-filter: brightness(1) grayscale(.1) opacity(1);
-            filter: brightness(1) grayscale(.1) opacity(1);
-}
-
-.rankselection input:active +.rankoption{opacity: .9;}
-
-.rankselection input:checked +.rankoption{
-    -webkit-filter: none;
-       -moz-filter: none;
-            filter: none;
+.rankpicker input[type=radio]:checked +.rankoption {
+  -webkit-filter: none;
+  filter: none;
+  opacity: 1;
 }
 
 .bronze {
-	background-image:url("rank-1.png");
+	background-image: url("rank-1.png");
 }
 .silver {
-	background-image:url("rank-2.png");
+	background-image: url("rank-2.png");
 }
 .gold {
-	background-image:url("rank-3.png");
+	background-image: url("rank-3.png");
 }
 .platinum {
-	background-image:url("rank-4.png");
+	background-image: url("rank-4.png");
 }
 .diamond {
-	background-image:url("rank-5.png");
+	background-image: url("rank-5.png");
 }
 .master {
-	background-image:url("rank-6.png");
+	background-image: url("rank-6.png");
 }
 .grandmaster {
-	background-image:url("rank-7.png");
+	background-image: url("rank-7.png");
+}
+
+.updated, .error {
+  font-size: 1.5rem;
+  margin-top: 2.4rem;
+  margin-left: 6.2rem;
+}
+
+.updated {
+  color: #4cbb17;
+}
+
+.error {
+  color: #ed4337;
 }
