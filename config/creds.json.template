@@ -1,15 +1,15 @@
 {
-    "redditClientId": "",
-    "redditClientSecret": "",
+	"redditClientId": "",
+	"redditClientSecret": "",
 	"redditRedirectURI": "",
 	
-    "redditBotClientId": "",
-    "redditBotClientSecret": "",
-    "redditBotUserName": "",
-    "redditBotPassword": "",
-    "redditBotRedirectURI": "",
+	"redditBotClientId": "",
+	"redditBotClientSecret": "",
+	"redditBotUserName": "",
+	"redditBotPassword": "",
+	"redditBotRedirectURI": "",
 	
-    "blizzardClientId": "",
-    "blizzardClientSecret": "",
-    "blizzardRedirectURI": ""
+	"blizzardClientId": "",
+	"blizzardClientSecret": "",
+	"blizzardRedirectURI": ""
 }
