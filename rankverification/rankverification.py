@@ -111,8 +111,8 @@ def fetchRank():
 	
 @rankverification.route("/redditflair/updateflair", methods=['GET'])
 def updateFlair():
-	customtext = request.args.get('customtext', '')
-	customrank = request.args.get('rankselect', None)
+	customtext = request.args.get('customflairtext', '')
+	customrank = request.args.get('rank', None)
 	
 	reddit.redditUpdateFlair(customrank, customtext)
 
