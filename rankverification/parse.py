@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import urllib.request, re
-from urllib.parse import urlencode
 
 PRESTIGE = {
     # Bronze 0 - 5
@@ -199,7 +198,6 @@ def parseOWProfile(battletag, blizzardid, xblname, psnname, platform):
 		return parsePCProfile(battletag)
 	else:
 		return parseConsoleProfile(blizzardid, xblname, psnname, platform)
-	return None
 	
 def parseConsoleProfile(blizzardid, xblname, psnname, platform):
 	if platform == 'psn':

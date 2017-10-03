@@ -4,7 +4,6 @@ from flask_limiter.util import get_remote_address
 import rankverification.reddit as reddit
 import rankverification.blizzard as blizzard
 from rankverification.parse import parseOWProfile
-from config import data as config
 
 limiter = Limiter(
     key_func=get_remote_address,

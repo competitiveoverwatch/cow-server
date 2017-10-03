@@ -27,10 +27,12 @@ class RedisSessionInterface(SessionInterface):
         self.redis = redis
         self.prefix = prefix
 
-    def generate_sid(self):
+    @staticmethod
+    def generate_sid():
         return str(uuid4())
 
-    def get_redis_expiration_time(self, app, session):
+    @staticmethod
+    def get_redis_expiration_time(app, session):
         if session.permanent:
             return app.permanent_session_lifetime
         return timedelta(days=1)
