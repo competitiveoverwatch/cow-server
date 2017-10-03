@@ -4,6 +4,7 @@ from flask_limiter.util import get_remote_address
 import redditflair.reddit as reddit
 import redditflair.blizzard as blizzard
 from redditflair.parse import parseOWProfile
+from config import flairdata
 
 limiter = Limiter(
     key_func=get_remote_address,
