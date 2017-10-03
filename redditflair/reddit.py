@@ -11,7 +11,7 @@ def redditLogin(code):
 	if code:
 		# create praw session with given code
 		redditPraw = praw.Reddit(client_id=config['creds']['redditClientId'], client_secret=config['creds']['redditClientSecret'], redirect_uri=config['creds']['redditRedirectURI'], user_agent='rankification by u/jawoll')
-		redditRefreshToken = redditPraw.auth.authorize(code)
+		redditPraw.auth.authorize(code)
 		
 		# set session username if possible
 		try:
@@ -38,7 +38,7 @@ def redditUpdateFlair(customrank, customtext):
 		
 		# prepare css class
 		cssclass = ''
-		if customrank and int(customrank) > 0 and int(customrank) < 8:
+		if customrank and 0 < int(customrank) < 8:
 			ranknum = int(customrank)	
 		cssclass = config['config']['ranks'][ranknum-1]
 		
