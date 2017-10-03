@@ -1,16 +1,16 @@
 from flask import Blueprint, make_response, render_template, session, redirect, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-import rankverification.reddit as reddit
-import rankverification.blizzard as blizzard
-from rankverification.parse import parseOWProfile
+import redditflair.reddit as reddit
+import redditflair.blizzard as blizzard
+from redditflair.parse import parseOWProfile
 
 limiter = Limiter(
     key_func=get_remote_address,
     default_limits=["200 per day", "50 per hour"]
 )
 
-redditflair = Blueprint('rankverification', __name__)
+redditflair = Blueprint('redditflair', __name__)
 
 
 
