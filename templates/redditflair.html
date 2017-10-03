@@ -1,0 +1,47 @@
+<html lang="en">
+	<head>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.0">
+	</head>
+	<script>
+		var nowsetting=1
+		function setFlair(ev, id) {
+			if (nowsetting == 1) {
+				parent.document.getElementById('flair1').className = ev.target.className;
+				parent.document.getElementById('flair1_id').value = id;
+				nowsetting = 2;
+			} else {
+				parent.document.getElementById('flair2').className = ev.target.className;
+				parent.document.getElementById('flair2_id').value = id;
+				nowsetting = 1;
+			}
+		}
+		
+		function setSetting(num) {
+			nowsetting=num;
+		}
+	</script>
+	<body>
+		{% if session.get('redditname') %}
+		<div id="flair1" onclick="setSetting(1)"></div>
+		<div id="flair2" onclick="setSetting(2)"></div>
+		<form action="/redditflair/updateflair" method="get">
+		<input type="hidden" id="flair2_id">
+		<input type="hidden" id="flair1_id">
+		<input type="submit" value="Update Flair">
+		</form>
+		{% set categories = flairdata['categories'] %}
+		{% set flairs = flairdata['flairs'] %}
+		{% for category in categories %}
+			<h1>{{category['title']}}</h1>
+			{% for item in category['items'] %}
+				{% set flair = flairs[item['id']] %}
+				<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{item['id']}}')"></div>{{item['name']}}<br>
+			{% endfor %}
+		{% endfor %}
+		{% else %}
+		<a href="{{redditLink}}">Sign in with Reddit</a>
+		{% endif %}
+		
+		
+	</body>
+</html>

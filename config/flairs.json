@@ -1,0 +1,71 @@
+{
+	"categories": [ 
+		{
+			"title": "APEX",
+			"items": [
+				{"name": "Cloud9 Kongdoo", "id": "c9kongdoo"},
+				{"name": "ConBox", "id": "conbox"},
+				{"name": "GC Busan", "id": "gcbusan"},
+				{"name": "Kongdoo Panthera", "id": "kongdoopanthera"},
+				{"name": "Lunatic Hai", "id": "lunatichai"},
+				{"name": "LuxuryWatch Red", "id": "luxurywatchred"},
+				{"name": "NC Foxes", "id": "ncfoxes"},
+				{"name": "Runaway", "id": "runaway"},
+				{"name": "X6 Gaming", "id": "x6gaming"}
+			]
+		},
+		{
+			"title": "Ranks",
+			"items": [
+				{"name": "Bronze", "id": "bronze"},
+				{"name": "Silver", "id": "silver"},
+				{"name": "Gold", "id": "gold"},
+				{"name": "Platinum", "id": "platinum"},
+				{"name": "Diamond", "id": "diamond"},
+				{"name": "Master", "id": "master"},
+				{"name": "Grand Master", "id": "grandmaster"}
+			]
+		}
+	],
+	
+	"flairs": {
+		"apex": {"sheet": "teams", "row": "01", "col": "01"},
+		"c9kongdoo": {"sheet": "teams", "row": "01", "col": "02"},
+		"conbox": {"sheet": "teams", "row": "01", "col": "03"},
+		"gcbusan": {"sheet": "teams", "row": "01", "col": "04"},
+		"kongdoopanthera": {"sheet": "teams", "row": "01", "col": "05"},
+		"lunatichai": {"sheet": "teams", "row": "01", "col": "06"},
+		"luxurywatchred": {"sheet": "teams", "row": "01", "col": "07"},
+		"ncfoxes": {"sheet": "teams", "row": "01", "col": "08"},
+		"runaway": {"sheet": "teams", "row": "01", "col": "09"},
+		"x6gaming": {"sheet": "teams", "row": "01", "col": "10"},
+		
+		"contenders": {"sheet": "teams", "row": "02", "col": "01"},
+		"123": {"sheet": "teams", "row": "02", "col": "02"},
+		"bazookapuppiez": {"sheet": "teams", "row": "02", "col": "03"},
+		"cloud9": {"sheet": "teams", "row": "02", "col": "04"},
+		"envision": {"sheet": "teams", "row": "02", "col": "05"},
+		"envyus": {"sheet": "teams", "row": "02", "col": "06"},
+		"eunited": {"sheet": "teams", "row": "02", "col": "07"},
+		"faze": {"sheet": "teams", "row": "02", "col": "08"},
+		"fnrgfe": {"sheet": "teams", "row": "02", "col": "09"},
+		"gamersorigin": {"sheet": "teams", "row": "02", "col": "10"},
+		"gigantti": {"sheet": "teams", "row": "02", "col": "11"},
+		"immortals": {"sheet": "teams", "row": "03", "col": "01"},
+		"kungarna": {"sheet": "teams", "row": "03", "col": "02"},
+		"misfits": {"sheet": "teams", "row": "03", "col": "03"},
+		"renegades": {"sheet": "teams", "row": "03", "col": "04"},
+		"rogue": {"sheet": "teams", "row": "03", "col": "05"},
+		"singularity": {"sheet": "teams", "row": "03", "col": "06"},
+		
+		"bronze": {"sheet": "ranks", "row": "01", "col": "01"},
+		"silver": {"sheet": "ranks", "row": "01", "col": "02"},
+		"gold": {"sheet": "ranks", "row": "01", "col": "03"},
+		"platinum": {"sheet": "ranks", "row": "01", "col": "04"},
+		"diamond": {"sheet": "ranks", "row": "01", "col": "05"},
+		"master": {"sheet": "ranks", "row": "01", "col": "06"},
+		"grandmaster": {"sheet": "ranks", "row": "01", "col": "07"}
+		
+		
+	}
+}

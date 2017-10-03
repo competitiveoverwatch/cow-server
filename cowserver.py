@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_talisman import Talisman
 from flask_seasurf import SeaSurf
-from rankverification.rankverification import rankverification, limiter
+from redditflair.redditflair import redditflair, limiter
 from redissession import RedisSessionInterface
 
 content_security_policy = {
@@ -18,7 +18,7 @@ Talisman(app, content_security_policy=content_security_policy)
 SeaSurf(app)
 
 limiter.init_app(app)
-app.register_blueprint(rankverification)
+app.register_blueprint(redditflair)
 app.session_interface = RedisSessionInterface()
 
 if __name__ == "__main__":

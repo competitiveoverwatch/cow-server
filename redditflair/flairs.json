@@ -1,0 +1,39 @@
+{
+	"categories": [ 
+		{
+			"title": "Overwatch League",
+			"spritesheet": "teams",
+			"items": [
+				{"name": "Overwatch", "id": "overwatch", "row": "01", "col": "01"},
+				{"name": "Overwatch", "id": "overwatch", "row": "01", "col": "01"},
+				{"name": "Overwatch", "id": "overwatch", "row": "01", "col": "01"},
+				{"name": "Overwatch", "id": "overwatch", "row": "01", "col": "01"},
+				{"name": "Overwatch", "id": "overwatch", "row": "01", "col": "01"},
+				{"name": "Overwatch", "id": "overwatch", "row": "01", "col": "01"}
+			]
+		},
+		{
+			"title": "APEX",
+			"spritesheet": "teams",
+			"items": [
+				{"name": "Overwatch", "id": "overwatch", "row": "01", "col": "01"},
+				{"name": "Overwatch", "id": "overwatch", "row": "01", "col": "01"},
+				{"name": "Overwatch", "id": "overwatch", "row": "01", "col": "01"},
+				{"name": "Overwatch", "id": "overwatch", "row": "01", "col": "01"}
+			]
+		},
+		{
+			"title": "Ranks",
+			"spritesheet": "ranks",
+			"items": [
+				{"name": "Bronze", "id": "bronze", "row": "01", "col": "01"},
+				{"name": "Silver", "id": "silver", "row": "01", "col": "02"},
+				{"name": "Gold", "id": "gold", "row": "01", "col": "03"},
+				{"name": "Platinum", "id": "platinum", "row": "01", "col": "04"},
+				{"name": "Diamond", "id": "diamond", "row": "01", "col": "05"},
+				{"name": "Master", "id": "master", "row": "01", "col": "06"},
+				{"name": "Grand Master", "id": "grandmaster", "row": "01", "col": "07"}
+			]
+		}
+	]
+}

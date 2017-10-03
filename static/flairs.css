@@ -1,0 +1,133 @@
+.flair {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    vertical-align: middle;
+    display: inline-block;
+    color: transparent;
+    margin: 0;
+    width: 23px;
+    height: 23px;
+    background: transparent
+}
+/*Rows*/
+.flair[class*="-r02"]::before {
+    background: 0 -23px
+}
+.flair[class*="-r03"]::before {
+    background: 0 -46px
+}
+.flair[class*="-r04"]::before {
+    background: 0 -69px
+}
+.flair[class*="-r05"]::before {
+    background: 0 -92px
+}
+.flair[class*="-r06"]::before {
+    background: 0 -115px
+}
+.flair[class*="-r07"]::before {
+    background: 0 -138px
+}
+.flair[class*="-r08"]::before {
+    background: 0 -161px
+}
+.flair[class*="-r09"]::before {
+    background: 0 -184px
+}
+/*columns*/
+.flair[class*="-c01"]::before {
+    width: 23px;
+    clip: rect(0, 23px, 23px, 0px);
+    margin-left: 0
+}
+.flair[class*="-c02"]::before {
+    width: 46px;
+    clip: rect(0, 46px, 23px, 23px);
+    margin-left: -23px;
+}
+.flair[class*="-c03"]::before {
+    width: 69px;
+    clip: rect(0, 69px, 23px, 46px);
+    margin-left: -46px;
+}
+.flair[class*="-c04"]::before {
+    width: 92px;
+    clip: rect(0, 92px, 23px, 69px);
+    margin-left: -69px;
+}
+.flair[class*="-c05"]::before {
+    width: 115px;
+    clip: rect(0, 115px, 23px, 92px);
+    margin-left: -92px;
+}
+.flair[class*="-c06"]::before {
+    width: 138px;
+    clip: rect(0, 138px, 23px, 115px);
+    margin-left: -115px;
+}
+.flair[class*="-c07"]::before {
+    width: 161px;
+    clip: rect(0, 161px, 23px, 138px);
+    margin-left: -138px;
+}
+.flair[class*="-c08"]::before {
+    width: 184px;
+    clip: rect(0, 184px, 23px, 161px);
+    margin-left: -161px;
+}
+.flair[class*="-c09"]::before {
+    width: 207px;
+    clip: rect(0, 207px, 23px, 184px);
+    margin-left: -184px;
+}
+.flair[class*="-c10"]::before {
+    width: 230px;
+    clip: rect(0, 230px, 23px, 207px);
+    margin-left: -207px;
+}
+.flair[class*="-c11"]::before {
+    width: 253px;
+    clip: rect(0, 253px, 23px, 230px);
+    margin-left: -230px;
+}
+
+/* Team flair sheet */
+.flair[class*="-teams"]::before {
+    content: "";
+    background-image: url("flairs-teams.png");
+    height: 23px;
+    color: transparent;
+	background-size: 253px 208px;
+	position: absolute;
+}
+ 
+/* Rank flair sheet */
+.flair[class*="-ranks"]::before {
+    content: "";
+    background-image: url("flairs-ranks.png");
+    height: 23px;
+    color: transparent;
+	background-size: 184px 23px;
+	position: absolute;
+}
+
+/* Flag flair sheet */
+.flair[class*="-flags"]::before {
+    content: "";
+    background-image: url("flairs-flags.png");
+    height: 23px;
+    color: transparent;
+	background-size: 253px 185;
+	position: absolute;
+}
+
+/* Special flair sheet */
+.flair[class*="-special"]::before {
+    content: "";
+    background-image: url("flairs-special.png");
+    height: 23px;
+    color: transparent;
+	background-size: 184px 23px;
+	position: absolute;
+}
