@@ -14,9 +14,6 @@ limiter = Limiter(
 
 redditflair = Blueprint('redditflair', __name__)
 
-
-
-
 # main route
 @redditflair.route("/redditflair")
 def redditFlair():
@@ -24,27 +21,23 @@ def redditFlair():
 	responseParams['redditLink'] = reddit.redditLink()
 	
 	# if logged in get userObject
-	redditname = session.get('redditname')
 	userObject = None
+	redditname = session.get('redditname')
 	if redditname:
 		userObject = User.query.filter_by(name=redditname).first()
 	
 	response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata, user=userObject))
+	
+	if session.get('updated'):
+		session['updated'] = False
+	
 	return response
 
-
-
+	
 # flair verification index
 @redditflair.route("/redditflair/rankverification")
 def rankVerification():
-	responseParams = dict()
-	responseParams['redditLink'] = reddit.redditLink()
-		
-	response = make_response(render_template('rankverification.html', **responseParams))
-	
-	if session.get('updated'):
-		session['step'] = 1
-		
+	response = make_response(render_template('rankverification.html'))
 	return response
 
 # reddit oauth login
@@ -102,7 +95,6 @@ def fetchRank():
 		rank = parseOWProfile(battletag, blizzardid, xblname, psnname, platform)
 		if rank:
 			session['rank'] = rank
-			session['step'] = 4
 			
 			# platform
 			session['platform'] = platform	
@@ -143,10 +135,11 @@ def fetchRank():
 					userObject.rank = session['ranknum']
 					db.session.commit()
 					
+			session['step'] = 1
 		else:
 			session['rank'] = "error"
 			
-	return redirect('/redditflair/rankverification')
+	return redirect('/redditflair')
 	
 	
 	

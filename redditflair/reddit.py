@@ -23,7 +23,6 @@ def redditLogin(code):
 		# set session username if possible
 		try:
 			session['redditname'] = redditPraw.user.me().name
-			session['step'] = 2
 		except:
 			pass
 		

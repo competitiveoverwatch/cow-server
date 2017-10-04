@@ -35,7 +35,7 @@ def blizzardLogin(code):
 			result = oauthtoken.get(blizzardurl(region, api=True) + 'account/user')
 			session['battletag'] = result.json()['battletag']
 			session['blizzardid'] = result.json()['id']
-			session['step'] = 3
+			session['step'] = 2
 		except:
 			pass
 	

@@ -6,10 +6,6 @@
 		<meta name="theme-color" content="#E8E8E9">
 		<meta name="description" content="r/CompetitiveOverwatch Rank Verification">
 
-		{% if session.get('updated') %}
-			<meta http-equiv="refresh" content="3;url=https://competitiveoverwatch.reddit.com" />
-		{% endif %}
-
 		<title>r/CompetitiveOverwatch Rank Verification</title>
 
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}">
@@ -62,29 +58,13 @@
 			<ol>
 				{% set step = session.get('step', 1) %}
 
-				<!-- Step 1 - Reddit login -->
-				<li class="step {{ 'complete' if step > 1 }}">
-					<span role="img" aria-label="Step 1 {{ 'complete' if step > 1 }}" class="circle">1</span>
-
-					{% if step == 1 %}
-						<a class="button" href='{{redditLink}}'>Sign in with Reddit</a>
-
-					{% elif step > 1 %}
-						{% set redditUsername = session.get('redditname', 'Unknown') %}
-
-						<p class="info">Reddit account to flair: <a href="https://reddit.com/user/{{redditUsername}}" title="Reddit user {{redditUsername}}">u/{{redditUsername}}</a></p>
-
-						<a class="button" href='{{redditLink}}' title="Change Reddit Account">Change Account</a>
-					{% endif %}
-				</li>
-				
-				<!-- Step 2 - Blizzard login -->
-				<li class="step {{ 'complete' if step > 2 }} {{ 'disabled' if step < 2 }}">
-					<span role="img" aria-label="Step 2 {{ 'complete' if step > 2 }}" class="circle">2</span>
+				<!-- Step 1 - Blizzard login -->
+				<li class="step {{ 'complete' if step > 1 }} {{ 'disabled' if step < 1 }}">
+					<span role="img" aria-label="Step  1{{ 'complete' if step > 1 }}" class="circle">1</span>
 
 					<form action="/redditflair/blizzardredirect" method="get">
 
-						{% if step > 2 and session.get('battletag') and session.get('region')  %}
+						{% if step > 1 and session.get('battletag') and session.get('region')  %}
 							{% set battletag, region = session.get('battletag'), session.get('region') %}
 
 							<p class="info">Overwatch account: {{battletag}}</p>
@@ -94,7 +74,7 @@
 							name="region"
 							id="region_select"
 							title="Overwatch Region"
-							{% if step < 2 %}
+							{% if step < 1 %}
 								disabled
 							{% endif %}>
 								{% for region in ["us", "eu", "apac"] %}
@@ -102,26 +82,26 @@
 								{% endfor %}
 						</select>
 
-						{% if step <= 2 %}
-							<input type="submit" value="Sign in with Blizzard" {% if step < 2 %} disabled {% endif %} />
+						{% if step <= 1 %}
+							<input type="submit" value="Sign in with Blizzard" {% if step < 1 %} disabled {% endif %} />
 						{% endif %}
 
-						{% if step > 2 %}
+						{% if step > 1 %}
 							<input type="submit" value="Change Account" title="Change Reddit Account" />
 						{% endif %}
 					</form>
 				</li>
 				
-				<!-- Step 3 - Fetch rank -->
-				<li class="step {{ 'complete' if step > 3 }} {{ 'disabled' if step < 3 }}">
-					<span role="img" aria-label="Step 3 {{ 'complete' if step > 3 }}" class="circle">3</span>
+				<!-- Step 2 - Fetch rank -->
+				<li class="step {{ 'complete' if step > 2 }} {{ 'disabled' if step < 2 }}">
+					<span role="img" aria-label="Step 2 {{ 'complete' if step > 2 }}" class="circle">2</span>
 
 					<form action="/redditflair/fetchrank" method="get">
 						<select
 							name="platform"
 							id="platform_select"
 							title="Overwatch Platform"
-							{% if step < 3 %}
+							{% if step < 2 %}
 								disabled
 							{% endif %}>
 								{% for platform in [("pc", "PC"), ("psn", "PS4"), ("xbl", "Xbox")] %}
@@ -152,50 +132,6 @@
 							id="xblname"
 							name="xblname"
 							placeholder="Xbox Live Gamertag">
-					</form>
-				</li>
-				
-				<!-- Step 4 - Update flair -->
-				<li class="step {{ 'complete' if session.get('updated') }} {{ 'disabled' if step < 4 }}">
-					<form action="/redditflair/updateflair" method="get">
-						<span role="img" aria-label="Step 4 {{ 'complete' if session.get('updated') }}" class="circle">4</span>
-					
-						{% if step == 4%}				
-							<div class="rankpicker">
-								{% set ranks = ["bronze","silver","gold","platinum","diamond","master","grandmaster"] %}
-								{% set rankNum = session.get('ranknum', 0) %}
-
-								{% for rank in ranks %}
-									{% if loop.index <= rankNum %}
-										<input
-											type="radio"
-											name="rank"
-											id="{{rank}}"
-											value="{{loop.index}}"
-											{% if rankNum == loop.index %}
-												checked
-											{% endif %} />
-
-										<label
-											for="{{rank}}"
-											class="rankoption {{rank}}">{{rank|title}}</label>
-									{% endif %}
-								{% endfor %}
-							</div>
-							
-							{% set rank, plaform = session.get('rank'), session.get('platform') %}
-								
-							<input
-								type="text"
-								placeholder="Custom Flair Text"
-								name="customflairtext"
-								{% if rank or platform %}
-									{% set suffix = " (" ~ platform ~ ")" %}
-									value="{{ rank|title }}{{ suffix if platform else '' }}"
-								{% endif %} />
-						{% endif %}
-
-						<input type="submit" value="Update Flair" title="Update Reddit Flair">
 					</form>
 				</li>
 			</ol>

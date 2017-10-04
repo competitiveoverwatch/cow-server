@@ -1,6 +1,10 @@
 <html lang="en">
 	<head>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.0">
+
+		{% if session.get('updated') %}
+			<meta http-equiv="refresh" content="3;url=https://competitiveoverwatch.reddit.com" />
+		{% endif %}
 	</head>
 	<script>
 		var nowsetting=1
@@ -47,11 +51,31 @@
 				<input type="submit" value="Update Flair">
 			</form>
 			{% for category in categories %}
-				<h1>{{category['title']}}</h1>
-				{% for item in category['items'] %}
-					{% set flair = flairs[item['id']] %}
-					<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{item['id']}}')"></div>{{item['name']}}<br>
-				{% endfor %}
+				<!-- special case for rank flairs -->
+				{% if category['title'] == "Ranks" %}
+					<h1>{{category['title']}}</h1>
+					<a href="/redditflair/rankverification">Verify your rank.</a><br>
+					
+					{% set rankNum = 0 %}
+					{% if user %}
+						{% set rankNum = user.rank %}
+					{% endif %}	
+					{% for item in category['items'] %}
+						{% set flair = flairs[item['id']] %}
+						{% if loop.index <= rankNum %}
+							<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{item['id']}}')"></div>{{item['name']}}<br>
+						{% endif %}
+					{% endfor %}
+					
+				{% else %}
+				
+					<h1>{{category['title']}}</h1>
+					{% for item in category['items'] %}
+						{% set flair = flairs[item['id']] %}
+						<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{item['id']}}')"></div>{{item['name']}}<br>
+					{% endfor %}
+					
+				{% endif %}
 			{% endfor %}
 			{% else %}
 			<a href="{{redditLink}}">Sign in with Reddit</a>
