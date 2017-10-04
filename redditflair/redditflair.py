@@ -5,6 +5,7 @@ import redditflair.reddit as reddit
 import redditflair.blizzard as blizzard
 from redditflair.parse import parseOWProfile
 from config import flairdata
+from database import db, User
 
 limiter = Limiter(
     key_func=get_remote_address,
@@ -21,8 +22,14 @@ redditflair = Blueprint('redditflair', __name__)
 def redditFlair():
 	responseParams = dict()
 	responseParams['redditLink'] = reddit.redditLink()
-
-	response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata))
+	
+	# if logged in get userObject
+	redditname = session.get('redditname')
+	userObject = None
+	if redditname:
+		userObject = User.query.filter_by(name=redditname).first()
+	
+	response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata, user=userObject))
 	return response
 
 
@@ -48,6 +55,16 @@ def redditLogin():
 	
 	if state and state == 'getreddit':
 		reddit.redditLogin(code)
+		
+	# if session redditname is set make database entry if necessary
+	redditname = session.get('redditname')
+	if redditname:
+		userObject = User.query.filter_by(name=redditname).first()
+		if not userObject:
+			# create new entry
+			newUser = User(redditname)
+			db.session.add(newUser)
+			db.session.commit()
 	
 	return redirect('/redditflair')
 	
@@ -112,7 +129,20 @@ def fetchRank():
 				session['ranknum'] = 6
 			else:
 				session['ranknum'] = 7
-			
+				
+			# update database entry
+			redditname = session.get('redditname')
+			if redditname:
+				userObject = User.query.filter_by(name=redditname).first()
+				if userObject:
+					userObject.battletag = battletag
+					userObject.blizzardid = blizzardid
+					userObject.xbl = xblname
+					userObject.psn = psnname
+					userObject.sr = rankint
+					userObject.rank = session['ranknum']
+					db.session.commit()
+					
 		else:
 			session['rank'] = "error"
 			
@@ -122,12 +152,24 @@ def fetchRank():
 	
 @redditflair.route("/redditflair/updateflair", methods=['GET'])
 def updateFlair():
-	customtext = request.args.get('customflairtext', '')
-	customrank = request.args.get('rank', None)
+	flair1 = request.args.get('flair1_id', None)
+	flair2 = request.args.get('flair2_id', None)
 	
-	reddit.redditUpdateFlair(customrank, customtext)
-
-	return redirect('/redditflair/rankverification')
+	try:
+		flair1, flair2 = reddit.redditUpdateFlair(flair1, flair2)
+		
+		# update flairs in database if logged in
+		redditname = session.get('redditname')
+		if redditname:
+			userObject = User.query.filter_by(name=redditname).first()
+			if userObject:
+				userObject.flair1 = flair1
+				userObject.flair2 = flair2
+				db.session.commit()
+	except:
+		pass
+		
+	return redirect('/redditflair')
 
 @redditflair.errorhandler(429)
 def ratelimit_handler(e):

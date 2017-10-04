@@ -1,7 +1,14 @@
 from flask import session
 from config import data as config
+from config import flairdata
 import praw
 
+SPRITESHEETS = {
+	'teams': 'st',
+	'ranks': 'sr',
+	'flags': 'sf',
+	'special': 'sx'
+}
 
 def redditLink():
 	return 'https://www.reddit.com/api/v1/authorize?duration=temporary&response_type=code&client_id=' + config['creds']['redditClientId'] + '&redirect_uri=' + config['creds']['redditRedirectURI'] + '&state=getreddit&scope=identity'
@@ -24,31 +31,37 @@ def redditLogin(code):
 		session['rank'] = None
 		
 		
-def redditUpdateFlair(customrank, customtext):
-	battletag = session.get('battletag', '')
-	redditname = session.get('redditname', '')
-	rank = session.get('rank', 0)
-	ranknum = session.get('ranknum', 1)
-
-	if battletag and redditname and ranknum and rank and rank != "error":
+def redditUpdateFlair(flair1ID, flair2ID):
+	redditname = session.get('redditname', None)
+	if redditname and (flair1ID or flair2ID):
+		# ensure correct flair configuration
+		if flair1ID == flair2ID:
+			flair2ID = None
+		if flair1ID == None and flair2ID:
+			flair1ID = flair2ID
+			flair2ID = None
+		
+		
 		# get redditor
 		redditPraw = praw.Reddit(client_id=config['creds']['redditBotClientId'], client_secret=config['creds']['redditBotClientSecret'], redirect_uri=config['creds']['redditBotRedirectURI'], user_agent='rankification by u/jawoll', username = config['creds']['redditBotUserName'], password = config['creds']['redditBotPassword'])
 		user = praw.models.Redditor(redditPraw, name=redditname)
-		subreddit = redditPraw.subreddit('Competitiveoverwatch')
+		subreddit = redditPraw.subreddit(config['config']['subreddit'])
 		
 		# prepare css class
-		cssclass = ''
-		if customrank and 0 < int(customrank) < 8:
-			ranknum = int(customrank)	
-		cssclass = config['config']['ranks'][ranknum-1]
-		
+		flair1 = flairdata['flairs'][flair1ID]
+		cssclass = SPRITESHEETS[flair1['sheet']] + '-c' + flair1['col'] + '-r' + flair1['row']
+		if flair2ID:
+			flair2 = flairdata['flairs'][flair2ID]
+			cssclass += '-2' + SPRITESHEETS[flair2['sheet']] + '-2c' + flair2['col'] + '-2r' + flair2['row']
+				
 		# prepare custom text
 		text = ''
-		if customtext:
-			text += customtext
 			
 		# update flair
 		subreddit.flair.set(user, css_class = cssclass, text = text)
 
-		session.clear()
 		session['updated'] = True
+	else:
+		raise ValueError()
+		
+	return flair1ID, flair2ID	
