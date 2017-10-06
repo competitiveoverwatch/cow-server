@@ -20,11 +20,12 @@ def redditFlair():
 	responseParams = dict()
 	responseParams['redditLink'] = reddit.redditLink()
 	
-	# if logged in get userObject
+	# if logged in get userObject and special flairs
 	userObject = None
 	redditname = session.get('redditname')
 	if redditname:
 		userObject = User.query.filter_by(name=redditname).first()
+	
 	
 	response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata, user=userObject))
 	

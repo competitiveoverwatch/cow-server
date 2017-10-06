@@ -26,6 +26,7 @@
 	</script>
 	<body>
 		{% set categories = flairdata['categories'] %}
+		{% set ranks = flairdata['ranks'] %}
 		{% set flairs = flairdata['flairs'] %}
 		
 		{% if session.get('redditname') %}
@@ -48,36 +49,53 @@
 						<input type="hidden" name="flair2_id" id="flair2_id">
 					{% endif %}			
 				{% endif %}	
-				<input type="submit" value="Update Flair">
-			</form>
-			{% for category in categories %}
-				<!-- special case for rank flairs -->
-				{% if category['title'] == "Ranks" %}
-					<h1>{{category['title']}}</h1>
-					<a href="/redditflair/rankverification">Verify your rank.</a><br>
-					
-					{% set rankNum = 0 %}
-					{% if user %}
-						{% set rankNum = user.rank %}
-					{% endif %}	
-					{% for item in category['items'] %}
-						{% set flair = flairs[item['id']] %}
-						{% if loop.index <= rankNum %}
-							<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{item['id']}}')"></div>{{item['name']}}<br>
-						{% endif %}
-					{% endfor %}
-					
-				{% else %}
+				<input type="text" name="customflairtext" placeholder="Custom Flair Text">
 				
+				<input type="submit" value="Update Flair">
+				
+				<!-- Special category -->
+				{% if user %}
+					<h1>Special</h1>
+					{% if user.blizzard != "" %}
+						{% set flair = flairs['blizzard'] %}
+						<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{'blizzard'}}')"></div>{{flair['name']}} - {{user.blizzard}}<br>
+					{% endif %}	
+					{% if user.verified != "" %}
+						{% set flair = flairs['verified'] %}
+						<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{'verified'}}')"></div>{{flair['name']}} - {{user.verified}}<br>
+					{% endif %}	
+				{% endif %}	
+			
+				<!-- Rank category -->
+				<h1>{{ranks['title']}}</h1>
+				
+				{% set rankNum = 0 %}
+				{% if user %}
+					{% set rankNum = user.rank %}
+				{% endif %}	
+				{% if rankNum == 0 %}
+					<a href="/redditflair/rankverification">Verify your rank</a>
+				{% else %}
+					<input type="checkbox" name="showsr" value="1" checked> Display my SR number. <br>
+				{% endif %}
+				{% for item in ranks['items'] %}
+					{% set flair = flairs[item] %}
+					{% if loop.index <= rankNum %}
+						<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{item}}')"></div>{{flair['name']}}<br>
+					{% endif %}
+				{% endfor %}
+			
+				<!-- Other categories -->
+				{% for category in categories %}
+					<!-- special case for rank flairs -->
 					<h1>{{category['title']}}</h1>
 					{% for item in category['items'] %}
-						{% set flair = flairs[item['id']] %}
-						<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{item['id']}}')"></div>{{item['name']}}<br>
+						{% set flair = flairs[item] %}
+						<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{item}}')"></div>{{flair['name']}}<br>
 					{% endfor %}
-					
-				{% endif %}
-			{% endfor %}
-			{% else %}
+				{% endfor %}
+			</form>
+		{% else %}
 			<a href="{{redditLink}}">Sign in with Reddit</a>
 		{% endif %}
 		
