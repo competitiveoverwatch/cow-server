@@ -3,7 +3,7 @@ from flask_talisman import Talisman
 from flask_seasurf import SeaSurf
 from redditflair.redditflair import redditflair, limiter
 from redissession import RedisSessionInterface
-from database import db, User
+from database import db, User, Specials
 import os.path
 
 content_security_policy = {

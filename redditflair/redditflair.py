@@ -5,7 +5,7 @@ import redditflair.reddit as reddit
 import redditflair.blizzard as blizzard
 from redditflair.parse import parseOWProfile
 from config import flairdata
-from database import db, User
+from database import db, User, Specials
 
 limiter = Limiter(
     key_func=get_remote_address,
@@ -22,18 +22,21 @@ def redditFlair():
 	
 	# if logged in get userObject and special flairs
 	userObject = None
+	specials = None
 	redditname = session.get('redditname')
 	if redditname:
 		userObject = User.query.filter_by(name=redditname).first()
+		# get special flairs
+		specials = Specials.query.filter_by(userid=userObject.id).all()
 	
-	
-	response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata, user=userObject))
+	response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata, user=userObject, specials=specials))
 	
 	if session.get('updated'):
 		session['updated'] = False
 	
 	return response
 
+	
 	
 # flair verification index
 @redditflair.route("/redditflair/rankverification")
@@ -63,6 +66,7 @@ def redditLogin():
 	return redirect('/redditflair')
 	
 
+	
 # blizzard oauth redirect
 @redditflair.route("/redditflair/blizzardredirect", methods=['GET'])
 def blizzardRedirect():
@@ -79,6 +83,7 @@ def blizzardLogin():
 		blizzard.blizzardLogin(code)
 			
 	return redirect('/redditflair/rankverification')
+	
 	
 
 # parse playoverwatch profile and fetch rank

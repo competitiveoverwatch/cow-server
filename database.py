@@ -12,8 +12,6 @@ class User(db.Model):
 	flair1 = db.Column(db.String(60))
 	flair2 = db.Column(db.String(60))
 	flairtext = db.Column(db.String(60))
-	blizzard = db.Column(db.String(60))
-	verified = db.Column(db.String(60))
 	sr = db.Column(db.Integer)
 	rank = db.Column(db.Integer)
 	
@@ -29,3 +27,14 @@ class User(db.Model):
 		self.verified = verified
 		self.sr = sr
 		self.rank = rank
+		
+class Specials(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	userid = db.Column(db.Integer)
+	specialid = db.Column(db.String(60))
+	text = db.Column(db.String(60))
+	
+	def __init__(self, userid, specialid='', text=''):
+		self.userid = userid
+		self.specialid = specialid
+		self.text = text

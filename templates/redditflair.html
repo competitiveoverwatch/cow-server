@@ -54,18 +54,14 @@
 				<input type="submit" value="Update Flair">
 				
 				<!-- Special category -->
-				{% if user %}
+				{% if user and specials %}
 					<h1>Special</h1>
-					{% if user.blizzard != "" %}
-						{% set flair = flairs['blizzard'] %}
-						<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{'blizzard'}}')"></div>{{flair['name']}} - {{user.blizzard}}<br>
-					{% endif %}	
-					{% if user.verified != "" %}
-						{% set flair = flairs['verified'] %}
-						<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{'verified'}}')"></div>{{flair['name']}} - {{user.verified}}<br>
-					{% endif %}	
+					{% for special in specials %}
+						{% set flair = flairs[special.specialid] %}
+						<div class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}" onclick="setFlair(event, '{{'blizzard'}}')"></div>{{flair['name']}} - {{special.text}}<br>
+					{% endfor %}
 				{% endif %}	
-			
+					
 				<!-- Rank category -->
 				<h1>{{ranks['title']}}</h1>
 				
