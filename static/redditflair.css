@@ -1,0 +1,237 @@
+html {
+  font-size: 10px;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #E8E8E9;
+  font-family: -apple-system, BlinkMacSystemFont,  "Roboto", "Helvetica Neue", Helvetica, "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Arial, sans-serif;
+  font-size: 1.6rem;
+  overflow-x: hidden;
+  padding: 4rem;
+}
+
+@media (max-width: 755px) {
+  body {
+    padding: 4rem 0;
+  }
+}
+
+a {
+  color: #0097D2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  line-height: 1.2;
+}
+
+header {
+  margin: 0 auto;
+  text-align: center;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  width: 90%;
+}
+
+/* Main heading */
+h1 {
+  color: hsl(0, 0%, 7%);
+  font-size: 2.6rem;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+/* Subheading */
+h2 {
+  color: #042E54;
+  margin-top: 2.6rem;
+}
+
+
+.container {
+  margin: 0.8rem auto 0 auto;
+  background: #FFF;
+  border-radius: .4rem;
+  width: 40%;
+  min-width: 62rem;
+  padding: 1.6rem;
+}
+
+.container-top {
+	margin-bottom: 3.9rem;
+	margin-top: 3.9rem;
+}
+
+.flex-container {
+  display: flex;
+  display: -webkit-flex;
+  -webkit-flex-wrap: nowrap; 
+  flex-wrap:         nowrap;
+}
+
+.flairpicker {
+  flex-grow: 1;
+  flex-basis: 0;
+  border-color: #ccc;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: .2rem;
+  padding: 1.2rem;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  transition: border .1s ease-in-out;
+  -webkit-transition: border .1s ease-in-out;
+}
+
+.flairpicker:hover {
+  border-color: #042E54;
+}
+
+
+.flairpicker-left {
+	margin-right: 1em;
+}
+
+.flairpicker-active {
+	border-color: #042E54;
+}
+
+.flairpicker-text {
+	font-size: 1.8rem;
+	margin-left: 0.5rem;
+}
+
+.flairpicker-label {
+	flex-grow: 1;
+	text-align: center;
+	margin-bottom: 0.8rem;
+	font-size: 1.8rem;
+    color: #042E54;
+}
+
+.custom-flair-text {
+  flex-grow: 2;
+  margin-top: 1.6em;
+  border-radius: .2rem;
+  border: .1rem solid #ccc;
+  color: #666;
+  font-size: inherit;
+  padding: .5rem;
+  vertical-align: middle;
+  width: 60%;
+}
+
+
+.update-flair-button {
+  flex-grow: 1;
+  background: #042E54;
+  border-radius: .2rem;
+  min-width: 22rem;
+  color: #FFF;
+  padding: 0.5rem;
+  transition: background .1s ease-in-out;
+  -webkit-transition: background .1s ease-in-out;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  margin-top:2.6rem;
+  margin-left:1rem;
+}
+
+
+.reset-flair-button {
+  flex-grow: 0;
+  background: #666;
+  border-radius: .2rem;
+  width: 4rem;
+  color: #FFF;
+  padding: 0.5rem;
+  transition: background .1s ease-in-out;
+  -webkit-transition: background .1s ease-in-out;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  
+  font-size: inherit;
+  margin-top:2.6rem;
+  margin-left:1rem;
+}
+
+.update-flair-button:hover {
+  background: hsl(0, 0%, 7%);
+  text-decoration: none;
+}
+
+.reset-flair-button:hover {
+  background: hsl(0, 0%, 7%);
+  text-decoration: none;
+}
+
+.category-label {
+  font-size: 2.2rem;
+  text-align: center;
+  color: #042E54;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.flex-container-flairs {
+  display: flex;
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap; 
+  flex-wrap:         wrap;
+}
+
+.flair-item {
+  border-color: #ccc;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: .4rem;
+  padding: 0.8rem;
+  flex-basis: 31.5%;
+  overflow:hidden;
+  white-space:nowrap;
+  margin: 0.5rem;
+  text-overflow: ellipsis;
+  box-sizing:border-box;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  background: #fff;
+  transition: background .1s ease-in-out;
+  -webkit-transition: background .1s ease-in-out;
+}
+
+.flair-item:hover {
+  background: hsl(0, 0%, 85%);
+	
+}
+
+.flair-item:active {
+  background: #042E54;
+}
