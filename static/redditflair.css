@@ -156,6 +156,8 @@ h2 {
 }
 
 
+
+
 .reset-flair-button {
   flex-grow: 0;
   background: #666;
@@ -190,6 +192,7 @@ h2 {
   background: hsl(0, 0%, 7%);
   text-decoration: none;
 }
+
 
 .category-label {
   font-size: 2.2rem;
@@ -234,4 +237,29 @@ h2 {
 
 .flair-item:active {
   background: #042E54;
+}
+
+.flair-verification-item {
+  border-radius: .4rem;
+  background-color: #042E54;
+  color: #fff;
+  padding: 0.8rem;
+  flex-basis: 31.5%;
+  overflow:hidden;
+  white-space:nowrap;
+  margin: 0.5rem;
+  text-overflow: ellipsis;
+  box-sizing:border-box;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  transition: background .1s ease-in-out;
+  -webkit-transition: background .1s ease-in-out;
+  cursor: pointer;
+  text-align: center;
+}
+.flair-verification-item:hover {
+  background: hsl(0, 0%, 7%);
+	
 }

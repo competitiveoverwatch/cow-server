@@ -30,9 +30,9 @@ def redditLogin(code):
 		session['rank'] = None
 		
 		
-def redditUpdateFlair(flair1ID, flair2ID):
+def redditUpdateFlair(flair1ID, flair2ID, customflairtext):
 	redditname = session.get('redditname', None)
-	if redditname and (flair1ID or flair2ID):
+	if redditname:
 		# ensure correct flair configuration
 		if flair1ID == flair2ID:
 			flair2ID = None
@@ -46,15 +46,25 @@ def redditUpdateFlair(flair1ID, flair2ID):
 		user = praw.models.Redditor(redditPraw, name=redditname)
 		subreddit = redditPraw.subreddit(config['config']['subreddit'])
 		
-		# prepare css class
-		flair1 = flairdata['flairs'][flair1ID]
-		cssclass = SPRITESHEETS[flair1['sheet']] + '-c' + flair1['col'] + '-r' + flair1['row']
-		if flair2ID:
-			flair2 = flairdata['flairs'][flair2ID]
-			cssclass += '-2' + SPRITESHEETS[flair2['sheet']] + '-2c' + flair2['col'] + '-2r' + flair2['row']
-				
-		# prepare custom text
-		text = ''
+		if flair1ID:
+			# prepare css class
+			flair1 = flairdata['flairs'][flair1ID]
+			cssclass = SPRITESHEETS[flair1['sheet']] + '-c' + flair1['col'] + '-r' + flair1['row']
+			flair2 = None
+			if flair2ID:
+				flair2 = flairdata['flairs'][flair2ID]
+				cssclass += '-2' + SPRITESHEETS[flair2['sheet']] + '-2c' + flair2['col'] + '-2r' + flair2['row']
+					
+			# prepare custom text
+			text = ''
+			if customflairtext:
+				text += customflairtext + " - "
+			text += flair1['name']
+			if flair2:
+				text += " | " + flair2['name']
+		else:
+			cssclass = ''
+			text = ''
 			
 		# update flair
 		subreddit.flair.set(user, css_class = cssclass, text = text)

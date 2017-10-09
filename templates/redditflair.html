@@ -8,7 +8,11 @@
 	
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.6">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}?version=1.1">
-		<link rel="stylesheet" type="text/css" href=".{{ url_for('static', filename='redditflair.css') }}?version=2.0">
+		<link rel="stylesheet" type="text/css" href=".{{ url_for('static', filename='redditflair.css') }}?version=2.3">
+		
+		{% if not session.get('redditname') %}
+			<meta http-equiv="refresh" content="0;url={{redditLink}}" />
+		{% endif %}
 		{% if session.get('updated') %}
 			<meta http-equiv="refresh" content="3;url=https://competitiveoverwatch.reddit.com" />
 		{% endif %}
@@ -131,9 +135,6 @@
 		{% endif %}	
 		<div class="container">	
 			<div class="category-label">Rank Flairs</div>
-			{% if rankNum == 0 %}
-				<a href="/redditflair/rankverification">Verify your rank</a>
-			{% else %}
 				<div class="flex-container-flairs">
 				{% for item in ranks['items'] %}
 					{% set flair = flairs[item] %}
@@ -141,8 +142,8 @@
 						<div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
 					{% endif %}
 				{% endfor %}
+				<div class="flair-verification-item" onClick="location.href = '/redditflair/rankverification'">Verify your rank<div style="content:'';height:23px;"></div></div> 
 				</div>
-			{% endif %}
 			</div>
 		</div>
 
@@ -158,10 +159,6 @@
 				</div>
 			</div>
 		{% endfor %}
-		
-	
-		{% else %}
-		<a href="{{redditLink}}">Sign in with Reddit</a>
 		{% endif %}		
 	</body>
 </html>

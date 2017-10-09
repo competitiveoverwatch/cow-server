@@ -153,9 +153,10 @@ def fetchRank():
 def updateFlair():
 	flair1 = request.args.get('flair1_id', None)
 	flair2 = request.args.get('flair2_id', None)
+	customflairtext = request.args.get('customflairtext', '')
 	
 	try:
-		flair1, flair2 = reddit.redditUpdateFlair(flair1, flair2)
+		flair1, flair2 = reddit.redditUpdateFlair(flair1, flair2, customflairtext)
 		
 		# update flairs in database if logged in
 		redditname = session.get('redditname')
