@@ -122,7 +122,7 @@
 				<div class="flex-container-flairs">
 				{% for special in specials %}
 						{% set flair = flairs[special.specialid] %}
-						<div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}} - {{special.text}}</div>
+						<div class="flair-item" onclick="setFlair(event, '{{special.specialid}}')"><div class="flair flair-small flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}} - {{special.text}}</div>
 				{% endfor %}
 				</div>
 			</div>

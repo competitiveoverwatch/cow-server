@@ -36,7 +36,7 @@ def redditUpdateFlair(flair1ID, flair2ID, customflairtext):
 		# ensure correct flair configuration
 		if flair1ID == flair2ID:
 			flair2ID = None
-		if flair1ID == None and flair2ID:
+		if not flair1ID and flair2ID: 
 			flair1ID = flair2ID
 			flair2ID = None
 		
@@ -58,7 +58,7 @@ def redditUpdateFlair(flair1ID, flair2ID, customflairtext):
 			# prepare custom text
 			text = ''
 			if customflairtext:
-				text += customflairtext + " - "
+				text += customflairtext + u' \u2014 '
 			text += flair1['name']
 			if flair2:
 				text += " | " + flair2['name']
