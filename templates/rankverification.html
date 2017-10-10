@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -8,8 +9,9 @@
 
 		<title>r/CompetitiveOverwatch Rank Verification</title>
 
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}">
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/reset.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/global.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/rankverification.css') }}">
 		
 		<script>
 			function ready(fn) {
@@ -35,13 +37,13 @@
 				});
 				
 				window.platform_select.addEventListener('change', function() {
-					const platform = window.platform_select.value
+					const platform = window.platform_select.value;
 
-					window.psnname.style.display = (platform === "psn")? "inline-block" : "none";
-					window.xblname.style.display = (platform === "xbl")? "inline-block" : "none";
+					const visibleDisplayStyle = "inline-block";
+
+					window.psnname.style.display = (platform === "psn")? visibleDisplayStyle : "none";
+					window.xblname.style.display = (platform === "xbl")? visibleDisplayStyle : "none";
 				});
-
-
 			});
 		</script>
 
@@ -50,7 +52,7 @@
 	</head>
 	<body>
 		<header role="banner">
-			<h1>Competitive Overwatch Rank Verification</h1>
+			<h1><a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> Rank Verification</h1>
 			<h2>Keep your <a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> rank flair up to date.</h2>
 		</header>
 			

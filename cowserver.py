@@ -8,7 +8,7 @@ import os.path
 
 content_security_policy = {
 	'script-src': '\'unsafe-inline\'',
-	'style-src': '\'self\''
+	'style-src': ['\'self\'','\'unsafe-inline\'']
 }
 
 def setupApp():

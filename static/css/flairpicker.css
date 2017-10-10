@@ -1,61 +1,4 @@
-html {
-  font-size: 10px;
-  overflow-x: hidden;
-}
-
-body {
-  background-color: #E8E8E9;
-  font-family: -apple-system, BlinkMacSystemFont,  "Roboto", "Helvetica Neue", Helvetica, "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Arial, sans-serif;
-  font-size: 1.6rem;
-  overflow-x: hidden;
-  padding: 4rem;
-}
-
-@media (max-width: 755px) {
-  body {
-    padding: 4rem 0;
-  }
-}
-
-a {
-  color: #0097D2;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-p {
-  line-height: 1.2;
-}
-
-header {
-  margin: 0 auto;
-  text-align: center;
-  user-select: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  width: 90%;
-}
-
-/* Main heading */
-h1 {
-  color: hsl(0, 0%, 7%);
-  font-size: 2.6rem;
-  font-weight: bold;
-  pointer-events: none;
-}
-
-/* Subheading */
-h2 {
-  color: #042E54;
-  margin-top: 2.6rem;
-}
-
-
-.container {
+section {
   margin: 0.8rem auto 0 auto;
   background: #FFF;
   border-radius: .4rem;
@@ -64,38 +7,38 @@ h2 {
   padding: 1.6rem;
 }
 
-.container-top {
+section:first-of-type {
 	margin-bottom: 3.9rem;
 	margin-top: 3.9rem;
 }
 
-.flex-container {
+section h1 {
+  color: #042E54;
+  font-size: 100%;
+  margin-bottom: 1rem;
+}
+
+.container {
   display: flex;
-  display: -webkit-flex;
-  -webkit-flex-wrap: nowrap; 
-  flex-wrap:         nowrap;
+  flex-wrap: nowrap;
 }
 
 .flairpicker {
   flex-grow: 1;
   flex-basis: 0;
-  border-color: #ccc;
-  border-width: 1px;
-  border-style: solid;
   border-radius: .2rem;
+  border: 1px solid #ccc;
   padding: 1.2rem;
   user-select: none;
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  transition: border .1s ease-in-out;
-  -webkit-transition: border .1s ease-in-out;
+  transition: border .08s ease-in-out;
 }
 
 .flairpicker:hover {
   border-color: #042E54;
 }
-
 
 .flairpicker-left {
 	margin-right: 1em;
@@ -115,7 +58,7 @@ h2 {
 	text-align: center;
 	margin-bottom: 0.8rem;
 	font-size: 1.8rem;
-    color: #042E54;
+  color: #042E54;
 }
 
 .custom-flair-text {
@@ -131,33 +74,6 @@ h2 {
 }
 
 
-.update-flair-button {
-  flex-grow: 1;
-  background: #042E54;
-  border-radius: .2rem;
-  min-width: 22rem;
-  color: #FFF;
-  padding: 0.5rem;
-  transition: background .1s ease-in-out;
-  -webkit-transition: background .1s ease-in-out;
-  user-select: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  vertical-align: middle;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border: none;
-  cursor: pointer;
-  font-size: inherit;
-  margin-top:2.6rem;
-  margin-left:1rem;
-}
-
-
-
-
 .reset-flair-button {
   flex-grow: 0;
   background: #666;
@@ -165,8 +81,7 @@ h2 {
   width: 4rem;
   color: #FFF;
   padding: 0.5rem;
-  transition: background .1s ease-in-out;
-  -webkit-transition: background .1s ease-in-out;
+  transition: background .08s ease-in-out;
   user-select: none;
   -ms-user-select: none;
   -moz-user-select: none;
@@ -177,7 +92,6 @@ h2 {
   appearance: none;
   border: none;
   cursor: pointer;
-  
   font-size: inherit;
   margin-top:2.6rem;
   margin-left:1rem;
@@ -202,18 +116,8 @@ h2 {
   margin-bottom: 1rem;
 }
 
-.flex-container-flairs {
-  display: flex;
-  display: -webkit-flex;
-  -webkit-flex-wrap: wrap; 
-  flex-wrap:         wrap;
-}
-
-.flair-item {
-  border-color: #ccc;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: .4rem;
+.flair {
+  border: 1px solid #ccc;
   padding: 0.8rem;
   flex-basis: 31.5%;
   overflow:hidden;
@@ -226,16 +130,15 @@ h2 {
   -moz-user-select: none;
   -webkit-user-select: none;
   background: #fff;
-  transition: background .1s ease-in-out;
-  -webkit-transition: background .1s ease-in-out;
+  transition: background .08s ease-in-out;
 }
 
-.flair-item:hover {
+.flair:hover {
   background: hsl(0, 0%, 85%);
 	
 }
 
-.flair-item:active {
+.flair:active {
   background: #042E54;
 }
 
@@ -249,17 +152,15 @@ h2 {
   white-space:nowrap;
   margin: 0.5rem;
   text-overflow: ellipsis;
-  box-sizing:border-box;
+  box-sizing: border-box;
   user-select: none;
   -ms-user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  transition: background .1s ease-in-out;
-  -webkit-transition: background .1s ease-in-out;
+  transition: background .08s ease-in-out;
   cursor: pointer;
   text-align: center;
 }
 .flair-verification-item:hover {
   background: hsl(0, 0%, 7%);
-	
 }

@@ -29,14 +29,12 @@ def redditFlair():
 		# get special flairs
 		specials = Specials.query.filter_by(userid=userObject.id).all()
 	
-	response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata, user=userObject, specials=specials))
+	response = make_response(render_template('flairpicker.html', **responseParams, flairdata=flairdata, user=userObject, specials=specials))
 	
 	if session.get('updated'):
 		session['updated'] = False
 	
 	return response
-
-	
 	
 # flair verification index
 @redditflair.route('/redditflair/rankverification')

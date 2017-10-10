@@ -1,0 +1,87 @@
+html {
+  font-size: 10px;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #E8E8E9;
+  font-family: -apple-system, BlinkMacSystemFont,  "Roboto", "Helvetica Neue", Helvetica, "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Arial, sans-serif;
+  font-size: 1.6rem;
+  overflow-x: hidden;
+  padding: 4rem;
+}
+
+@media (max-width: 755px) {
+  body {
+    padding: 4rem 0;
+  }
+}
+
+a {
+  color: #0097D2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  line-height: 1.2;
+}
+
+header {
+  margin: 0 auto;
+  text-align: center;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  width: 90%;
+}
+
+/* Main heading */
+h1 {
+  color: hsl(0, 0%, 7%);
+  font-size: 2.6rem;
+  font-weight: bold;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+/* Subheading */
+h2 {
+  color: #042E54;
+  line-height: 1.2;
+  margin-top: 2.6rem;
+}
+
+.button, input[type=submit] {
+  background: #042E54;
+  border-radius: .2rem;
+  color: #FFF;
+  display: inline-block;
+  padding: 1rem 2.6rem;
+  transition: background .1s ease-in-out;
+  -webkit-transition: background .1s ease-in-out;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+}
+
+.button:hover, input[type=submit]:hover {
+  background: hsl(0, 0%, 7%);
+  text-decoration: none;
+}
+
+input[type=submit] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  margin: 0;
+}

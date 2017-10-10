@@ -1,4 +1,4 @@
-.flair {
+.flair-image {
     padding: 0;
     border: 0;
     border-radius: 0;
@@ -11,88 +11,88 @@
     background: transparent
 }
 /*Rows*/
-.flair[class*="-r02"]::before {
+.flair-image[class*="-r02"]::before {
     background: 0 -46px
 }
-.flair[class*="-r03"]::before {
+.flair-image[class*="-r03"]::before {
     background: 0 -92px
 }
-.flair[class*="-r04"]::before {
+.flair-image[class*="-r04"]::before {
     background: 0 -138px
 }
-.flair[class*="-r05"]::before {
+.flair-image[class*="-r05"]::before {
     background: 0 -184px
 }
-.flair[class*="-r06"]::before {
+.flair-image[class*="-r06"]::before {
     background: 0 -230px
 }
-.flair[class*="-r07"]::before {
+.flair-image[class*="-r07"]::before {
     background: 0 -276px
 }
-.flair[class*="-r08"]::before {
+.flair-image[class*="-r08"]::before {
     background: 0 -322px
 }
-.flair[class*="-r09"]::before {
+.flair-image[class*="-r09"]::before {
     background: 0 -368px
 }
 /*columns*/
-.flair[class*="-c01"]::before {
+.flair-image[class*="-c01"]::before {
     width: 46px;
     clip: rect(0, 46px, 46px, 0px);
     margin-left: 0
 }
-.flair[class*="-c02"]::before {
+.flair-image[class*="-c02"]::before {
     width: 92px;
     clip: rect(0, 92px, 46px, 46px);
     margin-left: -46px;
 }
-.flair[class*="-c03"]::before {
+.flair-image[class*="-c03"]::before {
     width: 138px;
     clip: rect(0, 138px, 46px, 92px);
     margin-left: -92px;
 }
-.flair[class*="-c04"]::before {
+.flair-image[class*="-c04"]::before {
     width: 184px;
     clip: rect(0, 184px, 46px, 138px);
     margin-left: -138px;
 }
-.flair[class*="-c05"]::before {
+.flair-image[class*="-c05"]::before {
     width: 230px;
     clip: rect(0, 230px, 46px, 184px);
     margin-left: -184px;
 }
-.flair[class*="-c06"]::before {
+.flair-image[class*="-c06"]::before {
     width: 276px;
     clip: rect(0, 276px, 46px, 230px);
     margin-left: -230px;
 }
-.flair[class*="-c07"]::before {
+.flair-image[class*="-c07"]::before {
     width: 322px;
     clip: rect(0, 322px, 46px, 276px);
     margin-left: -276px;
 }
-.flair[class*="-c08"]::before {
+.flair-image[class*="-c08"]::before {
     width: 368px;
     clip: rect(0, 368px, 46px, 322px);
     margin-left: -322px;
 }
-.flair[class*="-c09"]::before {
+.flair-image[class*="-c09"]::before {
     width: 414px;
     clip: rect(0, 414px, 46px, 368px);
     margin-left: -368px;
 }
-.flair[class*="-c10"]::before {
+.flair-image[class*="-c10"]::before {
     width: 460px;
     clip: rect(0, 460px, 46px, 414px);
     margin-left: -414px;
 }
-.flair[class*="-c11"]::before {
+.flair-image[class*="-c11"]::before {
     width: 506px;
     clip: rect(0, 506px, 46px, 460px);
     margin-left: -460px;
 }
 
-.flair-small{
+.flair-image-small{
 	transform: scale(0.5) translate(0px,-11px);
 	width: 23px;
 	height: 23px;
@@ -101,9 +101,9 @@
 }
 
 /* Team flair sheet */
-.flair[class*="-teams"]::before {
+.flair-image[class*="-teams"]::before {
     content: "";
-    background-image: url("flairs-teams-2x.png");
+    background-image: url("../images/flairs-teams-2x.png");
     height: 46px;
     color: transparent;
 	background-size: 506px 416px;
@@ -111,9 +111,9 @@
 }
  
 /* Rank flair sheet */
-.flair[class*="-ranks"]::before {
+.flair-image[class*="-ranks"]::before {
     content: "";
-    background-image: url("flairs-ranks-2x.png");
+    background-image: url("../images/flairs-ranks-2x.png");
     height: 46px;
     color: transparent;
 	background-size: 368px 46px;
@@ -121,9 +121,9 @@
 }
 
 /* Flag flair sheet */
-.flair[class*="-flags"]::before {
+.flair-image[class*="-flags"]::before {
     content: "";
-    background-image: url("flairs-flags-2x.png");
+    background-image: url("../images/flairs-flags-2x.png");
     height: 46px;
     color: transparent;
 	background-size: 506px 185;
@@ -131,9 +131,9 @@
 }
 
 /* Special flair sheet */
-.flair[class*="-special"]::before {
+.flair-image[class*="-special"]::before {
     content: "";
-    background-image: url("flairs-special-2x.png");
+    background-image: url("../images/flairs-special-2x.png");
     height: 46px;
     color: transparent;
 	background-size: 368px 46px;

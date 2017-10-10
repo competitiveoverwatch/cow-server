@@ -9,7 +9,7 @@ class User(db.Model):
 	# Maximum Battletag length is 12
 	battletag = db.Column(db.String(12))
 	blizzardid = db.Column(db.String(60))
-	# PSN's max length is 16, XBL's is 15 anyway
+	# PSN's max length is 16, XBL's is 15
 	psn = db.Column(db.String(16))
 	xbl = db.Column(db.String(15))
 
