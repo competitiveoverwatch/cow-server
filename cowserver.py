@@ -48,3 +48,5 @@ setupDatabase()
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0')
+	# For local HTTPS with cert & key files:
+	# app.run(host='0.0.0.0',ssl_context=('cert.pem', 'key.pem'))
