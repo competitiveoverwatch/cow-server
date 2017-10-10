@@ -34,7 +34,7 @@ def setupApp():
 
 	# Redis Session Interface
 	app.session_interface = RedisSessionInterface()
-	
+
 	return app
 	
 def setupDatabase():
@@ -46,5 +46,5 @@ def setupDatabase():
 app = setupApp()
 setupDatabase()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
 	app.run(host='0.0.0.0')
