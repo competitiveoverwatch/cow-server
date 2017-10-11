@@ -61,7 +61,7 @@ def redditUpdateFlair(flair1ID, flair2ID, customflairtext):
 				text += customflairtext + u' \u2014 '
 			text += flair1['name']
 			if flair2:
-				text += " | " + flair2['name']
+				text += '' | '' + flair2['name']
 		else:
 			cssclass = ''
 			text = ''

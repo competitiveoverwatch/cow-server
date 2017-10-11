@@ -9,13 +9,13 @@ from database import db, User, Specials
 
 limiter = Limiter(
     key_func=get_remote_address,
-    default_limits=["200 per day", "50 per hour"]
+    default_limits=['200 per day', '50 per hour']
 )
 
 redditflair = Blueprint('redditflair', __name__)
 
 # main route
-@redditflair.route("/redditflair")
+@redditflair.route('/redditflair')
 def redditFlair():
 	responseParams = dict()
 	responseParams['redditLink'] = reddit.redditLink()
@@ -39,13 +39,13 @@ def redditFlair():
 	
 	
 # flair verification index
-@redditflair.route("/redditflair/rankverification")
+@redditflair.route('/redditflair/rankverification')
 def rankVerification():
 	response = make_response(render_template('rankverification.html'))
 	return response
 
 # reddit oauth login
-@redditflair.route("/redditflair/redditlogin", methods=['GET'])
+@redditflair.route('/redditflair/redditlogin', methods=['GET'])
 def redditLogin():
 	code = request.args.get('code', '')
 	state = request.args.get('state', '')
@@ -68,13 +68,13 @@ def redditLogin():
 
 	
 # blizzard oauth redirect
-@redditflair.route("/redditflair/blizzardredirect", methods=['GET'])
+@redditflair.route('/redditflair/blizzardredirect', methods=['GET'])
 def blizzardRedirect():
 	region = request.args.get('region', '')
 	return redirect(blizzard.blizzardRedirectURL(region))
 	
 # blizzard oauth login
-@redditflair.route("/redditflair/blizzardlogin", methods=['GET'])
+@redditflair.route('/redditflair/blizzardlogin', methods=['GET'])
 def blizzardLogin():
 	code = request.args.get('code', '')
 	state = request.args.get('state', '')
@@ -87,8 +87,8 @@ def blizzardLogin():
 	
 
 # parse playoverwatch profile and fetch rank
-@redditflair.route("/redditflair/fetchrank", methods=['GET'])
-@limiter.limit("1 per minute")
+@redditflair.route('/redditflair/fetchrank', methods=['GET'])
+@limiter.limit('1 per minute')
 def fetchRank():
 	region = session.get('region', None)
 	battletag = session.get('battletag', None)
@@ -143,13 +143,13 @@ def fetchRank():
 					
 			session['step'] = 1
 		else:
-			session['rank'] = "error"
+			session['rank'] = 'error'
 			
 	return redirect('/redditflair')
 	
 	
 	
-@redditflair.route("/redditflair/updateflair", methods=['GET'])
+@redditflair.route('/redditflair/updateflair', methods=['GET'])
 def updateFlair():
 	flair1 = request.args.get('flair1_id', None)
 	flair2 = request.args.get('flair2_id', None)

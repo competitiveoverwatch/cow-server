@@ -159,3 +159,4 @@ $RECYCLE.BIN/
 /config/creds.json
 *.pem
 *.cert
+*.db

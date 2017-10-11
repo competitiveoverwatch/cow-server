@@ -4,11 +4,15 @@ db = SQLAlchemy()
 
 class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String(60))
-	battletag = db.Column(db.String(60))
+	# Reddit username - max length is 20
+	name = db.Column(db.String(20))
+	# Maximum Battletag length is 12
+	battletag = db.Column(db.String(12))
 	blizzardid = db.Column(db.String(60))
-	psn = db.Column(db.String(60))
-	xbl = db.Column(db.String(60))
+	# PSN's max length is 16, XBL's is 15 anyway
+	psn = db.Column(db.String(16))
+	xbl = db.Column(db.String(15))
+
 	flair1 = db.Column(db.String(60))
 	flair2 = db.Column(db.String(60))
 	flairtext = db.Column(db.String(60))
