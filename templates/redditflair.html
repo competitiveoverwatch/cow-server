@@ -14,7 +14,7 @@
 			<meta http-equiv="refresh" content="0;url={{redditLink}}" />
 		{% endif %}
 		{% if session.get('updated') %}
-			<meta http-equiv="refresh" content="3;url=https://competitiveoverwatch.reddit.com" />
+			<meta http-equiv="refresh" content="3;url=https://co_test.reddit.com" />
 		{% endif %}
 	</head>
 	<script>
@@ -108,7 +108,7 @@
 					</div>
 				</div>
 				<div class="flex-container">
-					<input class="custom-flair-text" type="text" name="customflairtext" placeholder="Custom Flair Text">
+					<input class="custom-flair-text" type="text" name="customflairtext" placeholder="Custom Flair Text" value="{{user.flairtext}}">
 					<input class="update-flair-button" type="submit" value="Update Flair">
 					<input class="reset-flair-button" type="button" onClick="resetFlairs()" value="&#10060">
 				</div>

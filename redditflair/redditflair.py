@@ -165,6 +165,7 @@ def updateFlair():
 			if userObject:
 				userObject.flair1 = flair1
 				userObject.flair2 = flair2
+				userObject.flairtext = customflairtext
 				db.session.commit()
 	except:
 		pass
