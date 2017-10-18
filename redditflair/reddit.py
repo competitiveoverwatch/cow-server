@@ -54,21 +54,25 @@ def redditUpdateFlair(flair1ID, flair2ID, customflairtext):
 			if flair2ID:
 				flair2 = flairdata['flairs'][flair2ID]
 				cssclass += '-2' + SPRITESHEETS[flair2['sheet']] + '-2c' + flair2['col'] + '-2r' + flair2['row']
-					
+			
+			print(cssclass)
+			
 			# prepare custom text
 			text = ''
 			if customflairtext:
 				text += customflairtext + u' \u2014 '
 			text += flair1['name']
 			if flair2:
-				text += '' | '' + flair2['name']
+				text += ' | ' + flair2['name']
+				
+			print(text)
 		else:
 			cssclass = ''
 			text = ''
 			
 		# update flair
 		subreddit.flair.set(user, css_class = cssclass, text = text)
-
+		print("ok")
 		session['updated'] = True
 	else:
 		raise ValueError()

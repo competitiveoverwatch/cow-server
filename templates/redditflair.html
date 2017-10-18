@@ -6,7 +6,7 @@
 		<meta name="theme-color" content="#E8E8E9">
 		<meta name="description" content="r/CompetitiveOverwatch Rank Verification">
 	
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.6">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.7">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}?version=1.1">
 		<link rel="stylesheet" type="text/css" href=".{{ url_for('static', filename='redditflair.css') }}?version=2.3">
 		
@@ -14,7 +14,7 @@
 			<meta http-equiv="refresh" content="0;url={{redditLink}}" />
 		{% endif %}
 		{% if session.get('updated') %}
-			<meta http-equiv="refresh" content="3;url=https://co_test.reddit.com" />
+			<meta http-equiv="refresh" content="2;url=https://co_test.reddit.com" />
 		{% endif %}
 	</head>
 	<script>
@@ -66,99 +66,104 @@
 	</script>
 	<body>
 		{% if session.get('redditname') %}
-		
-		{% set categories = flairdata['categories'] %}
-		{% set ranks = flairdata['ranks'] %}
-		{% set flairs = flairdata['flairs'] %}
-		<header role="banner">
-			<h2>Hey, u/{{session.get('redditname')}}! Choose your <a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> flairs.</h2>
-		</header>
-		<!-- Flair Selectors -->
-		<form action="/redditflair/updateflair" method="get">
-			<div class="container container-top">	
-				<div class="flex-container">
-					<span class="flairpicker-label">Primary Flair</span>
-					<span class="flairpicker-label">Secondary Flair</span>
-				</div>
-				<div class="flex-container">
-					<div id="flairpicker1" class="flairpicker flairpicker-left flairpicker-active" onclick="setSetting(1)" oncontextmenu="removeFlair(1);return false;">
-					{% if user.flair1 %}
-						{% set flair = flairs[user.flair1] %}
-						<div id="flair1" class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>
-						<input type="hidden" name="flair1_id" id="flair1_id" value="{{user.flair1}}">
-						<span id="flair1_text" class="flairpicker-text">{{flair['name']}}</span>
-					{% else %}
-						<div id="flair1" class="flair"></div>
-						<input type="hidden" name="flair1_id" id="flair1_id">
-						<span id="flair1_text" class="flairpicker-text"></span>
-					{% endif %}
+			{% if session.get('updated') %}
+				<header role="banner">
+					<h2>Your flair was updated, you will be redirected to <a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> in a few seconds.</h2>
+				</header>
+			{% else %}
+				{% set categories = flairdata['categories'] %}
+				{% set ranks = flairdata['ranks'] %}
+				{% set flairs = flairdata['flairs'] %}
+				<header role="banner">
+					<h2>Hey, u/{{session.get('redditname')}}! Choose your <a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> flairs.</h2>
+				</header>
+				<!-- Flair Selectors -->
+				<form action="/redditflair/updateflair" method="get">
+					<div class="container container-top">	
+						<div class="flex-container">
+							<span class="flairpicker-label">Primary Flair</span>
+							<span class="flairpicker-label">Secondary Flair</span>
+						</div>
+						<div class="flex-container">
+							<div id="flairpicker1" class="flairpicker flairpicker-left flairpicker-active" onclick="setSetting(1)" oncontextmenu="removeFlair(1);return false;">
+							{% if user.flair1 %}
+								{% set flair = flairs[user.flair1] %}
+								<div id="flair1" class="flair flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>
+								<input type="hidden" name="flair1_id" id="flair1_id" value="{{user.flair1}}">
+								<span id="flair1_text" class="flairpicker-text">{{flair['name']}}</span>
+							{% else %}
+								<div id="flair1" class="flair"></div>
+								<input type="hidden" name="flair1_id" id="flair1_id">
+								<span id="flair1_text" class="flairpicker-text"></span>
+							{% endif %}
+							</div>
+							
+							<div id="flairpicker2" class="flairpicker" onclick="setSetting(2)" oncontextmenu="removeFlair(2);return false;">
+							{% if user.flair2 %}
+								{% set flair = flairs[user.flair2] %}
+								<div id="flair2" class="flair flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>
+								<input type="hidden" name="flair2_id" id="flair2_id" value="{{user.flair2}}">
+								<span id="flair2_text" class="flairpicker-text">{{flair['name']}}</span>
+							{% else %}
+								<div id="flair2" class="flair"></div>
+								<input type="hidden" name="flair2_id" id="flair2_id">
+								<span id="flair2_text" class="flairpicker-text"></span>
+							{% endif %}
+							</div>
+						</div>
+						<div class="flex-container">
+							<input class="custom-flair-text" type="text" name="customflairtext" placeholder="Custom Flair Text" value="{{user.flairtext}}">
+							<input class="update-flair-button" type="submit" value="Update Flair">
+							<input class="reset-flair-button" type="button" onClick="resetFlairs()" value="&#10060">
+						</div>
 					</div>
-					
-					<div id="flairpicker2" class="flairpicker" onclick="setSetting(2)" oncontextmenu="removeFlair(2);return false;">
-					{% if user.flair2 %}
-						{% set flair = flairs[user.flair2] %}
-						<div id="flair2" class="flair flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>
-						<input type="hidden" name="flair2_id" id="flair2_id" value="{{user.flair2}}">
-						<span id="flair2_text" class="flairpicker-text">{{flair['name']}}</span>
-					{% else %}
-						<div id="flair2" class="flair"></div>
-						<input type="hidden" name="flair2_id" id="flair2_id">
-						<span id="flair2_text" class="flairpicker-text"></span>
-					{% endif %}
+				</form>
+				
+				<!-- Special category -->
+				{% if user and specials %}
+					<div class="container">	
+						<div class="category-label">Special Flairs</div>
+						<div class="flex-container-flairs">
+						{% for special in specials %}
+								{% set flair = flairs[special.specialid] %}
+								<div class="flair-item" onclick="setFlair(event, '{{special.specialid}}')"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}} - {{special.text}}</div>
+						{% endfor %}
+						</div>
+					</div>
+				{% endif %}	
+				
+				<!-- Rank category -->
+				{% set rankNum = 0 %}
+				{% if user %}
+					{% set rankNum = user.rank %}
+				{% endif %}	
+				<div class="container">	
+					<div class="category-label">Rank Flairs</div>
+						<div class="flex-container-flairs">
+						{% for item in ranks['items'] %}
+							{% set flair = flairs[item] %}
+							{% if loop.index <= rankNum %}
+								<div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
+							{% endif %}
+						{% endfor %}
+						<div class="flair-verification-item" onClick="location.href = '/redditflair/rankverification'">Verify your rank<div style="content:'';height:23px;"></div></div> 
+						</div>
 					</div>
 				</div>
-				<div class="flex-container">
-					<input class="custom-flair-text" type="text" name="customflairtext" placeholder="Custom Flair Text" value="{{user.flairtext}}">
-					<input class="update-flair-button" type="submit" value="Update Flair">
-					<input class="reset-flair-button" type="button" onClick="resetFlairs()" value="&#10060">
-				</div>
-			</div>
-		</form>
-		
-		<!-- Special category -->
-		{% if user and specials %}
-			<div class="container">	
-				<div class="category-label">Special Flairs</div>
-				<div class="flex-container-flairs">
-				{% for special in specials %}
-						{% set flair = flairs[special.specialid] %}
-						<div class="flair-item" onclick="setFlair(event, '{{special.specialid}}')"><div class="flair flair-small flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}} - {{special.text}}</div>
-				{% endfor %}
-				</div>
-			</div>
-		{% endif %}	
-		
-		<!-- Rank category -->
-		{% set rankNum = 0 %}
-		{% if user %}
-			{% set rankNum = user.rank %}
-		{% endif %}	
-		<div class="container">	
-			<div class="category-label">Rank Flairs</div>
-				<div class="flex-container-flairs">
-				{% for item in ranks['items'] %}
-					{% set flair = flairs[item] %}
-					{% if loop.index <= rankNum %}
-						<div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
-					{% endif %}
-				{% endfor %}
-				<div class="flair-verification-item" onClick="location.href = '/redditflair/rankverification'">Verify your rank<div style="content:'';height:23px;"></div></div> 
-				</div>
-			</div>
-		</div>
 
-		<!-- Categories -->
-		{% for category in categories %}
-			<div class="container">	
-				<div class="category-label">{{category['title']}}</div>
-				<div class="flex-container-flairs">
-				{% for item in category['items'] %}
-					{% set flair = flairs[item] %}
-					<div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
+				<!-- Categories -->
+				{% for category in categories %}
+					<div class="container">	
+						<div class="category-label">{{category['title']}}</div>
+						<div class="flex-container-flairs">
+						{% for item in category['items'] %}
+							{% set flair = flairs[item] %}
+							<div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
+						{% endfor %}
+						</div>
+					</div>
 				{% endfor %}
-				</div>
-			</div>
-		{% endfor %}
+			{% endif %}		
 		{% endif %}		
 	</body>
 </html>

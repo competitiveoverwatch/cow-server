@@ -151,10 +151,11 @@ def fetchRank():
 	
 @redditflair.route('/redditflair/updateflair', methods=['GET'])
 def updateFlair():
+	print("hi")
 	flair1 = request.args.get('flair1_id', None)
 	flair2 = request.args.get('flair2_id', None)
 	customflairtext = request.args.get('customflairtext', '')
-	
+	print("hi2")
 	try:
 		flair1, flair2 = reddit.redditUpdateFlair(flair1, flair2, customflairtext)
 		
