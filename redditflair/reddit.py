@@ -4,10 +4,10 @@ from config import flairdata
 import praw
 
 SPRITESHEETS = {
-	'teams': 'st',
-	'ranks': 'sr',
-	'flags': 'sf',
-	'special': 'sx'
+	'teams': 'steams',
+	'ranks': 'sranks',
+	'flags': 'sflags',
+	'special': 'sspecial'
 }
 
 def redditLink():
@@ -30,7 +30,7 @@ def redditLogin(code):
 		session['rank'] = None
 		
 		
-def redditUpdateFlair(flair1ID, flair2ID, customflairtext):
+def redditUpdateFlair(flair1ID, flair2ID, customflairtext, sr):
 	redditname = session.get('redditname', None)
 	if redditname:
 		# ensure correct flair configuration
@@ -55,24 +55,23 @@ def redditUpdateFlair(flair1ID, flair2ID, customflairtext):
 				flair2 = flairdata['flairs'][flair2ID]
 				cssclass += '-2' + SPRITESHEETS[flair2['sheet']] + '-2c' + flair2['col'] + '-2r' + flair2['row']
 			
-			print(cssclass)
-			
 			# prepare custom text
 			text = ''
 			if customflairtext:
 				text += customflairtext + u' \u2014 '
 			text += flair1['name']
+			if sr and flair1['sheet'] == 'ranks':
+				text += ' (' + str(sr) + ')'
 			if flair2:
 				text += ' | ' + flair2['name']
-				
-			print(text)
+				if sr and flair2['sheet'] == 'ranks':
+					text += ' (' + str(sr) + ')'
 		else:
 			cssclass = ''
 			text = ''
 			
 		# update flair
 		subreddit.flair.set(user, css_class = cssclass, text = text)
-		print("ok")
 		session['updated'] = True
 	else:
 		raise ValueError()

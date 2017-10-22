@@ -27,7 +27,7 @@ def redditFlair():
 	if redditname:
 		userObject = User.query.filter_by(name=redditname).first()
 		# get special flairs
-		specials = Specials.query.filter_by(userid=userObject.id).all()
+		specials = Specials.query.filter_by(name=redditname).all()
 	
 	response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata, user=userObject, specials=specials))
 	
@@ -155,9 +155,17 @@ def updateFlair():
 	flair1 = request.args.get('flair1_id', None)
 	flair2 = request.args.get('flair2_id', None)
 	customflairtext = request.args.get('customflairtext', '')
+	displaysr = request.args.get('displaysr', None)
 	print("hi2")
 	try:
-		flair1, flair2 = reddit.redditUpdateFlair(flair1, flair2, customflairtext)
+		# get sr if necessary
+		sr = None
+		if displaysr:
+			redditname = session.get('redditname')
+			userObject = User.query.filter_by(name=redditname).first()
+			sr = userObject.sr;
+	
+		flair1, flair2 = reddit.redditUpdateFlair(flair1, flair2, customflairtext, sr)
 		
 		# update flairs in database if logged in
 		redditname = session.get('redditname')

@@ -76,6 +76,14 @@ h2 {
   flex-wrap:         nowrap;
 }
 
+.flex-container-verification {
+  display: flex;
+  display: -webkit-flex;
+  -webkit-flex-wrap: nowrap; 
+  flex-wrap:         nowrap;
+  justify-content: space-between;
+}
+
 .flairpicker {
   flex-grow: 1;
   flex-basis: 0;
@@ -239,12 +247,11 @@ h2 {
   background: #042E54;
 }
 
-.flair-verification-item {
+.flair-verification-button {
   border-radius: .4rem;
   background-color: #042E54;
   color: #fff;
   padding: 0.8rem;
-  flex-basis: 31.5%;
   overflow:hidden;
   white-space:nowrap;
   margin: 0.5rem;
@@ -258,8 +265,51 @@ h2 {
   -webkit-transition: background .1s ease-in-out;
   cursor: pointer;
   text-align: center;
+  min-width: 20rem;
 }
-.flair-verification-item:hover {
+.flair-verification-button:hover {
   background: hsl(0, 0%, 7%);
-	
+}
+
+.sr-checkbox {
+	margin-left: 2rem;
+	min-width: 20rem;
+	justify-content: space-between;
+}
+
+input.checkbox { display: none }
+
+input.checkbox + label {
+  display:inline-block;
+  line-height: 1.7;
+  position: relative;
+  padding: 0.7rem 0 0.5rem 5rem;
+  min-height: $inputSize;
+  cursor: pointer;
+}
+
+input.checkbox + label:before {
+  content:"";
+  height: 2.4rem;
+  width: 2.4rem;
+  position: absolute;
+  left: 1.5rem;
+  top: 0.9rem;
+  background-repeat: no-repeat;
+}
+
+input.checkbox[disabled] + label:before { opacity: 0.5 }
+
+input.checkbox[disabled] + label { color: rgba(0,0,0,0.3) }
+
+input.checkbox:checked + label:before { 
+  background: #042E54;
+  box-shadow: inset 0 0 0 0.4rem #fff;
+}
+input.checkbox + label:before {
+  border: .1rem solid #ccc; 
+}
+
+input.checkbox:checked:hover + label:before {
+  background: hsl(0, 0%, 7%);
 }

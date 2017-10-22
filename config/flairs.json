@@ -1,12 +1,19 @@
 {
 	"categories": [ 
 		{
-			"title": "APEX",
+			"title": "Overwatch League Season 1",
+			"items": [
+				"dallas-fuel",
+				"shanghai-dragons",
+				"san-francisco-shock"
+			]
+		},
+		{
+			"title": "APEX Season 4",
 			"items": [
 				"cloud9-kongdoo",
 				"conbox",
 				"gc-busan",
-				"kongdoo-panthera",
 				"lunatic-hai",
 				"luxurywatch-red",
 				"rx-foxes",
@@ -33,6 +40,32 @@
 				"renegades",
 				"rogue",
 				"team-singularity"
+			]
+		},
+		{
+			"title": "World Cup 2017",
+			"items": [
+				"flag-au",
+				"flag-ca",
+				"flag-cn",
+				"flag-fr",
+				"flag-se",
+				"flag-kr",
+				"flag-gb",
+				"flag-us"
+			]
+		},
+		{
+			"title": "APAC Premier 2017",
+			"items": [
+				"mvp-space",
+				"vici-gaming",
+				"afreeca-freecs",
+				"ahq-e-sports-club",
+				"envision",
+				"blank-esports",
+				"flash-wolves",
+				"miracle-team-one"
 			]
 		}
 	],
@@ -593,6 +626,311 @@
 			"col": "07",
 			"sheet": "teams",
 			"active": false
+		},
+		
+		
+		
+		"bronze": {
+			"name": "Bronze",
+			"row": "01",
+			"col": "01",
+			"sheet": "ranks",
+			"active": true
+		},
+		"diamond": {
+			"name": "Diamond",
+			"row": "01",
+			"col": "02",
+			"sheet": "ranks",
+			"active": true
+		},
+		"gold": {
+			"name": "Gold",
+			"row": "01",
+			"col": "03",
+			"sheet": "ranks",
+			"active": true
+		},
+		"grandmaster": {
+			"name": "Grandmaster",
+			"row": "01",
+			"col": "04",
+			"sheet": "ranks",
+			"active": true
+		},
+		"master": {
+			"name": "Master",
+			"row": "01",
+			"col": "05",
+			"sheet": "ranks",
+			"active": true
+		},
+		"platinum": {
+			"name": "Platinum",
+			"row": "01",
+			"col": "06",
+			"sheet": "ranks",
+			"active": true
+		},
+		"silver": {
+			"name": "Silver",
+			"row": "01",
+			"col": "07",
+			"sheet": "ranks",
+			"active": true
+		},
+		
+		
+		
+		
+		
+		
+		"flag-ar": {
+			"name": "Argentina",
+			"row": "01",
+			"col": "01",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-at": {
+			"name": "Austria",
+			"row": "01",
+			"col": "02",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-au": {
+			"name": "Australia",
+			"row": "01",
+			"col": "03",
+			"sheet": "flags",
+			"active": true
+		},
+		"flag-be": {
+			"name": "Belgium",
+			"row": "01",
+			"col": "04",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-br": {
+			"name": "Brazil",
+			"row": "01",
+			"col": "05",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-ca": {
+			"name": "Canada",
+			"row": "01",
+			"col": "06",
+			"sheet": "flags",
+			"active": true
+		},
+		"flag-cn": {
+			"name": "China",
+			"row": "01",
+			"col": "07",
+			"sheet": "flags",
+			"active": true
+		},
+		"flag-de": {
+			"name": "Germany",
+			"row": "01",
+			"col": "08",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-dk": {
+			"name": "Denmark",
+			"row": "01",
+			"col": "09",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-es": {
+			"name": "Spain",
+			"row": "01",
+			"col": "10",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-fi": {
+			"name": "Finland",
+			"row": "02",
+			"col": "01",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-fr": {
+			"name": "France",
+			"row": "02",
+			"col": "02",
+			"sheet": "flags",
+			"active": true
+		},
+		"flag-gb": {
+			"name": "United Kingdom",
+			"row": "02",
+			"col": "03",
+			"sheet": "flags",
+			"active": true
+		},
+		"flag-hk": {
+			"name": "Hong Kong",
+			"row": "02",
+			"col": "04",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-il": {
+			"name": "Israel",
+			"row": "02",
+			"col": "05",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-it": {
+			"name": "Italy",
+			"row": "02",
+			"col": "06",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-jp": {
+			"name": "Japan",
+			"row": "02",
+			"col": "07",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-kr": {
+			"name": "South Korea",
+			"row": "02",
+			"col": "08",
+			"sheet": "flags",
+			"active": true
+		},
+		"flag-nl": {
+			"name": "Netherlands",
+			"row": "02",
+			"col": "09",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-no": {
+			"name": "Norway",
+			"row": "02",
+			"col": "10",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-nz": {
+			"name": "New Zealand",
+			"row": "03",
+			"col": "01",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-pl": {
+			"name": "Poland",
+			"row": "03",
+			"col": "02",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-pt": {
+			"name": "Portugal",
+			"row": "03",
+			"col": "03",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-ro": {
+			"name": "Romania",
+			"row": "03",
+			"col": "04",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-ru": {
+			"name": "Russia",
+			"row": "03",
+			"col": "05",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-se": {
+			"name": "Sweden",
+			"row": "03",
+			"col": "06",
+			"sheet": "flags",
+			"active": true
+		},
+		"flag-sg": {
+			"name": "Singapore",
+			"row": "03",
+			"col": "07",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-th": {
+			"name": "Thailand",
+			"row": "03",
+			"col": "08",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-tr": {
+			"name": "Turkey",
+			"row": "03",
+			"col": "09",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-tw": {
+			"name": "Taiwan",
+			"row": "03",
+			"col": "10",
+			"sheet": "flags",
+			"active": false
+		},
+		"flag-us": {
+			"name": "United States",
+			"row": "04",
+			"col": "01",
+			"sheet": "flags",
+			"active": true
+		},
+		"flag-vn": {
+			"name": "Vietname",
+			"row": "04",
+			"col": "02",
+			"sheet": "flags",
+			"active": false
+		},
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		 "blizzard": {
+			"name": "Blizzard",
+			"row": "01",
+			"col": "01",
+			"sheet": "special",
+			"active": true
+		},
+		"verified": {
+			"name": "Verified",
+			"row": "01",
+			"col": "02",
+			"sheet": "special",
+			"active": true
 		}
 	}
 }

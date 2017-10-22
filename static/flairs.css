@@ -121,9 +121,9 @@
 .flair[class*="-sranks"]::before {
     content: "";
     background-image: url("flairs-ranks-2x.png");
-    height: 46px;
+    height: 44px;
     color: transparent;
-	background-size: 368px 46px;
+	background-size: 440px 44px;
 	position: absolute;
 }
 

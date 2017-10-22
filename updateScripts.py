@@ -135,30 +135,33 @@ def redditToDatabase(app):
 		redditPraw = praw.Reddit(client_id=config['creds']['redditBotClientId'], client_secret=config['creds']['redditBotClientSecret'], redirect_uri=config['creds']['redditBotRedirectURI'], user_agent='rankification by u/jawoll', username = config['creds']['redditBotUserName'], password = config['creds']['redditBotPassword'])
 		subreddit = redditPraw.subreddit('Competitiveoverwatch')
 		
-		count = 0
 		for flair in subreddit.flair(limit=None):
+			username = flair['user'].name
 			# normal flairs
 			if flair['flair_css_class'] in FLAIR_REPLACEMENTS: 
-		
-				username = flair['user'].name
-				userObject = User.query.filter_by(name=username).first()
-				if not userObject:
-					# create new entry
-					newUser = User(username)
-					newUser.flair1 = FLAIR_REPLACEMENTS[flair['flair_css_class']]
-					if flair['flair_text']:
-						newUser.flairtext = re.sub('[^\s\w]+', '', flair['flair_text'])
-					db.session.add(newUser)
-					db.session.commit()
-					print('added user: ' + username + '   with flair: ' + newUser.flair1)
-				else:
-					userObject.flair1 = FLAIR_REPLACEMENTS[flair['flair_css_class']]
-					if flair['flair_text']:
-						userObject.flairtext = re.sub('[^\s\w]+', '', flair['flair_text'])
-					db.session.commit()
-					print('updated user: ' + username + '   with flair: ' + userObject.flair1)
-			
+				# create new entry
+				newUser = User(username)
+				newUser.flair1 = FLAIR_REPLACEMENTS[flair['flair_css_class']]
+				if flair['flair_text']:
+					newUser.flairtext = re.sub('[^\s\w]+', '', flair['flair_text'])
+				db.session.add(newUser)
+				db.session.commit()
+				print('added user: ' + username + '   with flair: ' + newUser.flair1)
 				
+			# secial flairs
+			if flair['flair_css_class'] == 'verified' or flair['flair_css_class'] == 'blizzard':
+				# create new user entry
+				newUser = User(username)
+				newUser.flair1 = flair['flair_css_class']
+				db.session.add(newUser)
+				db.session.commit()
+				# create new specials entry
+				newSpecial = Specials(username)
+				newSpecial.specialid = flair['flair_css_class']
+				newSpecial.text = flair['flair_text'].replace('✓ ','')
+				db.session.add(newSpecial)
+				db.session.commit()
+				print('added verified user: ' + username + '   with flair: ' + newUser.flair1)
 				
 def databaseToReddit(app):
 	with app.app_context():
@@ -169,11 +172,22 @@ def databaseToReddit(app):
 			css_class = 's' + flair['sheet'] + '-r' + flair['row'] + '-c' + flair['col']
 			userlist = []
 			for user in flair_users:
-				userlist.append(user.name)
-			print('Updating ' + str(len(users)) + ' users with flair: ' + flair['name'])
-			subreddit.flair.update(userlist,css_class=css_class)
+				temp = dict()
+				temp['user'] = user.name
+				temp['flair_css_class'] = css_class
+				if flair['sheet'] == 'special':
+					special = Specials.query.filter_by(name=user.name).first()
+					temp['flair_text'] = special.text
+				else:
+					flairtext = ''
+					if user.flairtext:
+						flairtext += user.flairtext + u' \u2014 '
+					flairtext += flair['name']
+					temp['flair_text'] = flairtext
+				userlist.append(temp)
+			print('Updating ' + str(len(userlist)) + ' users with flair: ' + flair['name'])
+			subreddit.flair.update(userlist)
 			print('updated users: ' + str(userlist))
-		
-		
-
-		
+			
+def specialsToReddit(app):
+	pass
