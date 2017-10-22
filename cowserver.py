@@ -5,6 +5,7 @@ from redditflair.redditflair import redditflair, limiter
 from redissession import RedisSessionInterface
 from database import db, User, Specials
 import os.path
+import updateScripts
 
 content_security_policy = {
 	'script-src': '\'unsafe-inline\'',
@@ -45,6 +46,8 @@ def setupDatabase():
 
 app = setupApp()
 setupDatabase()
+
+updateScripts.databaseToReddit(app)
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0')
