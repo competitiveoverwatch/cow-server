@@ -166,7 +166,7 @@ def redditToDatabase(app):
 def databaseToReddit(app):
 	with app.app_context():
 		redditPraw = praw.Reddit(client_id=config['creds']['redditBotClientId'], client_secret=config['creds']['redditBotClientSecret'], redirect_uri=config['creds']['redditBotRedirectURI'], user_agent='rankification by u/jawoll', username = config['creds']['redditBotUserName'], password = config['creds']['redditBotPassword'])
-		subreddit = redditPraw.subreddit('CO_Test')
+		subreddit = redditPraw.subreddit('Competitiveoverwatch')
 		for id, flair in flairdata['flairs'].items():
 			flair_users = User.query.filter_by(flair1=id)
 			css_class = 's' + flair['sheet'] + '-r' + flair['row'] + '-c' + flair['col']
@@ -188,6 +188,3 @@ def databaseToReddit(app):
 			print('Updating ' + str(len(userlist)) + ' users with flair: ' + flair['name'])
 			subreddit.flair.update(userlist)
 			print('updated users: ' + str(userlist))
-			
-def specialsToReddit(app):
-	pass
