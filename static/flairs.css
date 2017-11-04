@@ -32,19 +32,19 @@
 .flair[class*="-r08"]::before {
     background: 0 -308px
 }
-.flair[class*="-r10"]::before {
+.flair[class*="-r09"]::before {
     background: 0 -352px
 }
-.flair[class*="-r11"]::before {
+.flair[class*="-r10"]::before {
     background: 0 -396px
 }
-.flair[class*="-r12"]::before {
+.flair[class*="-r11"]::before {
     background: 0 -440px
 }
-.flair[class*="-r13"]::before {
+.flair[class*="-r12"]::before {
     background: 0 -484px
 }
-.flair[class*="-r14"]::before {
+.flair[class*="-r13"]::before {
     background: 0 -526px
 }
 /*columns*/
@@ -113,7 +113,7 @@
     background-image: url("flairs-teams-2x.png");
     height: 44px;
     color: transparent;
-	background-size: 440px 352px;
+	background-size: 440px 396px;
 	position: absolute;
 }
  

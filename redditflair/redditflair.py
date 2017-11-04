@@ -14,6 +14,12 @@ limiter = Limiter(
 
 redditflair = Blueprint('redditflair', __name__)
 
+# temp route
+@redditflair.route('/')
+def root():
+	return '<h1>Temporary Maintenance</h1>'
+
+
 # main route
 @redditflair.route('/redditflair')
 def redditFlair():

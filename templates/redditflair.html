@@ -6,7 +6,7 @@
 		<meta name="theme-color" content="#E8E8E9">
 		<meta name="description" content="r/CompetitiveOverwatch Rank Verification">
 	
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.8">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.9">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}?version=1.1">
 		<link rel="stylesheet" type="text/css" href=".{{ url_for('static', filename='redditflair.css') }}?version=2.9">
 		
@@ -112,7 +112,7 @@
 							</div>
 						</div>
 						<div class="flex-container">
-							<input class="custom-flair-text" type="text" name="customflairtext" placeholder="Custom Flair Text" value="{{user.flairtext}}" pattern="[a-zA-Z0-9_-]{0,60}">
+							<input class="custom-flair-text" type="text" name="customflairtext" placeholder="Custom Flair Text" value="{{user.flairtext}}" pattern="[a-zA-Z0-9_- ]{0,60}">
 							<input class="update-flair-button" type="submit" value="Update Flair">
 							<input class="reset-flair-button" type="button" onClick="resetFlairs()" value="&#10060">
 						</div>
