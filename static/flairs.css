@@ -131,9 +131,9 @@
 .flair[class*="-sflags"]::before {
     content: "";
     background-image: url("flairs-flags-2x.png");
-    height: 46px;
+    height: 44px;
     color: transparent;
-	background-size: 506px 185;
+	background-size: 440px 176px;
 	position: absolute;
 }
 
@@ -141,9 +141,9 @@
 .flair[class*="-sspecial"]::before {
     content: "";
     background-image: url("flairs-special-2x.png");
-    height: 46px;
+    height: 44px;
     color: transparent;
-	background-size: 368px 46px;
+	background-size: 440px 44px;
 	position: absolute;
 }
 

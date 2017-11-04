@@ -1,6 +1,7 @@
 from flask import session
 from config import data as config
 from config import flairdata
+from database import db, User, Specials
 import praw
 
 SPRITESHEETS = {
@@ -29,9 +30,24 @@ def redditLogin(code):
 		# reset rank for new login
 		session['rank'] = None
 		
+def flairName(flairID, user, sr):
+	flair = flairdata['flairs'][flairID]
+	flairname = ''
+	
+	# verified
+	if flairID == 'verified':
+		special = Specials.query.filter_by(name=user).filter_by(specialid='verified').first()
+		flairname += u'\u2714 ' + special.text
+	else:
+		flairname += flair['name']
+		if sr and flair['sheet'] == 'ranks':
+			flairname += ' (' + str(sr) + ')'
+	
+	return flairname
 		
-def redditUpdateFlair(flair1ID, flair2ID, customflairtext, sr):
-	redditname = session.get('redditname', None)
+def redditUpdateFlair(flair1ID, flair2ID, customflairtext, sr, redditname = None):
+	if redditname == None:
+		redditname = session.get('redditname', None)
 	if redditname:
 		# ensure correct flair configuration
 		if flair1ID == flair2ID:
@@ -47,7 +63,7 @@ def redditUpdateFlair(flair1ID, flair2ID, customflairtext, sr):
 		subreddit = redditPraw.subreddit(config['config']['subreddit'])
 		
 		if flair1ID:
-			# prepare css class
+			# prepare css class			
 			flair1 = flairdata['flairs'][flair1ID]
 			cssclass = SPRITESHEETS[flair1['sheet']] + '-c' + flair1['col'] + '-r' + flair1['row']
 			flair2 = None
@@ -59,13 +75,11 @@ def redditUpdateFlair(flair1ID, flair2ID, customflairtext, sr):
 			text = ''
 			if customflairtext:
 				text += customflairtext + u' \u2014 '
-			text += flair1['name']
-			if sr and flair1['sheet'] == 'ranks':
-				text += ' (' + str(sr) + ')'
+				
+			# flair names
+			text += flairName(flair1ID, redditname, sr)
 			if flair2:
-				text += ' | ' + flair2['name']
-				if sr and flair2['sheet'] == 'ranks':
-					text += ' (' + str(sr) + ')'
+				text += ' | ' + flairName(flair2ID, redditname, sr)
 		else:
 			cssclass = ''
 			text = ''

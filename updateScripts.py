@@ -162,6 +162,7 @@ def redditToDatabase(app):
 				db.session.add(newSpecial)
 				db.session.commit()
 				print('added verified user: ' + username + '   with flair: ' + newUser.flair1)
+		
 				
 def databaseToReddit(app):
 	with app.app_context():

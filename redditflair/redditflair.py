@@ -19,7 +19,7 @@ redditflair = Blueprint('redditflair', __name__)
 def root():
 	return '<h1>Temporary Maintenance</h1>'
 
-
+	
 # main route
 @redditflair.route('/redditflair')
 def redditFlair():
