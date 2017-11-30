@@ -7,6 +7,12 @@ section {
   padding: 1.6rem;
 }
 
+@media (max-width: 660px) {
+  section {
+    min-width: none;
+  }
+}
+
 section:first-of-type {
 	margin-bottom: 3.9rem;
 	margin-top: 3.9rem;
@@ -20,14 +26,14 @@ section h1 {
 
 .container {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 .flairpicker {
   flex-grow: 1;
   flex-basis: 0;
   border-radius: .2rem;
-  border: 1px solid #ccc;
+  border: .1rem solid #ccc;
   padding: 1.2rem;
   user-select: none;
   -ms-user-select: none;
@@ -109,15 +115,41 @@ section h1 {
 
 
 .category-label {
-  font-size: 2.2rem;
-  text-align: center;
   color: #042E54;
-  width: 100%;
+  font-size: 2.2rem;
   margin-bottom: 1rem;
+  text-align: center;
+  width: 100%;
 }
 
 .flair {
-  border: 1px solid #ccc;
+  background: #fff;
+  border: .1rem solid #ccc;
+  box-sizing:border-box;
+  flex-basis: 31.5%;
+  margin: 0.5rem;
+  padding: 0.8rem;
+  text-overflow: ellipsis;
+  transition: background .08s ease-in-out;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  white-space:nowrap;
+}
+
+.flair:hover {
+  background: hsl(0, 0%, 85%);
+	
+}
+
+.flair:active {
+  background: #042E54;
+}
+
+.flair-item {
+  border-radius: .2rem;
+  border: .1rem solid #ccc;
   padding: 0.8rem;
   flex-basis: 31.5%;
   overflow:hidden;
@@ -130,37 +162,11 @@ section h1 {
   -moz-user-select: none;
   -webkit-user-select: none;
   background: #fff;
-  transition: background .08s ease-in-out;
+  transition: background .1s ease-in-out;
+  -webkit-transition: background .1s ease-in-out;
 }
 
-.flair:hover {
+.flair-item:hover {
   background: hsl(0, 0%, 85%);
-	
-}
-
-.flair:active {
-  background: #042E54;
-}
-
-.flair-verification-item {
-  border-radius: .4rem;
-  background-color: #042E54;
-  color: #fff;
-  padding: 0.8rem;
-  flex-basis: 31.5%;
-  overflow:hidden;
-  white-space:nowrap;
-  margin: 0.5rem;
-  text-overflow: ellipsis;
-  box-sizing: border-box;
-  user-select: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  transition: background .08s ease-in-out;
-  cursor: pointer;
-  text-align: center;
-}
-.flair-verification-item:hover {
-  background: hsl(0, 0%, 7%);
+  
 }
