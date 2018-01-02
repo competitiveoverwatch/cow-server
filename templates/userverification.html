@@ -1,0 +1,33 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="theme-color" content="#E8E8E9">
+		<meta name="description" content="r/CompetitiveOverwatch Rank Verification">
+
+		<title>r/CompetitiveOverwatch User Verification</title>
+		
+		{% if not session.get('redditname') %}
+			<meta http-equiv="refresh" content="0;url={{redditLink}}" />
+		{% endif %}
+
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+	</head>
+	<body>
+		{% if mod %}
+			<main role="main">
+				<form action="/userverification/verify" method="get">
+					<input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Username" name="user">
+					<input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Description" name="description">
+					<input type="submit" value="Verify" title="Verify">
+					<br><br>
+					{% for user in verifiedUsers %}
+						{{user.name}} - {{user.text}}<br>
+					{% endfor %}
+				</form>
+			</main>
+		{% endif %}
+	</body>
+</html>
