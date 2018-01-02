@@ -1,6 +1,12 @@
 {
 	"categories": [ 
 		{
+			"title": "Special Flairs",
+			"items": [
+				"internethulk"
+			]
+		},	
+		{
 			"title": "Overwatch League Season 1",
 			"items": [
 				"boston-uprising",
@@ -15,15 +21,6 @@
 				"san-francisco-shock",
 				"seoul-dynasty",
 				"shanghai-dragons"
-			]
-		},
-		{
-			"title": "World Cup 2017",
-			"items": [
-				"flag-ca",
-				"flag-fr",
-				"flag-se",
-				"flag-kr"
 			]
 		},
 		{
@@ -1022,6 +1019,13 @@
 			"name": "Verified",
 			"row": "01",
 			"col": "02",
+			"sheet": "special",
+			"active": true
+		},
+		"internethulk": {
+			"name": "RIP INTERNETHULK",
+			"row": "01",
+			"col": "03",
 			"sheet": "special",
 			"active": true
 		}
