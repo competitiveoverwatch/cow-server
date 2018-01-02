@@ -138,12 +138,19 @@ h2 {
   width: 60%;
 }
 
+.custom-flair-text-length {
+	flex-grow: 1;
+	margin-top: 3.5rem;
+	margin-left: 0.8rem;
+	color: #ccc;
+	font-size: 1.4rem;
+}
 
 .update-flair-button {
   flex-grow: 1;
   background: #042E54;
   border-radius: .2rem;
-  min-width: 22rem;
+  min-width: 20rem;
   color: #FFF;
   padding: 0.5rem;
   transition: background .1s ease-in-out;
@@ -160,7 +167,7 @@ h2 {
   cursor: pointer;
   font-size: inherit;
   margin-top:2.6rem;
-  margin-left:1rem;
+  margin-left:2rem;
 }
 
 

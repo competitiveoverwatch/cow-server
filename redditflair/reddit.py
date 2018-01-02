@@ -33,9 +33,6 @@ class Reddit():
             maxLen = 64 - len(text) - 3
             custom_text = user_object.flairtext[:maxLen] if len(user_object.flairtext) > maxLen else user_object.flairtext
             text = custom_text + u' \u2014 ' + text
-        else:
-            css_class = ''
-            text = ''
         
         # set flair via praw
         reddit_praw = praw.Reddit(client_id=config['creds']['redditBotClientId'], client_secret=config['creds']['redditBotClientSecret'], redirect_uri=config['creds']['redditBotRedirectURI'], user_agent='rankification by u/jawoll', username = config['creds']['redditBotUserName'], password = config['creds']['redditBotPassword'])

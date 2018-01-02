@@ -30,7 +30,7 @@ def redditFlair():
     redditname = session.get('redditname')
     userObject = None
     specials = None
-    userObject, special = Database.get_user(redditname)
+    userObject, specials = Database.get_user(redditname)
     
     response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata, user=userObject, specials=specials))
     

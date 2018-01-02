@@ -10,24 +10,24 @@ class Database():
         # create user if nonexistent
         if not user_object:
             user_object = User(name)
-            db.session.add(new_user)
+            db.session.add(user_object)
         
         # update info for given values
-        if battletag:
+        if battletag is not None:
             user_object.battletag = battletag
-        if psn:
+        if psn is not None:
             user_object.psn = psn
-        if xbl:
+        if xbl is not None:
             user_object.xbl = xbl
-        if flair_1:
+        if flair_1 is not None:
             user_object.flair1 = flair_1
-        if flair_2:
+        if flair_2 is not None:
             user_object.flair2 = flair_2
-        if flair_text:
+        if flair_text is not None:
             user_object.flairtext = flair_text
-        if sr:
+        if sr is not None:
             user_object.sr = sr
-        if rank:
+        if rank is not None:
             user_object.rank = rank
         
         db.session.commit()
@@ -43,7 +43,7 @@ class Database():
         
         # update info for given values
         special_object.specialid = special_id
-        if text:
+        if text is not None:
             special_object.text = text
        
         db.session.commit()
