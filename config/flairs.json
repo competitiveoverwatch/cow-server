@@ -1,98 +1,86 @@
 {
 	"categories": [ 
+        {
+            "title": "Overwatch League Teams",
+            "items": [
+                "boston-uprising",
+                "dallas-fuel",
+                "florida-mayhem",
+                "houston-outlaws",
+                "london-spitfire",
+                "los-angeles-gladiators",
+                "los-angeles-valiant",
+                "new-york-excelsior",
+                "philadelphia-fusion",
+                "san-francisco-shock",
+                "seoul-dynasty",
+                "shanghai-dragons"
+            ]
+        },
+        {
+            "title": "Team Flairs",
+            "items": [
+                "123",
+                "1246",
+                "afreeca-freecs",
+                "ahq-e-sports-club",
+                "bazooka-puppiez",
+                "blank-esports",
+                "boston-uprising",
+                "cloud9",
+                "cloud9-kongdoo",
+                "conbox",
+                "dallas-fuel",
+                "envision",
+                "envyus",
+                "eunited",
+                "faze",
+                "flash-lux",
+                "flash-wolves",
+                "florida-mayhem",
+                "fnrgfe",
+                "ftd-club",
+                "gamersorigin",
+                "gc-busan",
+                "houston-outlaws",
+                "immortals",
+                "kongdoo-uncia",
+                "kungarna",
+                "lgd-gaming",
+                "london-spitfire",
+                "los-angeles-gladiators",
+                "los-angeles-valiant",
+                "lucky-future",
+                "lunatic-hai",
+                "luxurywatch-blue",
+                "luxurywatch-red",
+                "meta-athena",
+                "meta-bellum",
+                "miracle-team-one",
+                "miraculous-youngster",
+                "misfits",
+                "mvp-space",
+                "new-york-excelsior",
+                "oh-my-god",
+                "philadelphia-fusion",
+                "renegades",
+                "rogue",
+                "rox-orcas",
+                "runaway",
+                "rx-foxes",
+                "san-francisco-shock",
+                "seoul-dynasty",
+                "shanghai-dragons",
+                "team-gigantti",
+                "team-singularity",
+                "vici-gaming",
+                "x6-gaming"
+            ]
+        },
 		{
-			"title": "Special Flairs",
+			"title": "Miscellaneous Flairs",
 			"items": [
 				"internethulk"
-			]
-		},	
-		{
-			"title": "Overwatch League Season 1",
-			"items": [
-				"boston-uprising",
-				"dallas-fuel",
-				"florida-mayhem",
-				"houston-outlaws",
-				"london-spitfire",
-				"los-angeles-gladiators",
-				"los-angeles-valiant",
-				"new-york-excelsior",
-				"philadelphia-fusion",
-				"san-francisco-shock",
-				"seoul-dynasty",
-				"shanghai-dragons"
-			]
-		},
-		{
-			"title": "APEX Season 4",
-			"items": [
-				"afreeca-freecs",
-				"cloud9-kongdoo",
-				"conbox",
-				"flash-lux",
-				"gc-busan",
-				"kongdoo-uncia",
-				"lunatic-hai",
-				"luxurywatch-red",
-				"luxurywatch-blue",
-				"meta-athena",
-				"meta-bellum",
-				"mvp-space",
-				"rox-orcas",
-				"rx-foxes",
-				"runaway",
-				"x6-gaming"
-			]
-		},
-		{
-			"title": "Contenders Season 1",
-			"items": [
-				"123",
-				"bazooka-puppiez",
-				"cloud9",
-				"envision",
-				"envyus",
-				"eunited",
-				"faze",
-				"fnrgfe",
-				"gamersorigin",
-				"team-gigantti",
-				"immortals",
-				"kungarna",
-				"misfits",
-				"renegades",
-				"rogue",
-				"team-singularity"
-			]
-		},
-		{
-			"title": "APAC Premier 2017",
-			"items": [
-				"mvp-space",
-				"vici-gaming",
-				"afreeca-freecs",
-				"ahq-e-sports-club",
-				"envision",
-				"blank-esports",
-				"flash-wolves",
-				"miracle-team-one",
-				"miraculous-youngster",
-				"runaway",
-				"gc-busan",
-				"1246"
-			]
-		},
-		{
-			"title": "Premier Series 2017 Grand Finals",
-			"items": [
-				"vici-gaming",
-				"1246",
-				"oh-my-god",
-				"lgd-gaming",
-				"ftd-club",
-				"lucky-future",
-				"miraculous-youngster",
-				"miracle-team-one"
 			]
 		}
 	],

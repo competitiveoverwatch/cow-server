@@ -8,7 +8,7 @@
     
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.11">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}?version=1.1">
-        <link rel="stylesheet" type="text/css" href=".{{ url_for('static', filename='redditflair.css') }}?version=1.11">
+        <link rel="stylesheet" type="text/css" href=".{{ url_for('static', filename='redditflair.css') }}?version=1.13">
         
         {% if not session.get('redditname') %}
             <meta http-equiv="refresh" content="0;url={{redditLink}}" />
@@ -74,6 +74,39 @@
             removeFlair(2);
             updateTextLength()
         }
+        
+        function searchKeyUp() {
+            var searchWord, items, containers;
+            searchWord = document.getElementById("search-text").value.toUpperCase();
+            items = document.getElementsByClassName("flair-item");
+            for (i=0; i<items.length; i++) {
+                if (items[i].innerHTML.toUpperCase().indexOf(searchWord) > -1) {
+                    items[i].style.display = "";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+            // hide empty containers
+            containers = document.getElementsByClassName("container");
+            for (i=2; i<containers.length; i++) {
+                // show all if empty search
+                if (searchWord == "") {
+                    containers[i].style.display = "";
+                    continue;
+                }
+                // hide preemptively
+                containers[i].style.display = "none";
+                // look for visible items
+                items = containers[i].getElementsByClassName("flair-item");
+                for (j=0; j<items.length; j++) {
+                    if (items[j].style.display != "none") {
+                        containers[i].style.display = "";
+                        break;
+                    }
+                }
+            }
+        }
+                
     </script>
     <body onload="updateTextLength()">
         {% if session.get('redditname') %}
@@ -123,13 +156,18 @@
                             </div>
                         </div>
                         <div class="flex-container">
-                            <input class="custom-flair-text" id="custom-flair-text" type="text" name="customflairtext" placeholder="Custom Flair Text" value="{{user.flairtext}}" onkeyup="updateTextLength()">
+                            <input class="text-box custom-flair-text" id="custom-flair-text" type="text" name="customflairtext" placeholder="Custom Flair Text" value="{{user.flairtext}}" onkeyup="updateTextLength()">
                             <span class="custom-flair-text-length" id="custom-flair-text-length">0</span>                           
                             <input class="update-flair-button" type="submit" value="Update Flair">
                             <input class="reset-flair-button" type="button" onClick="resetFlairs()" value="&#10060">
                         </div>
                     </div>
-                
+
+                    <div class="container">
+                        <input class="text-box search-text" id="search-text" type="text" placeholder="Search" onkeyup="searchKeyUp()">
+                    </div>
+
+                    
                     <!-- Special category -->
                     {% if user and specials %}
                         <div class="container"> 
