@@ -158,13 +158,20 @@ def updateFlair():
     flair_2 = request.args.get('flair2_id', None)
     custom_text = request.args.get('customflairtext', '')
     display_sr = request.args.get('displaysr', None)
-    #try:
-    redditname = session.get('redditname')
-    Database.set_user(redditname, flair_1=flair_1, flair_2=flair_2, flair_text=custom_text)
-    Reddit.set_flair(redditname, display_sr)    
-    session['updated'] = True 
-    #except:
-    #    pass
+    try:
+        # check flair consistency
+        if flair_1 == flair_2: 
+            flair_2 = None
+        if 'flair_1' not in flairdata['flairs'] or 'flair_2' not in flairdata['flairs']:
+            raise Exception('Unknown flair ID')
+        if not flairdata['flairs']['flair_1']['active']:
+            raise Exception('Primary flair must be active')
+        redditname = session.get('redditname')
+        Database.set_user(redditname, flair_1=flair_1, flair_2=flair_2, flair_text=custom_text)
+        Reddit.set_flair(redditname, display_sr)    
+        session['updated'] = True 
+    except:
+        pass
         
     return redirect('/redditflair')
 

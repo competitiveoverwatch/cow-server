@@ -8,7 +8,7 @@
     
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.11">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}?version=1.1">
-        <link rel="stylesheet" type="text/css" href=".{{ url_for('static', filename='redditflair.css') }}?version=1.13">
+        <link rel="stylesheet" type="text/css" href=".{{ url_for('static', filename='redditflair.css') }}?version=1.15">
         
         {% if not session.get('redditname') %}
             <meta http-equiv="refresh" content="0;url={{redditLink}}" />
@@ -19,7 +19,11 @@
     </head>
     <script>
         var nowsetting=1
-        function setFlair(ev, id) {
+        function setFlair(ev, id, active = true) {
+            // legacy flairs only in seconds slot
+            if (!active) {
+                setSetting(2);
+            }
             if (nowsetting == 1) {
                 parent.document.getElementById('flair1').className = ev.target.firstChild.className;
                 parent.document.getElementById('flair1').classList.remove("flair-small");
@@ -34,6 +38,7 @@
                 setSetting(1);
             }
             updateTextLength()
+            window.scrollTo(0, 0);
         }
         
         function updateTextLength() {
@@ -218,7 +223,7 @@
                             <div class="flex-container-flairs">
                             {% for item in category['items'] %}
                                 {% set flair = flairs[item] %}
-                                <div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
+                                <div class="flair-item" onclick="setFlair(event, '{{item}}', {{'true' if flair['active'] else 'false'}})"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
                             {% endfor %}
                             </div>
                         </div>
