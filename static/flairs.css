@@ -110,10 +110,10 @@
 /* Team flair sheet */
 .flair[class*="-steams"]::before {
     content: "";
-    background-image: url("flairs-teams-2x.png");
+    background-image: url("flairs-teams.png");
     height: 44px;
     color: transparent;
-	background-size: 440px 396px;
+	background-size: 440px 440px;
 	position: absolute;
 }
  

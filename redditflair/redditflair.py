@@ -162,9 +162,9 @@ def updateFlair():
         # check flair consistency
         if flair_1 == flair_2: 
             flair_2 = None
-        if 'flair_1' not in flairdata['flairs'] or 'flair_2' not in flairdata['flairs']:
+        if flair_1 not in flairdata['flairs'] or flair_2 not in flairdata['flairs']:
             raise Exception('Unknown flair ID')
-        if not flairdata['flairs']['flair_1']['active']:
+        if not flairdata['flairs'][flair_1]['active']:
             raise Exception('Primary flair must be active')
         redditname = session.get('redditname')
         Database.set_user(redditname, flair_1=flair_1, flair_2=flair_2, flair_text=custom_text)
