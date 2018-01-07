@@ -121,7 +121,33 @@
 		{
 			"title": "Miscellaneous Flairs",
 			"items": [
-				"internethulk"
+				"internethulk",
+                "ana",
+                "bastion",
+                "doomfist",
+                "dva",
+                "genji",
+                "hanzo",
+                "junkrat",
+                "lucio",
+                "mccree",
+                "mei",
+                "mercy",
+                "moira",
+                "orisa",
+                "pharah",
+                "reaper",
+                "reinhardt",
+                "roadhog",
+                "soldier-76",
+                "sombra",
+                "symmetra",
+                "torbjorn",
+                "tracer",
+                "widowmaker",
+                "winston",
+                "zarya",
+                "zenyatta"
 			]
 		}
 	],
@@ -1064,7 +1090,190 @@
             "active": false
         },
 		
-		
+        
+        
+		 "lucio": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "03",
+            "col": "02",
+            "name": "Lucio"
+        },
+        "hanzo": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "02",
+            "col": "03",
+            "name": "Hanzo"
+        },
+        "dva": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "02",
+            "col": "02",
+            "name": "D.va"
+        },
+        "genji": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "01",
+            "col": "03",
+            "name": "Genji"
+        },
+        "doomfist": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "02",
+            "col": "01",
+            "name": "Doomfist"
+        },
+        "torbjorn": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "05",
+            "col": "01",
+            "name": "Torbj\u00f6rn"
+        },
+        "winston": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "05",
+            "col": "04",
+            "name": "Winston"
+        },
+        "zarya": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "05",
+            "col": "05",
+            "name": "Zarya"
+        },
+        "mccree": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "03",
+            "col": "03",
+            "name": "McCree"
+        },
+        "pharah": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "04",
+            "col": "02",
+            "name": "Pharah"
+        },
+        "reaper": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "04",
+            "col": "03",
+            "name": "Reaper"
+        },
+        "moira": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "03",
+            "col": "04",
+            "name": "Moira"
+        },
+        "bastion": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "01",
+            "col": "02",
+            "name": "Bastion"
+        },
+        "roadhog": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "01",
+            "col": "05",
+            "name": "Roadhog"
+        },
+        "ana": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "01",
+            "col": "01",
+            "name": "Ana"
+        },
+        "sombra": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "03",
+            "col": "05",
+            "name": "Sombra"
+        },
+        "widowmaker": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "05",
+            "col": "03",
+            "name": "Widowmaker"
+        },
+        "mei": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "01",
+            "col": "04",
+            "name": "Mei"
+        },
+        "orisa": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "04",
+            "col": "01",
+            "name": "Orisa"
+        },
+        "junkrat": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "03",
+            "col": "01",
+            "name": "Junkrat"
+        },
+        "zenyatta": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "01",
+            "col": "06",
+            "name": "Zenyatta"
+        },
+        "mercy": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "02",
+            "col": "04",
+            "name": "Mercy"
+        },
+        "symmetra": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "04",
+            "col": "05",
+            "name": "Symmetra"
+        },
+        "soldier-76": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "02",
+            "col": "05",
+            "name": "Soldier: 76"
+        },
+        "tracer": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "05",
+            "col": "02",
+            "name": "Tracer"
+        },
+        "reinhardt": {
+            "sheet": "miscellaneous",
+            "active": true,
+            "row": "04",
+            "col": "04",
+            "name": "Reinhardt"
+        },
 		
 		 "blizzard": {
 			"name": "Blizzard",

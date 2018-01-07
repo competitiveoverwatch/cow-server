@@ -147,3 +147,14 @@
 	position: absolute;
 }
 
+/* Miscellaneous flair sheet */
+.flair[class*="-smiscellaneous"]::before {
+    content: "";
+    background-image: url("flairs-miscellaneous.png");
+    height: 44px;
+    color: transparent;
+	background-size: 264px 264px;
+	position: absolute;
+}
+
+
