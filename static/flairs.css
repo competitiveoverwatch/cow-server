@@ -140,10 +140,10 @@
 /* Special flair sheet */
 .flair[class*="-sspecial"]::before {
     content: "";
-    background-image: url("flairs-special-2x.png");
+    background-image: url("flairs-special.png");
     height: 44px;
     color: transparent;
-	background-size: 440px 44px;
+	background-size: 132px 132px;
 	position: absolute;
 }
 
