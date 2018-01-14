@@ -66,6 +66,8 @@ def redditLogin():
     ret = redirect('/redditflair')
     if state == 'userverification':
         ret = redirect('/userverification')
+    if state == 'flairstats':
+        ret = redirect('/flairstats')
     return ret
     
 
