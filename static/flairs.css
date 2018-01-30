@@ -98,6 +98,16 @@
     clip: rect(0, 440px, 44px, 396px);
     margin-left: -396px;
 }
+.flair[class*="-c11"]::before {
+    width: 484px;
+    clip: rect(0, 484px, 44px, 440px);
+    margin-left: -440px;
+}
+.flair[class*="-c12"]::before {
+    width: 528px;
+    clip: rect(0, 528px, 44px, 484px);
+    margin-left: -484px;
+}
 
 .flair-small{
 	transform: scale(0.5) translate(0px,-11px);
@@ -113,7 +123,7 @@
     background-image: url("flairs-teams.png");
     height: 44px;
     color: transparent;
-	background-size: 440px 440px;
+	background-size: 484px 484px;
 	position: absolute;
 }
  

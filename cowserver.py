@@ -10,7 +10,6 @@ import os.path
 import updateScripts
 
 content_security_policy = {
-    'script-src': '\'unsafe-inline\'',
     'style-src': '\'self\''
 }
 
@@ -18,7 +17,7 @@ def setupApp():
     app = Flask(__name__)
 
     # HTTP security headers
-    Talisman(app, content_security_policy=content_security_policy)
+    #Talisman(app, content_security_policy=content_security_policy)
 
     # CSRF library
     SeaSurf(app)

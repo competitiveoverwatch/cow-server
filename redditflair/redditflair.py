@@ -66,8 +66,6 @@ def redditLogin():
     ret = redirect('/redditflair')
     if state == 'userverification':
         ret = redirect('/userverification')
-    if state == 'flairstats':
-        ret = redirect('/flairstats')
     return ret
     
 
@@ -164,7 +162,7 @@ def updateFlair():
         # check flair consistency
         if flair_1 == flair_2: 
             flair_2 = None
-        if flair_1 not in flairdata['flairs'] or flair_2 not in flairdata['flairs']:
+        if (flair_1 and flair_1 not in flairdata['flairs']) or (flair_2 and flair_2 not in flairdata['flairs']):
             raise Exception('Unknown flair ID')
         if not flairdata['flairs'][flair_1]['active']:
             raise Exception('Primary flair must be active')

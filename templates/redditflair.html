@@ -1,12 +1,22 @@
 <html lang="en">
     <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113342352-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-113342352-1');
+        </script>
+        
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
         <meta name="format-detection" content="telephone=no">
         <meta name="theme-color" content="#E8E8E9">
         <meta name="description" content="r/CompetitiveOverwatch Rank Verification">
     
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.13">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flairs.css') }}?version=1.15">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}?version=1.1">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='redditflair.css') }}?version=1.16">
         
