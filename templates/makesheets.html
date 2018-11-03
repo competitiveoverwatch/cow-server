@@ -1,0 +1,37 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="theme-color" content="#E8E8E9">
+		<meta name="description" content="r/CompetitiveOverwatch Rank Verification">
+
+		<title>r/CompetitiveOverwatch Flair Sheets</title>
+		
+		{% if not session.get('redditname') %}
+			<meta http-equiv="refresh" content="0;url={{redditLink}}" />
+		{% endif %}
+
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+	</head>
+	<body>
+		{% if mod %}
+			<main role="main">
+                {% if reddit_stylesheet %}
+                    Reddit stylesheet needs to be updated!! Copy this: <br>
+                    <form>
+                        <textarea style="height:200px;width:400px;">{{reddit_stylesheet}}</textarea>
+                    </form>
+                    <br><br>
+                {% endif %}
+                <a href="{{ url_for('static', filename='flairsheets.zip') }}">Download ZIP</a>
+                <br><br>
+                {% for sheet in flairsheets %}
+					{{sheet}}<br>
+					<img src="{{ url_for('static', filename='flairs-' + sheet + '.png') }}" style="max-width:256px;max-height:256px"/><br>
+				{% endfor %}
+			</main>
+		{% endif %}
+	</body>
+</html>

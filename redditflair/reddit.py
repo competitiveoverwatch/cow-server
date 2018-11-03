@@ -1,6 +1,6 @@
 from flask import session
 from config import data as config
-from config import flairdata
+from config import get_flairdata
 from database import db, User, Specials, Database
 import praw
 
@@ -14,6 +14,8 @@ SPRITESHEETS = {
 class Reddit():
     @classmethod
     def set_flair(cls, name, display_sr=True):
+        flairdata = get_flairdata()
+
         user_object, specials = Database.get_user(name)
         
         text = ''
@@ -79,6 +81,8 @@ def redditLogin(code):
         session['rank'] = None
         
 def flairName(flairID, user, sr):
+    flairdata = get_flairdata()
+
     flair = flairdata['flairs'][flairID]
     flairname = ''
     
@@ -94,6 +98,8 @@ def flairName(flairID, user, sr):
     return flairname
         
 def redditUpdateFlair(flair1ID, flair2ID, customflairtext, sr, redditname = None):
+    flairdata = get_flairdata()
+
     if redditname == None:
         redditname = session.get('redditname', None)
     if redditname:
@@ -141,3 +147,8 @@ def redditUpdateFlair(flair1ID, flair2ID, customflairtext, sr, redditname = None
         raise ValueError()
         
     return flair1ID, flair2ID   
+
+def redditCSS():
+    redditPraw = praw.Reddit(client_id=config['creds']['redditBotClientId'], client_secret=config['creds']['redditBotClientSecret'], redirect_uri=config['creds']['redditBotRedirectURI'], user_agent='rankification by u/jawoll', username = config['creds']['redditBotUserName'], password = config['creds']['redditBotPassword'])
+    subreddit = redditPraw.subreddit(config['config']['subreddit'])
+    return subreddit.stylesheet().stylesheet

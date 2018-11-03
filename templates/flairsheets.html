@@ -1,0 +1,45 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="theme-color" content="#E8E8E9">
+		<meta name="description" content="r/CompetitiveOverwatch Rank Verification">
+
+		<title>r/CompetitiveOverwatch Flair Sheets</title>
+		
+		{% if not session.get('redditname') %}
+			<meta http-equiv="refresh" content="0;url={{redditLink}}" />
+		{% endif %}
+
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+	</head>
+	<body>
+		{% if mod %}
+			<main role="main">
+				<a href="/flairsheets/new" style="font-size:2rem;">New Flair</a><br>
+				<a href="https://drive.google.com/open?id=1AkdwKmU8gzLDaMQ8UAuyXjIdxIA89p6MxGCpI48v1a4">Readme</a>
+				<br><br>
+				<table>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Sheet</th>
+						<th></th>
+					</tr>
+					{% for k,v in flairs.items() %}
+						<tr>
+							<td>{{k}}</td>
+							<td>{{v['name']}}</td>
+							<td>{{v['sheet']}}</td>
+							<td><a href='/flairsheets/edit/{{k}}'>edit</a></td>
+						</tr>
+					{% endfor %}
+				</table>
+				<a href="/flairsheets/makesheets">Make Flairsheets</a><br>
+				<a href="{{ url_for('static', filename='flairsheets.zip') }}">Download current sheets</a>
+			</main>
+		{% endif %}
+	</body>
+</html>

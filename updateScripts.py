@@ -1,7 +1,7 @@
 from database import db, User, Specials
 import praw, json, operator, re
 from config import data as config
-from config import flairdata
+from config import get_flairdata
 
 FLAIR_REPLACEMENTS = {
 	'fan 123': '123', 
@@ -131,6 +131,7 @@ FLAIR_REPLACEMENTS = {
 }
 
 def redditToDatabase(app):
+	flairdata = get_flairdata()
 	with app.app_context():
 		redditPraw = praw.Reddit(client_id=config['creds']['redditBotClientId'], client_secret=config['creds']['redditBotClientSecret'], redirect_uri=config['creds']['redditBotRedirectURI'], user_agent='rankification by u/jawoll', username = config['creds']['redditBotUserName'], password = config['creds']['redditBotPassword'])
 		subreddit = redditPraw.subreddit('Competitiveoverwatch')
@@ -165,6 +166,7 @@ def redditToDatabase(app):
 		
 				
 def databaseToReddit(app):
+	flairdata = get_flairdata()
 	with app.app_context():
 		redditPraw = praw.Reddit(client_id=config['creds']['redditBotClientId'], client_secret=config['creds']['redditBotClientSecret'], redirect_uri=config['creds']['redditBotRedirectURI'], user_agent='rankification by u/jawoll', username = config['creds']['redditBotUserName'], password = config['creds']['redditBotPassword'])
 		subreddit = redditPraw.subreddit('Competitiveoverwatch')

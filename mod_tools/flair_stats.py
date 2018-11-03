@@ -4,7 +4,7 @@ from flask_limiter.util import get_remote_address
 from redditflair.reddit import Reddit
 import redditflair.blizzard as blizzard
 from redditflair.parse import parseOWProfile
-from config import flairdata
+from config import get_flairdata
 from database import db, User, Specials, Database
 import json, time, datetime, pygal
 from pygal.style import Style
@@ -18,6 +18,7 @@ custom_style = Style(
 
 
 def collect_flair_stats(mod=False, time_passed = 21600):
+    flairdata = get_flairdata()
     # load flair stats file
     with open('statistics/flair_stats.json', 'r') as f:
         flair_stats = json.load(f)
@@ -48,6 +49,7 @@ def collect_flair_stats(mod=False, time_passed = 21600):
 # user verification
 @flair_stats.route('/flairstats')
 def flairStats():
+    flairdata = get_flairdata()
     responseParams = dict()
     responseParams['redditLink'] = Reddit.auth_link('flairstats')
     
@@ -105,3 +107,4 @@ def flairStatsForceUpdate():
     collect_flair_stats(mod, time_passed = 0)    
         
     return redirect('/flairstats')
+    

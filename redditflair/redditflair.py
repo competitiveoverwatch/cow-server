@@ -5,12 +5,12 @@ import redditflair.reddit as reddit
 from redditflair.reddit import Reddit
 import redditflair.blizzard as blizzard
 from redditflair.parse import parseOWProfile
-from config import flairdata
+from config import set_flairdata, get_flairdata
 from database import db, User, Specials, Database
 
 limiter = Limiter(
     key_func=get_remote_address,
-    default_limits=['200 per day', '50 per hour']
+    default_limits=['60/minute']
 )
 
 redditflair = Blueprint('redditflair', __name__)
@@ -23,6 +23,8 @@ def root():
 # main route
 @redditflair.route('/redditflair')
 def redditFlair():
+    flairdata = get_flairdata()
+
     responseParams = dict()
     responseParams['redditLink'] = reddit.redditLink('flair')
     
@@ -31,7 +33,7 @@ def redditFlair():
     userObject = None
     specials = None
     userObject, specials = Database.get_user(redditname)
-    
+ 
     response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata, user=userObject, specials=specials))
     
     if session.get('updated'):
@@ -154,6 +156,8 @@ def fetchRank():
     
 @redditflair.route('/redditflair/updateflair', methods=['GET'])
 def updateFlair():
+    flairdata = get_flairdata()
+    
     flair_1 = request.args.get('flair1_id', None)
     flair_2 = request.args.get('flair2_id', None)
     custom_text = request.args.get('customflairtext', '')

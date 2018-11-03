@@ -1,12 +1,14 @@
-from flask import Flask
+from flask import Flask, url_for
 from flask_talisman import Talisman
 from flask_seasurf import SeaSurf
 from redditflair.redditflair import redditflair, limiter
 from mod_tools.user_verification import user_verification
 from mod_tools.flair_stats import flair_stats
+from mod_tools.flair_sheets import flair_sheets
 from redissession import RedisSessionInterface
 from database import db, User, Specials
-import os.path
+from werkzeug.utils import secure_filename
+import os
 import updateScripts
 
 content_security_policy = {
@@ -35,6 +37,7 @@ def setupApp():
     app.register_blueprint(redditflair)
     app.register_blueprint(user_verification)
     app.register_blueprint(flair_stats)
+    app.register_blueprint(flair_sheets)
 
     # Redis Session Interface
     app.session_interface = RedisSessionInterface()
@@ -49,6 +52,20 @@ def setupDatabase():
 
 app = setupApp()
 setupDatabase()
+
+#cache buster
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
+
+def dated_url_for(endpoint, **values):
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path, endpoint, filename)
+            if os.path.isfile(file_path):
+                values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
 
 #updateScripts.databaseToReddit(app)
 

@@ -4,7 +4,7 @@ from flask_limiter.util import get_remote_address
 from redditflair.reddit import Reddit
 import redditflair.blizzard as blizzard
 from redditflair.parse import parseOWProfile
-from config import flairdata
+from config import get_flairdata
 from database import db, User, Specials, Database
 
 user_verification = Blueprint('user_verification', __name__)

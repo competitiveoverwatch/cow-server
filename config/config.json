@@ -1,4 +1,6 @@
 {
 	"ranks": ["rank bronze","rank silver","rank gold","rank platinum","rank diamond","rank master","rank grandmaster"],
-	"subreddit": "Competitiveoverwatch"
+	"subreddit": "Competitiveoverwatch",
+	"flair_sheets": ["teams", "miscellaneous", "special", "ranks", "flags", "logos"],
+	"flair_size": 44
 }
