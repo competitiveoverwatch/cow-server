@@ -10,7 +10,7 @@ from config import data as config
 from database import db, User, Specials, Database
 from werkzeug.utils import secure_filename
 from PIL import Image, ImageEnhance
-import os, collections, json, sys, tinify, zipfile, copy
+import os, collections, json, sys, tinify, zipfile, copy, time
 
 flair_sheets = Blueprint('flair_sheets', __name__)
 ALLOWED_EXTENSIONS = set(['png'])
@@ -181,10 +181,10 @@ def flairMakesheets():
         matrix = makeFlairMatrix(sheet)
         size = makeSheet(matrix, sheet)
         reddit_stylesheet_new = updateStylesheet(reddit_stylesheet, sheet, int(size[0]/2)) # /2 for reddit half resolution
-        site_stylesheet = updateStylesheet(site_stylesheet, sheet, size[0])
+        site_stylesheet = updateStylesheet(site_stylesheet, sheet, size[0], True)
     # change stylesheets if necessary
     with open('static/flairs.css', 'w') as cssfile:
-            cssfile.write(site_stylesheet)
+        cssfile.write(site_stylesheet)
     if reddit_stylesheet_new == reddit_stylesheet:
         reddit_stylesheet_new = None
 
@@ -200,13 +200,18 @@ def flairMakesheets():
     response = make_response(render_template('makesheets.html', **responseParams, mod = mod, flairsheets = config['config']['flair_sheets'], reddit_stylesheet = reddit_stylesheet_new))
     return response
 
-def updateStylesheet(stylesheet, flairsheet, size):
+def updateStylesheet(stylesheet, flairsheet, size, timestamp = False):
     i = stylesheet.find('-s' + flairsheet)
     if i < 0:
         return stylesheet
     i1 = stylesheet.find('background-size:', i)
     i2 = stylesheet.find('px', stylesheet.find('px', i1) + 1) + 2 
-    return stylesheet[:i1] + 'background-size: ' + str(size) + 'px ' + str(size) + 'px' + stylesheet[i2:]
+    stylesheet = stylesheet[:i1] + 'background-size: ' + str(size) + 'px ' + str(size) + 'px' + stylesheet[i2:]
+    if timestamp:
+         i1 = stylesheet.find('flairs-' + flairsheet)
+         i2 = stylesheet.find('"', i1)
+         stylesheet = stylesheet[:i1] + 'flairs-' + flairsheet + '.png?q=' + str(int(time.time())) + stylesheet[i2:]
+    return stylesheet
 
 def makeFlairMatrix(sheet):
     flairdata = get_flairdata(True)
