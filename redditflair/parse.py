@@ -268,14 +268,14 @@ def parsePCProfile(battletag):
 			continue
 			
 		# get level
-		levelNode = soup.select('div.player-level')
-		tempLevel = 0
-		if len(levelNode) > 0:
-			levelcode = levelNode[0]['style'].replace('background-image:url(https://d1u1mce87gyfbn.cloudfront.net/game/playerlevelrewards/','').replace('_Border.png)','')
-			tempLevel = PRESTIGE[levelcode]
+		#levelNode = soup.select('div.player-level')
+		#tempLevel = 0
+		#if len(levelNode) > 0:
+		#	levelcode = levelNode[0]['style'].replace('background-image:url(https://d1u1mce87gyfbn.cloudfront.net/game/playerlevelrewards/','').replace('_Border.png)','')
+		#	tempLevel = PRESTIGE[levelcode]
 		
-		if int(tempRank) > int(rank):
-			rank = tempRank
+		#if int(tempRank) > int(rank):
+		#	rank = tempRank
 	
 	if rank == 0:
 		rank = None
