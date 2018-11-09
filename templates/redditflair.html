@@ -228,15 +228,17 @@
 
                     <!-- Categories -->
                     {% for category in categories %}
-                        <div class="container"> 
-                            <div class="category-label">{{category['title']}}</div>
-                            <div class="flex-container-flairs">
-                            {% for item in category['items'] %}
-                                {% set flair = flairs[item] %}
-                                <div class="flair-item" onclick="setFlair(event, '{{item}}', {{'true' if flair['active'] else 'false'}})"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
-                            {% endfor %}
+                        {% if category['items']|length > 0 %}
+                            <div class="container"> 
+                                <div class="category-label">{{category['title']}}</div>
+                                <div class="flex-container-flairs">
+                                {% for item in category['items'] %}
+                                    {% set flair = flairs[item] %}
+                                    <div class="flair-item" onclick="setFlair(event, '{{item}}', {{'true' if flair['active'] else 'false'}})"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
+                                {% endfor %}
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </form>
             {% endif %}     
