@@ -30,10 +30,6 @@
     <script>
         var nowsetting=1
         function setFlair(ev, id, active = true) {
-            // legacy flairs only in seconds slot
-            if (!active) {
-                setSetting(2);
-            }
             if (nowsetting == 1) {
                 parent.document.getElementById('flair1').className = ev.target.firstChild.className;
                 parent.document.getElementById('flair1').classList.remove("flair-small");

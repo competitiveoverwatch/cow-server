@@ -30,6 +30,8 @@ def redditFlair():
     
     # if logged in get userObject and special flairs
     redditname = session.get('redditname')
+    if redditname is None or redditname == "":
+        return redirect('/redditflair/rankverification')
     userObject = None
     specials = None
     userObject, specials = Database.get_user(redditname)
@@ -168,8 +170,6 @@ def updateFlair():
             flair_2 = None
         if (flair_1 and flair_1 not in flairdata['flairs']) or (flair_2 and flair_2 not in flairdata['flairs']):
             raise Exception('Unknown flair ID')
-        if not flairdata['flairs'][flair_1]['active']:
-            raise Exception('Primary flair must be active')
         redditname = session.get('redditname')
         Database.set_user(redditname, flair_1=flair_1, flair_2=flair_2, flair_text=custom_text)
         Reddit.set_flair(redditname, display_sr)    

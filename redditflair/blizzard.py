@@ -10,7 +10,7 @@ def blizzardurl(region, api=False):
 			link = 'https://www.battlenet.com.cn/oauth/'
 	else:
 		if api:
-			link = 'https://{0}.api.battle.net/'.format(region)
+			link = 'https://{0}.battle.net/'.format(region)
 		else:
 			link = 'https://{0}.battle.net/oauth/'.format(region)
 	return link
@@ -30,13 +30,13 @@ def blizzardLogin(code):
 		token_data = oauth.fetch_token(blizzardurl(region) + 'token', code = code, client_secret = config['creds']['blizzardClientSecret'])
 		blizzardToken = token_data['access_token']
 
-		try:
-			oauthtoken = OAuth2Session(client_id=config['creds']['blizzardClientId'], redirect_uri=config['creds']['blizzardRedirectURI'], token={'access_token': blizzardToken, 'token_type': 'bearer'})
-			result = oauthtoken.get(blizzardurl(region, api=True) + 'account/user')
-			session['battletag'] = result.json()['battletag']
-			session['blizzardid'] = result.json()['id']
-			session['step'] = 2
-		except:
-			pass
+		# try:
+		oauthtoken = OAuth2Session(client_id=config['creds']['blizzardClientId'], redirect_uri=config['creds']['blizzardRedirectURI'], token={'access_token': blizzardToken, 'token_type': 'bearer'})
+		result = oauthtoken.get(blizzardurl(region, api=True) + 'oauth/userinfo')
+		session['battletag'] = result.json()['battletag']
+		session['blizzardid'] = result.json()['id']
+		session['step'] = 2
+		# except:
+		# 	pass
 	
 	session['rank'] = None
