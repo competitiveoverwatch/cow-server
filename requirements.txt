@@ -20,7 +20,7 @@ praw==5.1.0
 prawcore==0.12.0
 pygal==2.4.0
 redis==2.10.6
-requests==2.18.4
+requests==2.20.0
 requests-oauthlib==0.8.0
 six==1.11.0
 SQLAlchemy==1.1.14
