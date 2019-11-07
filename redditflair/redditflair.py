@@ -29,13 +29,13 @@ def redditFlair():
     responseParams['redditLink'] = reddit.redditLink('flair')
     
     # if logged in get userObject and special flairs
-    redditname = session.get('redditname')
-    #if redditname is None or redditname == "":
-    #    session.clear()
-    #    return redirect('/redditflair')
     userObject = None
     specials = None
-    userObject, specials = Database.get_user(redditname)
+    redditname = session.get('redditname')
+    if redditname is None or redditname == "":
+        session.clear()
+    else:
+        userObject, specials = Database.get_user(redditname)
  
     response = make_response(render_template('redditflair.html', **responseParams, flairdata=flairdata, user=userObject, specials=specials))
     
