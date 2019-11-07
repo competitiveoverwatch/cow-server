@@ -30,9 +30,9 @@ def redditFlair():
     
     # if logged in get userObject and special flairs
     redditname = session.get('redditname')
-    if redditname is None or redditname == "":
-        session.clear()
-        return redirect('/redditflair')
+    #if redditname is None or redditname == "":
+    #    session.clear()
+    #    return redirect('/redditflair')
     userObject = None
     specials = None
     userObject, specials = Database.get_user(redditname)
