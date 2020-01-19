@@ -2,7 +2,8 @@ from flask import session
 from config import data as config
 from requests_oauthlib import OAuth2Session
 
-def blizzardurl(region, api=False):
+
+def blizzard_url(region, api=False):
 	if region == 'cn':
 		if api:
 			link = 'https://api.battlenet.com.cn/'
@@ -15,28 +16,42 @@ def blizzardurl(region, api=False):
 			link = 'https://{0}.battle.net/oauth/'.format(region)
 	return link
 
-def blizzardRedirectURL(region):
+
+def blizzard_redirect_url(region):
 	if not region:
 		region = 'us'
-	redirecturl = blizzardurl(region) + 'authorize?client_id=' + config['creds']['blizzardClientId'] + '&state=getblizzard&redirect_uri=' + config['creds']['blizzardRedirectURI'] + '&response_type=code'
-	redirecturl = redirecturl.format(region)
+	redirect_url = \
+		blizzard_url(region) + \
+		'authorize?client_id=' + \
+		config['creds']['blizzardClientId'] + \
+		'&state=getblizzard&redirect_uri=' + \
+		config['creds']['blizzardRedirectURI'] + \
+		'&response_type=code'
+	redirect_url = redirect_url.format(region)
 	session['region'] = region
-	return redirecturl
-	
-def blizzardLogin(code):
+	return redirect_url
+
+
+def blizzard_login(code):
 	if code:
 		region = session.get('region', 'us')
-		oauth = OAuth2Session(client_id=config['creds']['blizzardClientId'], redirect_uri=config['creds']['blizzardRedirectURI'], scope = [])
-		token_data = oauth.fetch_token(blizzardurl(region) + 'token', code = code, client_secret = config['creds']['blizzardClientSecret'])
-		blizzardToken = token_data['access_token']
+		oauth = OAuth2Session(
+			client_id=config['creds']['blizzardClientId'],
+			redirect_uri=config['creds']['blizzardRedirectURI'],
+			scope=[])
+		token_data = oauth.fetch_token(
+			blizzard_url(region) + 'token',
+			code=code,
+			client_secret=config['creds']['blizzardClientSecret'])
+		blizzard_token = token_data['access_token']
 
-		# try:
-		oauthtoken = OAuth2Session(client_id=config['creds']['blizzardClientId'], redirect_uri=config['creds']['blizzardRedirectURI'], token={'access_token': blizzardToken, 'token_type': 'bearer'})
-		result = oauthtoken.get(blizzardurl(region, api=True) + 'oauth/userinfo')
+		oauth_token = OAuth2Session(
+			client_id=config['creds']['blizzardClientId'],
+			redirect_uri=config['creds']['blizzardRedirectURI'],
+			token={'access_token': blizzard_token, 'token_type': 'bearer'})
+		result = oauth_token.get(blizzard_url(region, api=True) + 'oauth/userinfo')
 		session['battletag'] = result.json()['battletag']
 		session['blizzardid'] = result.json()['id']
 		session['step'] = 2
-		# except:
-		# 	pass
-	
+
 	session['rank'] = None

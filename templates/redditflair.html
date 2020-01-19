@@ -29,6 +29,7 @@
     </head>
     <script>
         var nowsetting=1
+
         function setFlair(ev, id, active = true) {
             if (nowsetting == 1) {
                 parent.document.getElementById('flair1').className = ev.target.firstChild.className;
@@ -117,7 +118,6 @@
                 }
             }
         }
-                
     </script>
     <body onload="updateTextLength()">
         {% if session.get('redditname') %}

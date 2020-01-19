@@ -3,7 +3,6 @@ from flask_talisman import Talisman
 from flask_seasurf import SeaSurf
 from redditflair.redditflair import redditflair, limiter
 from mod_tools.user_verification import user_verification
-from mod_tools.flair_stats import flair_stats
 from mod_tools.flair_sheets import flair_sheets
 from redissession import RedisSessionInterface
 from database import db, User, Specials
@@ -36,7 +35,6 @@ def setupApp():
     # Blueprints
     app.register_blueprint(redditflair)
     app.register_blueprint(user_verification)
-    app.register_blueprint(flair_stats)
     app.register_blueprint(flair_sheets)
 
     # Redis Session Interface

@@ -1,4 +1,4 @@
-import json, os
+import json
 
 data = dict()
 
@@ -7,8 +7,9 @@ with open("config/config.json") as config_data:
 
 with open("config/creds.json") as creds_data:
 	data['creds'] = json.load(creds_data)
-	
-def get_flairdata(temp = False):
+
+
+def get_flairdata(temp=False):
 	flairdata = None
 	if temp:
 		with open("static/flairs_tmp.json") as flair_data:
@@ -18,11 +19,11 @@ def get_flairdata(temp = False):
 			flairdata = json.load(flair_data)
 	return flairdata
 
-def set_flairdata(flairdata, temp = False):
+
+def set_flairdata(flairdata, temp=False):
 	if temp:
 		with open('static/flairs_tmp.json', 'w') as flair_data:
 			json.dump(flairdata, flair_data, indent=4)
 	else:
 		with open('static/flairs.json', 'w') as flair_data:
 			json.dump(flairdata, flair_data, indent=4)
-	
