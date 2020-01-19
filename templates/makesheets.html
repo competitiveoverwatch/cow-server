@@ -25,11 +25,11 @@
                     </form>
                     <br><br>
                 {% endif %}
-                <a href="{{ url_for('static', filename='flairsheets.zip') }}">Download ZIP</a>
+                <a href="{{ url_for('data', filename='flairsheets.zip') }}">Download ZIP</a>
                 <br><br>
                 {% for sheet in flairsheets %}
 					{{sheet}}<br>
-					<img src="{{ url_for('static', filename='flairs-' + sheet + '.png') }}" style="max-width:256px;max-height:256px"/><br>
+					<img src="{{ url_for('data', filename='flairs-' + sheet + '.png') }}" style="max-width:256px;max-height:256px"/><br>
 				{% endfor %}
 			</main>
 		{% endif %}

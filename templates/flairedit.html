@@ -21,7 +21,7 @@
 				<form action="/flairsheets/edit/{{id}}" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
 					<br><br>
-					<img src="{{ url_for('static', filename='flair_images/'+id+'.png') }}" style="max-width:64px;max-height:64px"/>
+					<img src="{{ url_for('data', filename='flair_images/'+id+'.png') }}" style="max-width:64px;max-height:64px"/>
                     <table>
 							<tr>
 								<td>Flair ID:</td>

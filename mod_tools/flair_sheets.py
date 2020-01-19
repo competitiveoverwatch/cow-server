@@ -82,7 +82,7 @@ def flair_edit(id):
 				file = request.files['file']
 				if file and allowed_file(file.filename):
 					filename = id + '.png'
-					file.save(os.path.join('static/flair_images', filename))
+					file.save(os.path.join('data/flair_images', filename))
 
 	response_params = dict()
 	response_params['redditLink'] = Reddit.auth_link('flairsheets')
@@ -124,7 +124,7 @@ def flair_new():
 			if file and allowed_file(file.filename):
 				# upload
 				filename = id + '.png'
-				file.save(os.path.join('static/flair_images', filename))
+				file.save(os.path.join('data/flair_images', filename))
 
 				# add to flair json and update flairdata
 				flair = dict()
@@ -207,9 +207,9 @@ def flairMakesheets():
 	config.set_flairdata(flairdata, True)
 
 	# create flairsheets zip
-	with zipfile.ZipFile('static/flairsheets.zip', 'w') as flairsheetzip:
+	with zipfile.ZipFile('data/flairsheets.zip', 'w') as flairsheetzip:
 		for sheet in config_data['config']['flair_sheets']:
-			flairsheetzip.write('static/flairs-' + sheet + '.png')
+			flairsheetzip.write('data/flairs-' + sheet + '.png')
 
 	response = make_response(
 		render_template(
@@ -282,7 +282,7 @@ def find_place(matrix, flair, id):
 
 def make_sheet(matrix, sheet):
 	flairdata = config.get_flairdata(True)
-	path = 'static/flairs-' + sheet + '.png'
+	path = 'data/flairs-' + sheet + '.png'
 	# make new spritesheet
 	size = (config_data['config']['flair_size'], config_data['config']['flair_size'])
 	spritesheet_size = (len(matrix) * size[0], len(matrix) * size[1])
@@ -294,9 +294,9 @@ def make_sheet(matrix, sheet):
 				continue
 			flair = flairdata['flairs'][id]
 			# open image
-			if not os.path.isfile('static/flair_images/' + id + '.png'):
+			if not os.path.isfile('data/flair_images/' + id + '.png'):
 				continue
-			image = Image.open('static/flair_images/' + id + '.png')
+			image = Image.open('data/flair_images/' + id + '.png')
 			image = image.convert('RGBA')
 			image.thumbnail(size, Image.ANTIALIAS)
 			imageSize = image.size
