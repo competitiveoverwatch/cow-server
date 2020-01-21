@@ -50,6 +50,12 @@
 .flair[class*="-r14"]::before {
     background: 0 -570px
 }
+.flair[class*="-r15"]::before {
+    background: 0 -616px
+}
+.flair[class*="-r16"]::before {
+    background: 0 -660px
+}
 /*columns*/
 .flair[class*="-c01"]::before {
     width: 44px;
@@ -133,17 +139,17 @@
 /* Team flair sheet */
 .flair[class*="-steams"]::before {
     content: "";
-    background-image: url("flairs-teams.png?q=1541776875");
+    background-image: url("data/flairs-teams.png?q=1579417557");
     height: 44px;
     color: transparent;
-/*	background-size: 616px 616px;*/
+/*	background-size: 704px 704px;*/
 	position: absolute;
 }
  
 /* Rank flair sheet */
 .flair[class*="-sranks"]::before {
     content: "";
-    background-image: url("flairs-ranks.png?q=1541776876");
+    background-image: url("data/flairs-ranks.png?q=1579417558");
     height: 44px;
     color: transparent;
 	background-size: 308px 308px;
@@ -153,7 +159,7 @@
 /* Flag flair sheet */
 .flair[class*="-sflags"]::before {
     content: "";
-    background-image: url("flairs-flags.png?q=1541776876");
+    background-image: url("data/flairs-flags.png?q=1579417558");
     height: 44px;
     color: transparent;
 	background-size: 440px 440px;
@@ -163,7 +169,7 @@
 /* Special flair sheet */
 .flair[class*="-sspecial"]::before {
     content: "";
-    background-image: url("flairs-special.png?q=1541776876");
+    background-image: url("data/flairs-special.png?q=1579417558");
     height: 44px;
     color: transparent;
 	background-size: 132px 132px;
@@ -173,7 +179,7 @@
 /* Miscellaneous flair sheet */
 .flair[class*="-smiscellaneous"]::before {
     content: "";
-    background-image: url("flairs-miscellaneous.png?q=1541776876");
+    background-image: url("data/flairs-miscellaneous.png?q=1579417558");
     height: 44px;
     color: transparent;
 	background-size: 264px 264px;

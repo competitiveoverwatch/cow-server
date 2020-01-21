@@ -4,4 +4,5 @@ config/creds.json
 *.db
 cowserver.ini
 wsgi.py
-data/
+static/data/
+.idea/

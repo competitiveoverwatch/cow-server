@@ -8,6 +8,7 @@ from redissession import RedisSessionInterface
 from database import db, User, Specials
 from werkzeug.utils import secure_filename
 import os
+import logging
 import updateScripts
 
 content_security_policy = {
@@ -52,7 +53,7 @@ def setup_database():
 
 app = setup_app()
 setup_database()
-
+app.logger.setLevel(logging.INFO)
 
 # cache buster
 @app.context_processor

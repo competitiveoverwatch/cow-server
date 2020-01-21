@@ -250,7 +250,6 @@ def parse_pc_profile(battletag):
 	pc_url = 'https://playoverwatch.com/en-us/career/pc/{0}/' + battletag
 
 	rank = 0
-	level = 0
 
 	for region in REGIONS:
 		try:
@@ -261,12 +260,11 @@ def parse_pc_profile(battletag):
 		soup = BeautifulSoup(html, 'html.parser')
 
 		# get rank
-		rankNode = soup.select('div.competitive-rank')
-		tempRank = 0
-		if len(rankNode) > 0:
-			tempRank = rankNode[0].get_text(strip=True)
-		else:
-			continue
+		rankNode = soup.select('div.competitive-rank-level')
+		for node in rankNode:
+			tempRank = int(node.get_text(strip=True))
+			if tempRank > rank:
+				rank = tempRank
 
 	if rank == 0:
 		rank = None

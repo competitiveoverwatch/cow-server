@@ -1,4 +1,4 @@
-from flask import Blueprint, make_response, render_template, session, redirect, request
+from flask import Blueprint, make_response, render_template, session, redirect, request, current_app
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import redditflair.reddit as reddit
@@ -103,6 +103,7 @@ def blizzard_login():
 @redditflair.route('/redditflair/fetchrank', methods=['GET'])
 @limiter.limit('1 per minute')
 def fetch_rank():
+	redditname = session.get('redditname')
 	region = session.get('region', None)
 	battletag = session.get('battletag', None)
 	blizzard_id = session.get('blizzardid', None)
@@ -111,7 +112,12 @@ def fetch_rank():
 	psn_name = request.args.get('psnname')
 
 	if region and battletag and blizzard_id and platform:
+		current_app.logger.info(
+			f"Parsing blizzard profile u/{redditname} - {battletag} - {blizzard_id} "
+			f"- {xbl_name} - {psn_name} - {platform}")
 		rank = parse_ow_profile(battletag, blizzard_id, xbl_name, psn_name, platform)
+		current_app.logger.info(
+			f"Blizzard profile result u/{redditname} - {rank}")
 		if rank:
 			session['rank'] = rank
 

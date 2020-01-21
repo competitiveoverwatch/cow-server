@@ -15,13 +15,7 @@ SPRITESHEETS = {
 class Reddit:
 	@classmethod
 	def get_global_praw(cls):
-		return praw.Reddit(
-			client_id=config['creds']['redditBotClientId'],
-			client_secret=config['creds']['redditBotClientSecret'],
-			redirect_uri=config['creds']['redditBotRedirectURI'],
-			user_agent='rankification by u/Watchful1',
-			username=config['creds']['redditBotUserName'],
-			password=config['creds']['redditBotPassword'])
+		return praw.Reddit(config['creds']['redditBotUserName'], user_agent='rankification by u/Watchful1')
 
 
 	@classmethod

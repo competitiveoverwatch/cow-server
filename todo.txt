@@ -1,0 +1,7 @@
+favicon
+page titles
+new OWL colors
+unfade
+emoji's for new reddit
+clean up old flairs
+rank verification
