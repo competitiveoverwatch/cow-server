@@ -14,64 +14,63 @@
 
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 	</head>
 	<body>
-		{% if mod %}
-			<main role="main">
-				<form action="/flairsheets/edit/{{id}}" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-					<br><br>
-					<img src="{{ url_for('static', filename='data/flair_images/'+id+'.png') }}" style="max-width:64px;max-height:64px"/>
-                    <table>
-							<tr>
-								<td>Flair ID:</td>
-								<td>{{id}}</td>
-							</tr>
-							<tr>
-								<td>Flair Sheet:</td>
-								<td>
-									{{flair['sheet']}} - r{{flair['row']}} c{{flair['col']}}
-								</td>
-							</tr>
-                            <tr>
-                                <td>Flair Name:</td>
-                                <td><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Flair name" name="name" value="{{flair['name']}}"></td>
-                            </tr>
-							<tr>
-								<td>Faded:</td>
-								<td>
-									<select	name="faded" id="faded" title="Faded">
-										<option value="no" {% if flair['active'] %} selected {% endif %}>No</option>
-										<option value="yes" {% if not flair['active'] %} selected {% endif %}>Yes</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>Flair Image:</td>
-								<td>
-									<input type="file" name="file">
-								</td>
-							</tr>
-							<tr>
-								<td>Flair Categories:</td>
-								<td>
-									<select	name="categories" id="categories" title="Categories" multiple size="8">
-										{% for category in categories %}
-											<option value="{{category['title']}}" {% if id in category['items'] %} selected {% endif %}>{{category['title']}}</option>
-										{% endfor %}
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td><input type="submit" name="submit_button" value="save" style="margin-top:2rem;"></td>
-							</tr>
-                            <tr>
-                                <td></td><td><a href="/flairsheets">back</a></td>
-                            </tr>
-                    </table>
-                </form>
-			</main>
-		{% endif %}
+        <main role="main">
+            <form action="/flairsheets/edit/{{flair.id}}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                <br><br>
+                <img src="{{ url_for('static', filename='data/flair_images/'+flair.short_name+'.png') }}" style="max-width:64px;max-height:64px"/>
+                <table>
+                        <tr>
+                            <td>Flair ID:</td>
+                            <td>{{flair.short_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Flair Sheet:</td>
+                            <td>
+                                {{flair.sheet}} - r{{flair.row}} c{{flair.col}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Flair Name:</td>
+                            <td><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Flair name" name="name" value="{{flair.name}}"></td>
+                        </tr>
+                        <tr>
+                            <td>Faded:</td>
+                            <td>
+                                <select	name="faded" id="faded" title="Faded">
+                                    <option value="no" {% if flair.is_active %} selected {% endif %}>No</option>
+                                    <option value="yes" {% if not flair.is_active %} selected {% endif %}>Yes</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Flair Image:</td>
+                            <td>
+                                <input type="file" name="file">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Flair Category:</td>
+                            <td>
+                                <select	name="category" id="category" title="Category">
+                                    {% for category in categories %}
+                                        <option value="{{category}}" {% if category == flair.category %} selected {% endif %}>{{category}}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" name="submit_button" value="save" style="margin-top:2rem;"></td>
+                        </tr>
+                        <tr>
+                            <td></td><td><a href="/flairsheets">back</a></td>
+                        </tr>
+                </table>
+            </form>
+        </main>
 	</body>
 </html>

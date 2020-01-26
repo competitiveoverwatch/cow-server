@@ -1,4 +1,4 @@
-from database import db, User, Specials
+from database import db, User, Flair
 import praw, json, operator, re
 from config import data as config
 from config import get_flairdata

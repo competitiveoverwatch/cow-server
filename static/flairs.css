@@ -139,10 +139,10 @@
 /* Team flair sheet */
 .flair[class*="-steams"]::before {
     content: "";
-    background-image: url("data/flairs-teams.png?q=1579417557");
+    background-image: url("data/flairs-teams.png?q=1580004843");
     height: 44px;
     color: transparent;
-/*	background-size: 704px 704px;*/
+/*	background-size: 88px 88px;*/
 	position: absolute;
 }
  

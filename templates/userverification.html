@@ -14,6 +14,7 @@
 
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 	</head>
 	<body>
 		{% if mod %}
@@ -24,7 +25,7 @@
 					<input type="submit" value="Verify" title="Verify">
 					<br><br>
 					{% for user in verifiedUsers %}
-						{{user.name}} - {{user.text}}<br>
+						{{user.name}} - {{user.special_text}}<br>
 					{% endfor %}
 				</form>
 			</main>

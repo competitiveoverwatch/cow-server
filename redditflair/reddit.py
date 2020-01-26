@@ -1,7 +1,6 @@
 from flask import session
 from config import data as config
-from config import get_flairdata
-from database import db, User, Specials, Database
+from database import db, User, Flair, Database
 import praw
 
 SPRITESHEETS = {
@@ -17,21 +16,18 @@ class Reddit:
 	def get_global_praw(cls):
 		return praw.Reddit(config['creds']['redditBotUserName'], user_agent='rankification by u/Watchful1')
 
-
 	@classmethod
 	def set_flair(cls, name, display_sr=True):
-		flairdata = get_flairdata()
-
-		user_object, specials = Database.get_user(name)
+		user_object = Database.get_or_add_user(name)
 
 		text = ''
 		css_class = ''
 		if user_object.flair1:
-			flair1 = flairdata['flairs'][user_object.flair1]
+			flair1 = Database.get_flair_by_short_name(user_object.flair1)
 			css_class += 's' + flair1['sheet'] + '-c' + flair1['col'] + '-r' + flair1['row']
 			text += cls.flair_name(flair1, user_object, display_sr)
 		if user_object.flair2:
-			flair2 = flairdata['flairs'][user_object.flair2]
+			flair2 = Database.get_flair_by_short_name(user_object.flair2)
 			css_class += '-2s' + flair2['sheet'] + '-2c' + flair2['col'] + '-2r' + flair2['row']
 			text += ' | ' + cls.flair_name(flair2, user_object, display_sr)
 
@@ -53,9 +49,9 @@ class Reddit:
 	def flair_name(cls, flair, user_object, display_sr=True):
 		flair_name = ''
 		if flair['name'] == 'Verified':
-			verified_user = Database.get_verified_user(user_object.name)
-			if verified_user:
-				flair_name += u'\u2714 ' + verified_user.text
+			verified_user = Database.get_or_add_user(user_object.name)
+			if verified_user.special_id:
+				flair_name += u'\u2714 ' + verified_user.special_text
 		else:
 			flair_name += flair['name']
 			if display_sr and flair['sheet'] == 'ranks':
@@ -72,6 +68,27 @@ class Reddit:
 			'&state=' + \
 			state + \
 			'&scope=identity'
+
+	@classmethod
+	def upload_emoji(cls, name, path):
+		reddit_praw = Reddit.get_global_praw()
+		subreddit = reddit_praw.subreddit(config['config']['subreddit'])
+		subreddit.emoji.add(name, path)
+
+	@classmethod
+	def upload_stylesheet_image(cls, image_name):
+		reddit_praw = Reddit.get_global_praw()
+		subreddit = reddit_praw.subreddit(config['config']['subreddit'])
+		subreddit.stylesheet.upload(
+			image_name,
+			'static/data/' + image_name + '.png')
+
+	@classmethod
+	def re_save_stylesheet(cls):
+		reddit_praw = Reddit.get_global_praw()
+		subreddit = reddit_praw.subreddit(config['config']['subreddit'])
+		css = subreddit.stylesheet().stylesheet
+		subreddit.stylesheet.update(css)
 
 
 def reddit_link(state):
@@ -103,75 +120,6 @@ def reddit_login(code):
 
 		# reset rank for new login
 		session['rank'] = None
-
-
-def flair_name(flair_ID, user, sr):
-	flairdata = get_flairdata()
-
-	flair = flairdata['flairs'][flair_ID]
-	flair_final = ''
-
-	# verified
-	if flair_ID == 'verified':
-		special = Specials.query.filter_by(name=user).filter_by(specialid='verified').first()
-		flair_final += u'\u2714 ' + special.text
-	else:
-		flair_final += flair['name']
-		if sr and flair['sheet'] == 'ranks':
-			flair_final += ' (' + str(sr) + ')'
-
-	return flair_final
-
-
-def reddit_update_flair(flair1_id, flair2_id, custom_flair_text, sr, redditname=None):
-	flairdata = get_flairdata()
-
-	if redditname is None:
-		redditname = session.get('redditname', None)
-	if redditname:
-		# ensure correct flair configuration
-		if flair1_id == flair2_id:
-			flair2_id = None
-		if not flair1_id and flair2_id:
-			flair1_id = flair2_id
-			flair2_id = None
-
-		# get redditor
-		reddit_praw = Reddit.get_global_praw()
-		user = reddit_praw.redditor(redditname)
-		subreddit = reddit_praw.subreddit(config['config']['subreddit'])
-
-		if flair1_id:
-			# prepare css class
-			flair1 = flairdata['flairs'][flair1_id]
-			css_class = SPRITESHEETS[flair1['sheet']] + '-c' + flair1['col'] + '-r' + flair1['row']
-			flair2 = None
-			if flair2_id:
-				flair2 = flairdata['flairs'][flair2_id]
-				css_class += '-2' + SPRITESHEETS[flair2['sheet']] + '-2c' + flair2['col'] + '-2r' + flair2['row']
-
-			# flair names
-			text = flair_name(flair1_id, redditname, sr)
-			if flair2:
-				text += ' | ' + flair_name(flair2_id, redditname, sr)
-
-			# custom text
-			if custom_flair_text:
-				# truncate if necessary
-				maxLen = 64 - len(text) - 3
-				custom_flair_text = custom_flair_text[:maxLen] if len(custom_flair_text) > maxLen else custom_flair_text
-				text = custom_flair_text + u' \u2014 ' + text
-		else:
-			css_class = ''
-			text = ''
-
-		# update flair
-		subreddit.flair.set(user, css_class=css_class, text=text)
-		session['updated'] = True
-	else:
-		raise ValueError()
-
-	return flair1_id, flair2_id
 
 
 def reddit_css():

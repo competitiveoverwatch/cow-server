@@ -1,11 +1,6 @@
 from flask import Blueprint, make_response, render_template, session, redirect, request
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 from redditflair.reddit import Reddit
-import redditflair.blizzard as blizzard
-from redditflair.parse import parse_ow_profile
-from config import get_flairdata
-from database import db, User, Specials, Database
+from database import db, User, Flair, Database
 
 user_verification = Blueprint('user_verification', __name__)
 
@@ -36,11 +31,15 @@ def user_verification_page():
 
 @user_verification.route('/userverification/verify')
 def user_verification_verify():
-	user = request.args.get('user', '')
+	user_name = request.args.get('user', '')
 	description = request.args.get('description', '')
 
-	Database.set_special(user, special_id='verified', text=description)
-	Database.set_user(user, flair_1='verified')
-	Reddit.set_flair(user)
+	user = Database.get_or_add_user(user_name)
+	user.special_id = 'verified'
+	user.special_text = description
+	user.flair1 = 'verified'
+	Database.commit()
+
+	Reddit.set_flair(user_name)
 
 	return redirect('/userverification')

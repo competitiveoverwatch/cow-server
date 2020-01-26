@@ -128,9 +128,6 @@
                     <h2>Your flair was updated, you will be redirected to <a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> in a few seconds.</h2>
                 </header>
             {% else %}
-                {% set categories = flairdata['categories'] %}
-                {% set ranks = flairdata['ranks'] %}
-                {% set flairs = flairdata['flairs'] %}
                 <header role="banner">
                     <h2>Hey, u/{{session.get('redditname')}}! Choose your <a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> flairs.</h2>
                 </header>
@@ -182,16 +179,14 @@
 
                     
                     <!-- Special category -->
-                    {% if user and specials %}
+                    {% if user.special_id %}
                         <div class="container"> 
                             <div class="category-label">Special Flairs</div>
                             <div class="flex-container-flairs">
-                            {% for special in specials %}
-                                {% if special.specialid in flairs %}
-                                    {% set flair = flairs[special.specialid] %}
-                                    <div class="flair-item" onclick="setFlair(event, '{{special.specialid}}')"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}} - {{special.text}}</div>
-                                {% endif %}
-                            {% endfor %}
+                            {% if user.special_id in flairs %}
+                                {% set flair = flairs[user.special_id] %}
+                                <div class="flair-item" onclick="setFlair(event, '{{user.special_id}}')"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}} - {{user.special_text}}</div>
+                            {% endif %}
                             </div>
                         </div>
                     {% endif %} 
@@ -204,7 +199,7 @@
                     <div class="container"> 
                         <div class="category-label">Rank Flairs</div>
                             <div class="flex-container-flairs">
-                            {% for item in ranks['items'] %}
+                            {% for item in ranks %}
                                 {% set flair = flairs[item] %}
                                 {% if loop.index <= rankNum %}
                                     <div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
@@ -225,18 +220,15 @@
                     </div>
 
                     <!-- Categories -->
-                    {% for category in categories %}
-                        {% if category['items']|length > 0 %}
-                            <div class="container"> 
-                                <div class="category-label">{{category['title']}}</div>
-                                <div class="flex-container-flairs">
-                                {% for item in category['items'] %}
-                                    {% set flair = flairs[item] %}
-                                    <div class="flair-item" onclick="setFlair(event, '{{item}}', {{'true' if flair['active'] else 'false'}})"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
-                                {% endfor %}
-                                </div>
+                    {% for category, items in categories.items() %}
+                        <div class="container">
+                            <div class="category-label">{{category}}</div>
+                            <div class="flex-container-flairs">
+                            {% for flair in items %}
+                                <div class="flair-item" onclick="setFlair(event, '{{flair.short_name}}', {{'true' if flair.is_active else 'false'}})"><div class="flair flair-small flair-s{{flair.sheet}}-c{{flair.col}}-r{{flair.row}}"></div>{{flair.name}}</div>
+                            {% endfor %}
                             </div>
-                        {% endif %}
+                        </div>
                     {% endfor %}
                 </form>
             {% endif %}     

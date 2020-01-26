@@ -5,8 +5,8 @@ import redditflair.reddit as reddit
 from redditflair.reddit import Reddit
 import redditflair.blizzard as blizzard
 from redditflair.parse import parse_ow_profile
-import config
-from database import db, User, Specials, Database
+from config import data as config_data
+from database import db, User, Flair, Database
 
 limiter = Limiter(
 	key_func=get_remote_address,
@@ -25,22 +25,24 @@ def root():
 # main route
 @redditflair.route('/redditflair')
 def reddit_flair():
-	flairdata = config.get_flairdata()
-
 	response_params = dict()
 	response_params['redditLink'] = reddit.reddit_link('flair')
 
 	# if logged in get userObject and special flairs
 	user_object = None
-	specials = None
 	reddit_name = session.get('redditname')
 	if reddit_name is None or reddit_name == "":
 		session.clear()
 	else:
-		user_object, specials = Database.get_user(reddit_name)
+		user_object = Database.get_or_add_user(reddit_name)
+
+	flairs = Database.get_all_flair()
+	categories = Database.get_flair_by_category()
 
 	response = make_response(
-		render_template('redditflair.html', **response_params, flairdata=flairdata, user=user_object, specials=specials)
+		render_template(
+			'redditflair.html', **response_params, flairs=flairs, categories=categories, user=user_object,
+			ranks=config_data['config']['ranks'])
 	)
 
 	if session.get('updated'):
@@ -182,7 +184,12 @@ def update_flair():
 		if (flair_1 and flair_1 not in flairdata['flairs']) or (flair_2 and flair_2 not in flairdata['flairs']):
 			raise Exception('Unknown flair ID')
 		redditname = session.get('redditname')
-		Database.set_user(redditname, flair_1=flair_1, flair_2=flair_2, flair_text=custom_text)
+		user = Database.get_or_add_user(redditname)
+		user.flair1 = flair_1
+		user.flair_2 = flair_2
+		user.custom_text = custom_text
+		Database.commit()
+
 		Reddit.set_flair(redditname, display_sr)
 		session['updated'] = True
 	except:

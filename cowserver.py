@@ -5,11 +5,10 @@ from redditflair.redditflair import redditflair, limiter
 from mod_tools.user_verification import user_verification
 from mod_tools.flair_sheets import flair_sheets
 from redissession import RedisSessionInterface
-from database import db, User, Specials
+from database import db, User, Flair
 from werkzeug.utils import secure_filename
 import os
 import logging
-import updateScripts
 
 content_security_policy = {
 	'style-src': '\'self\''

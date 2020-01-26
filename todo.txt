@@ -2,6 +2,14 @@
 -page titles
 -new OWL colors
 -unfade
-emoji's for new reddit
+-emoji's for new reddit
 clean up old flairs
 -rank verification
+update other bots that use flair json
+-print out flair json
+database migration
+-temp flair saving
+finish removing config.get_flairdata
+-resize flairs when saving
+-single category
+upload stylesheet

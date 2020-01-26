@@ -1,4 +1,4 @@
-import collections
+import json
 import os
 import time
 import tinify
@@ -9,211 +9,229 @@ from flask import Blueprint, make_response, render_template, session, redirect, 
 
 import redditflair.reddit as reddit
 from config import data as config_data
-import config
-from database import Database
+from database import Database, Flair
 from redditflair.reddit import Reddit
 
 flair_sheets = Blueprint('flair_sheets', __name__)
-ALLOWED_EXTENSIONS = set(['png'])
 tinify.key = config_data['creds']['tinifyKey']
 
 
-def allowed_file(filename):
-	return \
-		'.' in filename and \
-		filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+def save_image(file, short_name):
+	if file and file.filename != '' and file.filename.endswith(".png"):
+		path = os.path.join('static/data/flair_images', short_name + '.png')
+		file.save(path)
+
+		image = Image.open(path)
+		image = image.convert('RGBA')
+		image.thumbnail((64, 64), Image.ANTIALIAS)
+		image.save(path, quality=95, optimize=True)
+		return True
+
+	else:
+		return False
+
+
+def fade_image(image):
+	colorConverter = ImageEnhance.Color(image)
+	image = colorConverter.enhance(0.2)
+	# 50% transparency
+	bands = list(image.split())
+	if len(bands) == 4:
+		# Assuming alpha is the last band
+		bands[3] = bands[3].point(lambda x: x * 0.5)
+	image = Image.merge(image.mode, bands)
+	return image
 
 
 @flair_sheets.route('/flairsheets')
 def flair_sheets_page():
-	flair_data = config.get_flairdata(True)
-
 	response_params = dict()
 	response_params['redditLink'] = Reddit.auth_link('flairsheets')
 
 	# moderator check
 	redditname = session.get('redditname')
-	mod = False
 	if redditname:
 		if not Database.check_moderator(redditname):
 			return redirect('/redditflair')
-		mod = True
 
 	# gather flairs
-	flairs = collections.OrderedDict(sorted(flair_data['flairs'].items()))
+	clean_flairs = Database.get_clean_flair()
+	dirty_flairs = Database.get_dirty_flair()
 
-	response = make_response(render_template('flairsheets.html', **response_params, mod=mod, flairs=flairs))
+	response = make_response(
+		render_template(
+			'flairsheets.html', **response_params, clean_flairs=clean_flairs, dirty_flairs=dirty_flairs))
 	return response
 
 
 @flair_sheets.route('/flairsheets/edit/<id>', methods=['GET', 'POST'])
 def flair_edit(id):
-	flairdata = config.get_flairdata(True)
+	# moderator check
+	redditname = session.get('redditname')
+	if redditname:
+		if not Database.check_moderator(redditname):
+			return redirect('/redditflair')
 
-	if id not in flairdata['flairs']:
+	flair = Database.get_flair(id)
+
+	if flair is None:
 		return redirect('/flairsheets')
-	flair = flairdata['flairs'][id]
-
-	if request.method == 'POST':
-		name = request.form['name']
-		faded = request.form['faded']
-		categories = request.form.getlist('categories')
-		if name:
-			# update flair and json
-			flair['name'] = name
-			if faded == 'yes':
-				flair['active'] = False
-			else:
-				flair['active'] = True
-			flairdata['flairs'][id] = flair
-			# update categories
-			for i in range(len(flairdata['categories'])):
-				c = flairdata['categories'][i]
-				if c['title'] in categories:
-					if id not in c['items']:
-						c['items'].append(id)
-				else:
-					if id in c['items']:
-						c['items'].remove(id)
-				c['items'].sort()
-			config.set_flairdata(flairdata, True)
-			# Upload image if necessary
-			if 'file' in request.files:
-				file = request.files['file']
-				if file and allowed_file(file.filename):
-					filename = id + '.png'
-					file.save(os.path.join('static/data/flair_images', filename))
 
 	response_params = dict()
 	response_params['redditLink'] = Reddit.auth_link('flairsheets')
 
-	# moderator check
-	redditname = session.get('redditname')
-	mod = False
-	if redditname:
-		if not Database.check_moderator(redditname):
-			return redirect('/redditflair')
-		mod = True
+	if request.method == 'POST':
+		name = request.form['name']
+		faded = request.form['faded']
+		category = request.form['category']
+		if name:
+			if not flair.is_dirty:
+				flair = Database.clone_flair(flair)
+
+			# update flair and json
+			flair.name = name
+			if faded == 'yes':
+				flair.is_active = False
+			else:
+				flair.is_active = True
+			flair.category = category
+
+			Database.commit()
+			# Upload image if necessary
+			if 'file' in request.files:
+				file = request.files['file']
+				save_image(file, flair.short_name)
+
+			return redirect('/flairsheets')
 
 	response = make_response(
 		render_template(
-			'flairedit.html', **response_params, mod=mod, id=id, flair=flair,
+			'flairedit.html', **response_params, id=id, flair=flair,
 			flairsheets=config_data['config']['flair_sheets'],
-			categories=flairdata['categories']))
+			categories=config_data['config']['categories']))
 	return response
 
 
 @flair_sheets.route('/flairsheets/new', methods=['GET', 'POST'])
 def flair_new():
-	flairdata = config.get_flairdata(True)
+	# moderator check
+	redditname = session.get('redditname')
+	if redditname:
+		if not Database.check_moderator(redditname):
+			return redirect('/redditflair')
 
 	# process request
 	if request.method == 'POST':
-		id = request.form['id']
+		short_name = request.form['short_name']
 		name = request.form['name']
 		flairsheet = request.form['flairsheet']
 		faded = request.form['faded']
-		categories = request.form.getlist('categories')
+		category = request.form['category']
 		# check file exist
 		if 'file' not in request.files:
 			return redirect(request.url)
 		file = request.files['file']
 		# check fields
-		if (id) and (name) and (flairsheet) and (id not in flairdata['flairs']) and (file.filename != ''):
-			# check file
-			if file and allowed_file(file.filename):
-				# upload
-				filename = id + '.png'
-				file.save(os.path.join('static/data/flair_images', filename))
+		if short_name and name and flairsheet and not Database.get_flair_by_short_name(short_name, False):
+			save_image(file, short_name)
 
-				# add to flair json and update flairdata
-				flair = dict()
-				flair['name'] = name
-				flair['sheet'] = flairsheet
-				if faded == 'yes':
-					flair['active'] = False
-				else:
-					flair['active'] = True
-				matrix = make_flair_matrix(flairsheet)
-				flair = find_place(matrix, flair, id)
-				flairdata['flairs'][id] = flair
-				# update categories
-				for i in range(len(flairdata['categories'])):
-					c = flairdata['categories'][i]
-					if c['title'] in categories:
-						if id not in c['items']:
-							c['items'].append(id)
-					else:
-						if id in c['items']:
-							c['items'].remove(id)
-					c['items'].sort()
-				config.set_flairdata(flairdata, True)
-				return redirect('/flairsheets/edit/' + id)
+			flair = Flair(
+				short_name=short_name,
+				name=name,
+				sheet=flairsheet,
+				category=category,
+				is_active=faded != 'yes'
+			)
+
+			matrix = make_flair_matrix(flairsheet)
+			find_place(matrix, flair)
+			Database.add_flair(flair)
+			Database.commit()
+			return redirect('/flairsheets')
 		else:
 			return redirect(request.url)
 
 	response_params = dict()
 	response_params['redditLink'] = Reddit.auth_link('flairsheets')
 
-	# moderator check
-	redditname = session.get('redditname')
-	mod = False
-	if redditname:
-		if not Database.check_moderator(redditname):
-			return redirect('/redditflair')
-		mod = True
-
 	response = make_response(
 		render_template(
-			'flairnew.html', **response_params, mod=mod, flairsheets=config_data['config']['flair_sheets'],
-			categories=flairdata['categories']))
+			'flairnew.html', **response_params, flairsheets=config_data['config']['flair_sheets'],
+			categories=config_data['config']['categories']))
 	return response
 
 
 @flair_sheets.route('/flairsheets/makesheets')
 def flair_makesheets():
-	flairdata = config.get_flairdata(True)
-
 	response_params = dict()
 	response_params['redditLink'] = Reddit.auth_link('flairsheets')
 
 	# moderator check
 	redditname = session.get('redditname')
-	mod = False
 	if redditname:
 		if not Database.check_moderator(redditname):
 			return redirect('/redditflair')
-		mod = True
 
-	change = False
 	reddit_stylesheet = reddit.reddit_css()
+	reddit_stylesheet_new = None
 	with open('static/flairs.css', 'r') as css_file:
 		site_stylesheet = css_file.read()
+
+	dirty_sheets = set()
+	for flair in Database.get_dirty_flair():
+		dirty_sheets.add(flair.sheet)
+		path = 'static/data/flair_images/' + flair.short_name + '.png'
+		if not flair.is_active:
+			image = Image.open(path)
+			image = fade_image(image)
+			path = 'static/data/temp_faded.png'
+			image.save(path)
+
+		Reddit.upload_emoji(flair.short_name, path)
+
 	# iterate over stylesheets
-	for sheet in config_data['config']['flair_sheets']:
+	for sheet in dirty_sheets:
 		matrix = make_flair_matrix(sheet)
 		size = make_sheet(matrix, sheet)
 		reddit_stylesheet_new = update_stylesheet(
 			reddit_stylesheet, sheet, int(size[0] / 2))  # /2 for reddit half resolution
 		site_stylesheet = update_stylesheet(site_stylesheet, sheet, size[0], True)
+		Reddit.upload_stylesheet_image("flairs-" + sheet)
+
 	# change stylesheets if necessary
 	with open('static/flairs.css', 'w') as cssfile:
 		cssfile.write(site_stylesheet)
 	if reddit_stylesheet_new == reddit_stylesheet:
 		reddit_stylesheet_new = None
 
+	Reddit.re_save_stylesheet()
+
 	# make changes permanent on website
-	config.set_flairdata(flairdata)
-	config.set_flairdata(flairdata, True)
+	Database.merge_dirty()
+	Database.commit()
 
 	# create flairsheets zip
 	with zipfile.ZipFile('static/data/flairsheets.zip', 'w') as flairsheetzip:
 		for sheet in config_data['config']['flair_sheets']:
 			flairsheetzip.write('static/data/flairs-' + sheet + '.png')
 
+	# print out the flair json
+	flairs_table = {}
+	for flair in Database.get_all_flair():
+		flairs_table[flair.short_name] = {
+			"name": flair.name,
+			"col": flair.col,
+			"row": flair.row,
+			"sheet": flair.sheet,
+			"active": flair.is_active,
+			"category": flair.category
+		}
+	with open('static/data/flairs.json', 'w') as flair_data:
+		json.dump(flairs_table, flair_data, indent=4)
+
 	response = make_response(
 		render_template(
-			'makesheets.html', **response_params, mod=mod,
+			'makesheets.html', **response_params,
 			flairsheets=config_data['config']['flair_sheets'],
 			reddit_stylesheet=reddit_stylesheet_new))
 	return response
@@ -234,14 +252,13 @@ def update_stylesheet(stylesheet, flairsheet, size, timestamp=False):
 
 
 def make_flair_matrix(sheet):
-	flairdata = config.get_flairdata(True)
 	# find maximum index
 	size = 1
-	flairlist = flairdata['flairs']
-	for id, flair in flairlist.items():
-		if flair['sheet'] == sheet:
-			row = int(flair['row'])
-			col = int(flair['col'])
+	flairs = Database.get_all_flair(dirty=True)
+	for flair in flairs:
+		if flair.sheet == sheet:
+			row = int(flair.row)
+			col = int(flair.col)
 			if row > size:
 				size = row
 			if col > size:
@@ -249,22 +266,22 @@ def make_flair_matrix(sheet):
 	# create matrix
 	matrix = [[None for x in range(size)] for y in range(size)]
 	# insert flairs in matrix
-	for id, flair in flairlist.items():
-		if flair['sheet'] == sheet:
-			row = int(flair['row']) - 1
-			col = int(flair['col']) - 1
-			matrix[row][col] = id
+	for flair in flairs:
+		if flair.sheet == sheet:
+			row = int(flair.row) - 1
+			col = int(flair.col) - 1
+			matrix[row][col] = flair
 	return matrix
 
 
-def find_place(matrix, flair, id):
+def find_place(matrix, flair):
 	found_place = False
 	for row in range(len(matrix)):
 		for col in range(len(matrix)):
-			if matrix[row][col] == None:
-				flair['col'] = '%02d' % (col + 1)
-				flair['row'] = '%02d' % (row + 1)
-				matrix[row][col] = id
+			if matrix[row][col] is None:
+				flair.col = '%02d' % (col + 1)
+				flair.row = '%02d' % (row + 1)
+				matrix[row][col] = flair
 				found_place = True
 				break
 		if found_place:
@@ -274,14 +291,13 @@ def find_place(matrix, flair, id):
 		for row in matrix:
 			row.extend([None])
 		matrix.extend([[None] * (len(matrix) + 1)])
-		flair['col'] = '%02d' % len(matrix)
-		flair['row'] = '01'
-		matrix[0][len(matrix) - 1] = id
+		flair.col = '%02d' % len(matrix)
+		flair.row = '01'
+		matrix[0][len(matrix) - 1] = flair
 	return flair
 
 
 def make_sheet(matrix, sheet):
-	flairdata = config.get_flairdata(True)
 	path = 'static/data/flairs-' + sheet + '.png'
 	# make new spritesheet
 	size = (config_data['config']['flair_size'], config_data['config']['flair_size'])
@@ -289,35 +305,26 @@ def make_sheet(matrix, sheet):
 	spritesheet = Image.new('RGBA', spritesheet_size)
 	# make spritesheet image
 	for row in matrix:
-		for id in row:
-			if not id:
+		for flair in row:
+			if not flair:
 				continue
-			flair = flairdata['flairs'][id]
 			# open image
-			if not os.path.isfile('static/data/flair_images/' + id + '.png'):
+			if not os.path.isfile('static/data/flair_images/' + flair.short_name + '.png'):
 				continue
-			image = Image.open('static/data/flair_images/' + id + '.png')
+			image = Image.open('static/data/flair_images/' + flair.short_name + '.png')
 			image = image.convert('RGBA')
 			image.thumbnail(size, Image.ANTIALIAS)
 			imageSize = image.size
 			# calculate row, column
-			row = int(flair['row']) - 1
-			col = int(flair['col']) - 1
+			row = int(flair.row) - 1
+			col = int(flair.col) - 1
 			# calculate offset
 			offsetX = ((size[0] - imageSize[0]) / 2) + col * size[0]
 			offsetY = ((size[1] - imageSize[1]) / 2) + row * size[1]
 			offset = (int(offsetX), int(offsetY))
 			# faded flair
-			if not flair['active']:
-				# desaturate
-				colorConverter = ImageEnhance.Color(image)
-				image = colorConverter.enhance(0.2)
-				# 50% transparency
-				bands = list(image.split())
-				if len(bands) == 4:
-					# Assuming alpha is the last band
-					bands[3] = bands[3].point(lambda x: x * 0.5)
-				image = Image.merge(image.mode, bands)
+			if not flair.is_active:
+				image = fade_image(image)
 			# insert image
 			spritesheet.paste(image, offset)
 	# output spritesheet
