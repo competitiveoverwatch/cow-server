@@ -17,18 +17,16 @@
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 	</head>
 	<body>
-		{% if mod %}
-			<main role="main">
-				<form action="/userverification/verify" method="get">
-					<input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Username" name="user">
-					<input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Description" name="description">
-					<input type="submit" value="Verify" title="Verify">
-					<br><br>
-					{% for user in verifiedUsers %}
-						{{user.name}} - {{user.special_text}}<br>
-					{% endfor %}
-				</form>
-			</main>
-		{% endif %}
+        <main role="main">
+            <form action="/userverification/verify" method="get">
+                <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Username" name="user">
+                <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Description" name="description">
+                <input type="submit" value="Verify" title="Verify">
+                <br><br>
+                {% for user in verifiedUsers %}
+                    {{user.name}} - {{user.special_text}}<br>
+                {% endfor %}
+            </form>
+        </main>
 	</body>
 </html>

@@ -13,18 +13,15 @@ def user_verification_page():
 
 	# get verified users
 	verified_users = Database.get_verified_users()
-	verified_users.sort(key=lambda x: x.name)
 
 	# moderator check
 	redditname = session.get('redditname')
-	mod = False
 	if redditname:
 		if not Database.check_moderator(redditname):
 			return redirect('/redditflair')
-		mod = True
 
 	response = make_response(
-		render_template('userverification.html', **response_params, mod=mod, verifiedUsers=verified_users))
+		render_template('userverification.html', **response_params, verifiedUsers=verified_users))
 
 	return response
 
