@@ -6,3 +6,5 @@ cowserver.ini
 wsgi.py
 static/data/
 .idea/
+__pycache__
+output.txt
