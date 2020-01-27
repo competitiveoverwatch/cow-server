@@ -1,0 +1,18 @@
+-favicon
+-page titles
+-new OWL colors
+-unfade
+-emoji's for new reddit
+-clean up old flairs
+-rank verification
+update other bots that use flair json
+-print out flair json
+-migrate database flairs
+migrate database users
+migrate reddit users
+-temp flair saving
+-finish removing config.get_flairdata
+-resize flairs when saving
+-single category
+upload stylesheet
+-finish fixing /redditflair

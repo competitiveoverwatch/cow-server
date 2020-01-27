@@ -56,12 +56,12 @@ h2 {
 
 
 .container {
-  margin: 0.8rem auto 0 auto;
+  margin: 0.5rem auto 0 auto;
   background: #FFF;
   border-radius: .4rem;
   width: 40%;
   min-width: 62rem;
-  padding: 1.6rem;
+  padding: 1.2rem 1.4rem;
 }
 
 .container-top {
@@ -126,24 +126,42 @@ h2 {
     color: #042E54;
 }
 
-.custom-flair-text {
+.text-box {
   flex-grow: 2;
-  margin-top: 1.6em;
   border-radius: .2rem;
   border: .1rem solid #ccc;
   color: #666;
   font-size: inherit;
   padding: .5rem;
-  vertical-align: middle;
+  vertical-align: middle; 
+}
+
+.custom-flair-text {
+  margin-top: 1.6em;
   width: 60%;
 }
 
+.search-text {
+  background-image: url('searchicon.png');
+  background-position: 0.5rem 0.5rem;
+  background-repeat: no-repeat;
+  padding-left: 3.5rem;
+  width: 100%;
+}
+
+.custom-flair-text-length {
+	flex-grow: 1;
+	margin-top: 3.5rem;
+	margin-left: 0.8rem;
+	color: #ccc;
+	font-size: 1.4rem;
+}
 
 .update-flair-button {
   flex-grow: 1;
   background: #042E54;
   border-radius: .2rem;
-  min-width: 22rem;
+  min-width: 20rem;
   color: #FFF;
   padding: 0.5rem;
   transition: background .1s ease-in-out;
@@ -160,7 +178,7 @@ h2 {
   cursor: pointer;
   font-size: inherit;
   margin-top:2.6rem;
-  margin-left:1rem;
+  margin-left:2rem;
 }
 
 
@@ -203,11 +221,10 @@ h2 {
 
 
 .category-label {
-  font-size: 2.2rem;
+  font-size: 2rem;
   text-align: center;
   color: #042E54;
   width: 100%;
-  margin-bottom: 1rem;
 }
 
 .flex-container-flairs {
@@ -215,6 +232,7 @@ h2 {
   display: -webkit-flex;
   -webkit-flex-wrap: wrap; 
   flex-wrap:         wrap;
+  margin-top: 1rem;
 }
 
 .flair-item {

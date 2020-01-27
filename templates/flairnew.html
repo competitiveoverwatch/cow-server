@@ -1,0 +1,79 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="theme-color" content="#E8E8E9">
+		<meta name="description" content="r/CompetitiveOverwatch Rank Verification">
+
+		<title>r/CompetitiveOverwatch Flair Sheets</title>
+		
+		{% if not session.get('redditname') %}
+			<meta http-equiv="refresh" content="0;url={{redditLink}}" />
+		{% endif %}
+
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	</head>
+	<body>
+        <main role="main">
+            <form action="/flairsheets/new" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                <br><br>
+                <table>
+                        <tr>
+                            <td>Flair ID:</td>
+                            <td><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Flair ID" name="short_name"></td>
+                        </tr>
+                        <tr>
+                            <td>Flair Sheet:</td>
+                            <td>
+                                <select	name="flairsheet" id="flair_sheet" title="Flair Sheet">
+                                    {% for sheet in flairsheets %}
+                                        <option value="{{ sheet }}">{{ sheet }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Flair Name:</td>
+                            <td><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Flair name" name="name" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>Faded:</td>
+                            <td>
+                                <select	name="faded" id="faded" title="Faded">
+                                    <option value="no">No</option>
+                                    <option value="yes">Yes</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Flair Image:</td>
+                            <td>
+                                <input type="file" name="file">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Flair Category:</td>
+                            <td>
+                                <select	name="category" id="category" title="Category">
+                                    {% for category in categories %}
+                                        <option value="{{category}}">{{category}}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" name="submit_button" value="Save" style="margin-top:2rem;"></td>
+                        </tr>
+                        <tr>
+                            <td></td><td><a href="/flairsheets">back</a></td>
+                        </tr>
+                </table>
+            </form>
+        </main>
+	</body>
+</html>

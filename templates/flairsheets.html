@@ -1,0 +1,68 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="theme-color" content="#E8E8E9">
+		<meta name="description" content="r/CompetitiveOverwatch Rank Verification">
+
+		<title>r/CompetitiveOverwatch Flair Sheets</title>
+		
+		{% if not session.get('redditname') %}
+			<meta http-equiv="refresh" content="0;url={{redditLink}}" />
+		{% endif %}
+
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='reset.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	</head>
+	<body>
+        <main role="main">
+            <a href="/flairsheets/new" style="font-size:2rem;">New Flair</a><br>
+            <a href="https://drive.google.com/open?id=1AkdwKmU8gzLDaMQ8UAuyXjIdxIA89p6MxGCpI48v1a4">Readme</a>
+            <br><br>
+            {% if dirty_flairs %}
+                <h1>Pending flairs</h1>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Sheet</th>
+                        <th></th>
+                    </tr>
+                    {% for flair in dirty_flairs %}
+                        <tr>
+                            <td>{{flair.short_name}}</td>
+                            <td>{{flair.name}}</td>
+                            <td>{{flair.sheet}}</td>
+                            <td><a href='/flairsheets/edit/{{flair.id}}'>edit</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <br><br>
+            {% endif %}
+            <table>
+                <h1>Current flairs</h1>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Sheet</th>
+                    <th></th>
+                </tr>
+                {% for flair in clean_flairs %}
+                    <tr>
+                        <td>{{flair.short_name}}</td>
+                        <td>{{flair.name}}</td>
+                        <td>{{flair.sheet}}</td>
+                        <td><a href='/flairsheets/edit/{{flair.id}}'>edit</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br><br>
+            {% if dirty_flairs %}
+                <a href="/flairsheets/makesheets">Make Flairsheets</a><br>
+            {% endif %}
+            <a href="{{ url_for('static', filename='data/flairsheets.zip') }}">Download current sheets</a>
+        </main>
+	</body>
+</html>

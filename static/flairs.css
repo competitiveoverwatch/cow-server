@@ -32,20 +32,29 @@
 .flair[class*="-r08"]::before {
     background: 0 -308px
 }
-.flair[class*="-r10"]::before {
+.flair[class*="-r09"]::before {
     background: 0 -352px
 }
-.flair[class*="-r11"]::before {
+.flair[class*="-r10"]::before {
     background: 0 -396px
 }
-.flair[class*="-r12"]::before {
+.flair[class*="-r11"]::before {
     background: 0 -440px
 }
-.flair[class*="-r13"]::before {
+.flair[class*="-r12"]::before {
     background: 0 -484px
 }
-.flair[class*="-r14"]::before {
+.flair[class*="-r13"]::before {
     background: 0 -526px
+}
+.flair[class*="-r14"]::before {
+    background: 0 -570px
+}
+.flair[class*="-r15"]::before {
+    background: 0 -616px
+}
+.flair[class*="-r16"]::before {
+    background: 0 -660px
 }
 /*columns*/
 .flair[class*="-c01"]::before {
@@ -98,6 +107,36 @@
     clip: rect(0, 440px, 44px, 396px);
     margin-left: -396px;
 }
+.flair[class*="-c11"]::before {
+    width: 484px;
+    clip: rect(0, 484px, 44px, 440px);
+    margin-left: -440px;
+}
+.flair[class*="-c12"]::before {
+    width: 528px;
+    clip: rect(0, 528px, 44px, 484px);
+    margin-left: -484px;
+}
+.flair[class*="-c13"]::before {
+    width: 572px;
+    clip: rect(0, 572px, 44px, 528px);
+    margin-left: -528px;
+}
+.flair[class*="-c14"]::before {
+    width: 616px;
+    clip: rect(0, 616px, 44px, 572px);
+    margin-left: -572px;
+}
+.flair[class*="-c15"]::before {
+    width: 660px;
+    clip: rect(0, 660px, 44px, 616px);
+    margin-left: -616px;
+}
+.flair[class*="-c16"]::before {
+    width: 704px;
+    clip: rect(0, 704px, 44px, 660px);
+    margin-left: -660px;
+}
 
 .flair-small{
 	transform: scale(0.5) translate(0px,-11px);
@@ -110,40 +149,51 @@
 /* Team flair sheet */
 .flair[class*="-steams"]::before {
     content: "";
-    background-image: url("flairs-teams-2x.png");
+    background-image: url("data/flairs-teams.png?q=1580089176");
     height: 44px;
     color: transparent;
-	background-size: 440px 352px;
+	background-size: 704px 704px;
 	position: absolute;
 }
  
 /* Rank flair sheet */
 .flair[class*="-sranks"]::before {
     content: "";
-    background-image: url("flairs-ranks-2x.png");
+    background-image: url("data/flairs-ranks.png?q=1580089173");
     height: 44px;
     color: transparent;
-	background-size: 440px 44px;
+	background-size: 308px 308px;
 	position: absolute;
 }
 
 /* Flag flair sheet */
 .flair[class*="-sflags"]::before {
     content: "";
-    background-image: url("flairs-flags-2x.png");
-    height: 46px;
+    background-image: url("data/flairs-flags.png?q=1580089174");
+    height: 44px;
     color: transparent;
-	background-size: 506px 185;
+	background-size: 440px 440px;
 	position: absolute;
 }
 
 /* Special flair sheet */
 .flair[class*="-sspecial"]::before {
     content: "";
-    background-image: url("flairs-special-2x.png");
-    height: 46px;
+    background-image: url("data/flairs-special.png?q=1580089172");
+    height: 44px;
     color: transparent;
-	background-size: 368px 46px;
+	background-size: 132px 132px;
 	position: absolute;
 }
+
+/* Miscellaneous flair sheet */
+.flair[class*="-smiscellaneous"]::before {
+    content: "";
+    background-image: url("data/flairs-miscellaneous.png?q=1580089411");
+    height: 44px;
+    color: transparent;
+	background-size: 264px 264px;
+	position: absolute;
+}
+
 

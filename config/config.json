@@ -1,4 +1,20 @@
 {
-	"ranks": ["rank bronze","rank silver","rank gold","rank platinum","rank diamond","rank master","rank grandmaster"],
-	"subreddit": "Competitiveoverwatch"
+	"ranks": ["bronze","silver","gold","platinum","diamond","master","grandmaster"],
+	"subreddit": "CO_Test",
+	"flair_sheets": ["teams", "special", "ranks", "flags", "logos", "miscellaneous"],
+	"categories": [
+		"Overwatch League Teams",
+		"Overwatch World Cup",
+		"Overwatch Contenders NA",
+		"Overwatch Contenders EU",
+		"Overwatch Contenders KR",
+		"Overwatch Contenders CN",
+		"Overwatch Contenders PAC",
+		"Overwatch Contenders AU",
+		"Overwatch Contenders SA",
+		"Heroes",
+		"Logos",
+		"Legacy Team Flairs"
+	],
+	"flair_size": 44
 }
