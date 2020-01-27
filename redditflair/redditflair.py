@@ -36,13 +36,16 @@ def reddit_flair():
 	else:
 		user_object = Database.get_or_add_user(reddit_name)
 
-	flairs = Database.get_all_flair()
+	flairs = {}
+	for flair in Database.get_all_flair():
+		flairs[flair.short_name] = flair
+
 	categories = Database.get_flair_by_category()
 
 	response = make_response(
 		render_template(
 			'redditflair.html', **response_params, flairs=flairs, categories=categories, user=user_object,
-			ranks=config_data['config']['ranks'])
+			ranks=config_data['config']['ranks'], category_names=config_data['config']['categories'])
 	)
 
 	if session.get('updated'):
@@ -171,26 +174,22 @@ def fetch_rank():
 
 @redditflair.route('/redditflair/updateflair', methods=['GET'])
 def update_flair():
-	flairdata = config.get_flairdata()
-
-	flair_1 = request.args.get('flair1_id', None)
-	flair_2 = request.args.get('flair2_id', None)
+	flair1_name = request.args.get('flair1_id', None)
+	flair2_name = request.args.get('flair2_id', None)
 	custom_text = request.args.get('customflairtext', '')
-	display_sr = request.args.get('displaysr', None)
 	try:
-		# check flair consistency
-		if flair_1 == flair_2:
-			flair_2 = None
-		if (flair_1 and flair_1 not in flairdata['flairs']) or (flair_2 and flair_2 not in flairdata['flairs']):
+		flair1 = Database.get_flair_by_short_name(flair1_name)
+		flair2 = Database.get_flair_by_short_name(flair2_name)
+		if (flair1_name and not flair1) or (flair2_name and not flair2):
 			raise Exception('Unknown flair ID')
 		redditname = session.get('redditname')
 		user = Database.get_or_add_user(redditname)
-		user.flair1 = flair_1
-		user.flair_2 = flair_2
-		user.custom_text = custom_text
+		user.flair1 = flair1_name
+		user.flair2 = flair2_name
+		user.flairtext = custom_text
 		Database.commit()
 
-		Reddit.set_flair(redditname, display_sr)
+		Reddit.set_flair(redditname)
 		session['updated'] = True
 	except:
 		pass

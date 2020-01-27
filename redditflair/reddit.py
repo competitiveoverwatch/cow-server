@@ -17,19 +17,19 @@ class Reddit:
 		return praw.Reddit(config['creds']['redditBotUserName'], user_agent='rankification by u/Watchful1')
 
 	@classmethod
-	def set_flair(cls, name, display_sr=True):
+	def set_flair(cls, name):
 		user_object = Database.get_or_add_user(name)
 
 		text = ''
 		css_class = ''
 		if user_object.flair1:
 			flair1 = Database.get_flair_by_short_name(user_object.flair1)
-			css_class += 's' + flair1['sheet'] + '-c' + flair1['col'] + '-r' + flair1['row']
-			text += cls.flair_name(flair1, user_object, display_sr)
+			css_class += 's' + flair1.sheet + '-c' + flair1.col + '-r' + flair1.row
+			text += cls.flair_name(flair1, user_object)
 		if user_object.flair2:
 			flair2 = Database.get_flair_by_short_name(user_object.flair2)
-			css_class += '-2s' + flair2['sheet'] + '-2c' + flair2['col'] + '-2r' + flair2['row']
-			text += ' | ' + cls.flair_name(flair2, user_object, display_sr)
+			css_class += '-2s' + flair2.sheet + '-2c' + flair2.col + '-2r' + flair2.row
+			text += cls.flair_name(flair2, user_object)
 
 		# custom text
 		if user_object.flairtext:
@@ -46,16 +46,11 @@ class Reddit:
 		subreddit.flair.set(user, css_class=css_class, text=text)
 
 	@classmethod
-	def flair_name(cls, flair, user_object, display_sr=True):
+	def flair_name(cls, flair, user_object):
 		flair_name = ''
-		if flair['name'] == 'Verified':
-			verified_user = Database.get_or_add_user(user_object.name)
-			if verified_user.special_id:
-				flair_name += u'\u2714 ' + verified_user.special_text
-		else:
-			flair_name += flair['name']
-			if display_sr and flair['sheet'] == 'ranks':
-				flair_name += ' (' + str(user_object.sr) + ')'
+		flair_name += ':' + flair.short_name + ':'
+		if flair.name == 'Verified' and user_object.special_id:
+			flair_name += ' ' + user_object.special_text
 		return flair_name
 
 	@classmethod
@@ -84,11 +79,10 @@ class Reddit:
 			'static/data/' + image_name + '.png')
 
 	@classmethod
-	def re_save_stylesheet(cls):
+	def save_stylesheet(cls, stylesheet):
 		reddit_praw = Reddit.get_global_praw()
 		subreddit = reddit_praw.subreddit(config['config']['subreddit'])
-		css = subreddit.stylesheet().stylesheet
-		subreddit.stylesheet.update(css)
+		subreddit.stylesheet.update(stylesheet)
 
 
 def reddit_link(state):

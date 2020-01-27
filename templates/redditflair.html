@@ -142,9 +142,9 @@
                             <div id="flairpicker1" class="flairpicker flairpicker-left flairpicker-active" onclick="setSetting(1)" oncontextmenu="removeFlair(1);return false;">
                             {% if user.flair1 %}
                                 {% set flair = flairs[user.flair1] %}
-                                <div id="flair1" class="flair flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>
+                                <div id="flair1" class="flair flair-s{{flair.sheet}}-c{{flair.col}}-r{{flair.row}}"></div>
                                 <input type="hidden" name="flair1_id" id="flair1_id" value="{{user.flair1}}">
-                                <span id="flair1_text" class="flairpicker-text">{{flair['name']}}</span>
+                                <span id="flair1_text" class="flairpicker-text">{{flair.name}}</span>
                             {% else %}
                                 <div id="flair1" class="flair"></div>
                                 <input type="hidden" name="flair1_id" id="flair1_id">
@@ -155,9 +155,9 @@
                             <div id="flairpicker2" class="flairpicker" onclick="setSetting(2)" oncontextmenu="removeFlair(2);return false;">
                             {% if user.flair2 %}
                                 {% set flair = flairs[user.flair2] %}
-                                <div id="flair2" class="flair flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>
+                                <div id="flair2" class="flair flair-s{{flair.sheet}}-c{{flair.col}}-r{{flair.row}}"></div>
                                 <input type="hidden" name="flair2_id" id="flair2_id" value="{{user.flair2}}">
-                                <span id="flair2_text" class="flairpicker-text">{{flair['name']}}</span>
+                                <span id="flair2_text" class="flairpicker-text">{{flair.name}}</span>
                             {% else %}
                                 <div id="flair2" class="flair"></div>
                                 <input type="hidden" name="flair2_id" id="flair2_id">
@@ -185,7 +185,7 @@
                             <div class="flex-container-flairs">
                             {% if user.special_id in flairs %}
                                 {% set flair = flairs[user.special_id] %}
-                                <div class="flair-item" onclick="setFlair(event, '{{user.special_id}}')"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}} - {{user.special_text}}</div>
+                                <div class="flair-item" onclick="setFlair(event, '{{user.special_id}}')"><div class="flair flair-small flair-s{{flair.sheet}}-c{{flair.col}}-r{{flair.row}}"></div>{{flair.name}} - {{user.special_text}}</div>
                             {% endif %}
                             </div>
                         </div>
@@ -202,29 +202,22 @@
                             {% for item in ranks %}
                                 {% set flair = flairs[item] %}
                                 {% if loop.index <= rankNum %}
-                                    <div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-s{{flair['sheet']}}-c{{flair['col']}}-r{{flair['row']}}"></div>{{flair['name']}}</div>
+                                    <div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-s{{flair.sheet}}-c{{flair.col}}-r{{flair.row}}"></div>{{flair.name}}</div>
                                 {% endif %}
                             {% endfor %}
                             </div>
                             <div class="flex-container-verification">
                                 <div class="flair-verification-button" onClick="location.href = '/redditflair/rankverification'">Verify your rank</div>
-                                {% if rankNum > 0 %}
-                                    <div class="sr-checkbox">
-                                        <input class="checkbox" type="checkbox" value="1" name="displaysr" id="displaysr" checked>
-                                        <label for="displaysr">Display my SR: {{user.sr}}</label>
-                                    </div>
-                                {% endif %}
-                                
                             </div>
                         </div>
                     </div>
 
                     <!-- Categories -->
-                    {% for category, items in categories.items() %}
+                    {% for category in category_names %}
                         <div class="container">
                             <div class="category-label">{{category}}</div>
                             <div class="flex-container-flairs">
-                            {% for flair in items %}
+                            {% for flair in categories[category] %}
                                 <div class="flair-item" onclick="setFlair(event, '{{flair.short_name}}', {{'true' if flair.is_active else 'false'}})"><div class="flair flair-small flair-s{{flair.sheet}}-c{{flair.col}}-r{{flair.row}}"></div>{{flair.name}}</div>
                             {% endfor %}
                             </div>

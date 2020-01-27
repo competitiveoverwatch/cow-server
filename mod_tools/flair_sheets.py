@@ -180,14 +180,14 @@ def flair_makesheets():
 	dirty_sheets = set()
 	for flair in Database.get_dirty_flair():
 		dirty_sheets.add(flair.sheet)
-		path = 'static/data/flair_images/' + flair.short_name + '.png'
-		if not flair.is_active:
-			image = Image.open(path)
-			image = fade_image(image)
-			path = 'static/data/temp_faded.png'
-			image.save(path)
+		# path = 'static/data/flair_images/' + flair.short_name + '.png'
+		# if not flair.is_active:
+		# 	image = Image.open(path)
+		# 	image = fade_image(image)
+		# 	path = 'static/data/temp_faded.png'
+		# 	image.save(path)
 
-		Reddit.upload_emoji(flair.short_name, path)
+		# Reddit.upload_emoji(flair.short_name, path)
 
 	# iterate over stylesheets
 	for sheet in dirty_sheets:
@@ -201,19 +201,12 @@ def flair_makesheets():
 	# change stylesheets if necessary
 	with open('static/flairs.css', 'w') as cssfile:
 		cssfile.write(site_stylesheet)
-	if reddit_stylesheet_new == reddit_stylesheet:
-		reddit_stylesheet_new = None
 
-	Reddit.re_save_stylesheet()
+	Reddit.save_stylesheet(reddit_stylesheet_new)
 
 	# make changes permanent on website
 	Database.merge_dirty()
 	Database.commit()
-
-	# create flairsheets zip
-	with zipfile.ZipFile('static/data/flairsheets.zip', 'w') as flairsheetzip:
-		for sheet in config_data['config']['flair_sheets']:
-			flairsheetzip.write('static/data/flairs-' + sheet + '.png')
 
 	# print out the flair json
 	flairs_table = {}
@@ -229,12 +222,7 @@ def flair_makesheets():
 	with open('static/data/flairs.json', 'w') as flair_data:
 		json.dump(flairs_table, flair_data, indent=4)
 
-	response = make_response(
-		render_template(
-			'makesheets.html', **response_params,
-			flairsheets=config_data['config']['flair_sheets'],
-			reddit_stylesheet=reddit_stylesheet_new))
-	return response
+	return redirect('/flairsheets')
 
 
 def update_stylesheet(stylesheet, flairsheet, size, timestamp=False):
@@ -256,7 +244,7 @@ def make_flair_matrix(sheet):
 	size = 1
 	flairs = Database.get_all_flair(dirty=True)
 	for flair in flairs:
-		if flair.sheet == sheet:
+		if flair.sheet == sheet and flair.col and flair.row:
 			row = int(flair.row)
 			col = int(flair.col)
 			if row > size:
@@ -267,7 +255,7 @@ def make_flair_matrix(sheet):
 	matrix = [[None for x in range(size)] for y in range(size)]
 	# insert flairs in matrix
 	for flair in flairs:
-		if flair.sheet == sheet:
+		if flair.sheet == sheet and flair.col and flair.row:
 			row = int(flair.row) - 1
 			col = int(flair.col) - 1
 			matrix[row][col] = flair

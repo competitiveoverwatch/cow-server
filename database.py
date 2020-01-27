@@ -139,7 +139,7 @@ class Flair(db.Model):
 
 	is_dirty = db.Column(db.Boolean)
 
-	def __init__(self, short_name, name, sheet, category, is_active, col=None, row=None, is_dirty=True):
+	def __init__(self, short_name, name, sheet, category, is_active=True, col=None, row=None, is_dirty=True):
 		self.short_name = short_name
 		self.name = name
 		self.sheet = sheet
