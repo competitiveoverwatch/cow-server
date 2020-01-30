@@ -1,7 +1,7 @@
 import pickle
 from datetime import timedelta
 from uuid import uuid4
-from redis import Redis
+from redis import StrictRedis as Redis
 from werkzeug.datastructures import CallbackDict
 from flask.sessions import SessionInterface, SessionMixin
 
