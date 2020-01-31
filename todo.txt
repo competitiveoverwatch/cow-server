@@ -18,6 +18,6 @@
 update other bots that use flair json
 
 
-https://www.digitalocean.com/community/questions/flask-nginx-uwsgi-ubuntu-tutorial
-install nginx
-install uwsgi
+separate prod and local reddit credentials
+secure certificate
+watchful.gr

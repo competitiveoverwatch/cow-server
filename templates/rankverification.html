@@ -46,7 +46,7 @@
 				});
 				
 				window.platform_select.addEventListener('change', function() {
-					const platform = window.platform_select.value
+					const platform = window.platform_select.value;
 
 					window.psnname.style.display = (platform === "psn")? "inline-block" : "none";
 					window.xblname.style.display = (platform === "xbl")? "inline-block" : "none";
@@ -97,6 +97,7 @@
 
 						{% if step > 1 %}
 							<input type="submit" value="Change Account" title="Change Reddit Account" />
+                            <p class="info">You may need to logout <a href="https://www.blizzard.com/en-us/">here</a> before changing accounts</p>
 						{% endif %}
 					</form>
 				</li>
