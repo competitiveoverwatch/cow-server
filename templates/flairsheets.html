@@ -19,7 +19,6 @@
 	<body>
         <main role="main">
             <a href="/flairsheets/new" style="font-size:2rem;">New Flair</a><br>
-            <a href="https://drive.google.com/open?id=1AkdwKmU8gzLDaMQ8UAuyXjIdxIA89p6MxGCpI48v1a4">Readme</a>
             <br><br>
             {% if dirty_flairs %}
                 <h1>Pending flairs</h1>
@@ -60,7 +59,7 @@
             </table>
             <br><br>
             {% if dirty_flairs %}
-                <a href="/flairsheets/makesheets">Make Flairsheets</a><br>
+                <a href="/flairsheets/makesheets">Push changes</a><br>
             {% endif %}
             <a href="{{ url_for('static', filename='data/flairsheets.zip') }}">Download current sheets</a>
         </main>

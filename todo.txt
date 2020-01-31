@@ -17,7 +17,3 @@
 -finish fixing /redditflair
 update other bots that use flair json
 
-
-separate prod and local reddit credentials
-secure certificate
-watchful.gr
