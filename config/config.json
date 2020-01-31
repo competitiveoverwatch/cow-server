@@ -16,5 +16,6 @@
 		"Logos",
 		"Legacy Team Flairs"
 	],
-	"flair_size": 44
+	"flair_size": 44,
+	"maintenanceMode": 1
 }

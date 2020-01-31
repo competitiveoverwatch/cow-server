@@ -16,6 +16,18 @@ limiter = Limiter(
 redditflair = Blueprint('redditflair', __name__)
 
 
+@redditflair.before_request
+def check_for_maintenance():
+	if config_data['config']['maintenanceMode'] == 1 and request.path != '/maintenance' and 'static' not in request.path:
+		return redirect('/maintenance')
+
+
+# root route
+@redditflair.route('/maintenance')
+def maintenance():
+	return make_response(render_template('maintenance.html'))
+
+
 # root route
 @redditflair.route('/')
 def root():
