@@ -120,7 +120,7 @@ def fetch_rank():
 		current_app.logger.info(
 			f"Parsing blizzard profile u/{redditname} - {battletag} - {blizzard_id} "
 			f"- {xbl_name} - {psn_name} - {platform}")
-		rank = parse_ow_profile(battletag, blizzard_id, xbl_name, psn_name, platform)
+		rank, url = parse_ow_profile(battletag, blizzard_id, xbl_name, psn_name, platform)
 		current_app.logger.info(
 			f"Blizzard profile result u/{redditname} - {rank}")
 		if rank:
@@ -166,10 +166,11 @@ def fetch_rank():
 					db.session.commit()
 
 			session['step'] = 1
+			return redirect('/redditflair')
 		else:
 			session['rank'] = 'error'
-
-	return redirect('/redditflair')
+			session['rank_url'] = url
+			return redirect('/redditflair/rankverification')
 
 
 @redditflair.route('/redditflair/updateflair', methods=['GET'])

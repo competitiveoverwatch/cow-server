@@ -212,18 +212,18 @@ def parse_console_profile(blizzard_id, xbl_name, psn_name, platform):
 	try:
 		html = urllib.request.urlopen(console_url)
 	except urllib.error.HTTPError as e:
-		return None
+		return None, console_url
 
 	soup = BeautifulSoup(html, 'html.parser')
 
 	scripts = soup.findAll('script')
 	if not scripts:
-		return None
+		return None, console_url
 	last_script = scripts[-1]
 	found_id = re.match(r'window.app.career.init\((\d+),', last_script.get_text(strip=True)).group(1)
 
 	if int(found_id) != int(blizzard_id):
-		return None
+		return None, console_url
 
 	# get rank
 	rank_node = soup.select('div.competitive-rank')
@@ -242,7 +242,7 @@ def parse_console_profile(blizzard_id, xbl_name, psn_name, platform):
 
 	if rank == 0:
 		rank = None
-	return rank
+	return rank, console_url
 
 
 def parse_pc_profile(battletag):
@@ -268,4 +268,4 @@ def parse_pc_profile(battletag):
 
 	if rank == 0:
 		rank = None
-	return rank
+	return rank, pc_url

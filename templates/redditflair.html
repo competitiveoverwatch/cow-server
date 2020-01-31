@@ -50,9 +50,22 @@
         }
         
         function updateTextLength() {
-            flair1Len = parent.document.getElementById('flair1_text').innerHTML.length;
-            flair2Len = parent.document.getElementById('flair2_text').innerHTML.length;
-            flairLen = flair1Len + flair2Len + 6;
+            flairLen = 0;
+            flair1Len = parent.document.getElementById('flair1_id').getAttribute("value").length;
+            if (flair1Len > 0) {
+                flairLen += flair1Len + 2
+            }
+            flair2Len = parent.document.getElementById('flair2_id').getAttribute("value").length;
+            if (flair2Len > 0) {
+                flairLen += flair2Len + 2
+            }
+            if (flairLen > 0) {
+                flairLen += 3
+            }
+            specialBox = parent.document.getElementById('special-flair-text');
+            if (specialBox) {
+                flairLen += specialBox.value.length + 3
+            }
             customTextLen = parent.document.getElementById('custom-flair-text').value.length;
             charsLeft = 64 - flairLen - customTextLen;
             parent.document.getElementById('custom-flair-text-length').innerHTML = charsLeft.toString();
@@ -147,7 +160,7 @@
                                 <span id="flair1_text" class="flairpicker-text">{{flair.name}}</span>
                             {% else %}
                                 <div id="flair1" class="flair"></div>
-                                <input type="hidden" name="flair1_id" id="flair1_id">
+                                <input type="hidden" name="flair1_id" id="flair1_id" value>
                                 <span id="flair1_text" class="flairpicker-text"></span>
                             {% endif %}
                             </div>
@@ -160,14 +173,18 @@
                                 <span id="flair2_text" class="flairpicker-text">{{flair.name}}</span>
                             {% else %}
                                 <div id="flair2" class="flair"></div>
-                                <input type="hidden" name="flair2_id" id="flair2_id">
+                                <input type="hidden" name="flair2_id" id="flair2_id" value>
                                 <span id="flair2_text" class="flairpicker-text"></span>
                             {% endif %}
                             </div>
                         </div>
                         <div class="flex-container">
                             <input class="text-box custom-flair-text" id="custom-flair-text" type="text" name="customflairtext" placeholder="Custom Flair Text" value="{{user.flairtext}}" onkeyup="updateTextLength()">
-                            <span class="custom-flair-text-length" id="custom-flair-text-length">0</span>                           
+                            {% if user.special_text %}
+                                &nbsp;
+                                <input class="text-box custom-flair-text" id="special-flair-text" type="text" name="specialflairtext" disabled value="{{user.special_text}}">
+                            {% endif %}
+                            <span class="custom-flair-text-length" id="custom-flair-text-length">0</span>
                             <input class="update-flair-button" type="submit" value="Update Flair">
                             <input class="reset-flair-button" type="button" onClick="resetFlairs()" value="&#10060">
                         </div>

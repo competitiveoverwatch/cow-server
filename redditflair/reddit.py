@@ -25,33 +25,34 @@ class Reddit:
 		if user_object.flair1:
 			flair1 = Database.get_flair_by_short_name(user_object.flair1)
 			css_class += 's' + flair1.sheet + '-c' + flair1.col + '-r' + flair1.row
-			text += cls.flair_name(flair1, user_object)
+			text += ':' + flair1.short_name + ':'
 		if user_object.flair2:
 			flair2 = Database.get_flair_by_short_name(user_object.flair2)
 			css_class += '-2s' + flair2.sheet + '-2c' + flair2.col + '-2r' + flair2.row
-			text += cls.flair_name(flair2, user_object)
+			text += ':' + flair2.short_name + ':'
+
+		# special text
+		if user_object.special_text:
+			# truncate if necessary
+			max_len = 64 - len(text) - 3
+			special_text = user_object.special_text[:max_len] if len(
+				user_object.special_text) > max_len else user_object.special_text
+			text = special_text + u' \u2014 ' + text
 
 		# custom text
 		if user_object.flairtext:
 			# truncate if necessary
 			max_len = 64 - len(text) - 3
-			custom_text = user_object.flairtext[:max_len] if len(
-				user_object.flairtext) > max_len else user_object.flairtext
-			text = custom_text + u' \u2014 ' + text
+			if max_len > 0:
+				custom_text = user_object.flairtext[:max_len] if len(
+					user_object.flairtext) > max_len else user_object.flairtext
+				text = custom_text + u' \u2014 ' + text
 
 		# set flair via praw
 		reddit_praw = Reddit.get_global_praw()
 		user = reddit_praw.redditor(name)
 		subreddit = reddit_praw.subreddit(config['config']['subreddit'])
 		subreddit.flair.set(user, css_class=css_class, text=text)
-
-	@classmethod
-	def flair_name(cls, flair, user_object):
-		flair_name = ''
-		flair_name += ':' + flair.short_name + ':'
-		if flair.name == 'Verified' and user_object.special_id:
-			flair_name += ' ' + user_object.special_text
-		return flair_name
 
 	@classmethod
 	def auth_link(cls, state):

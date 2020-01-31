@@ -21,7 +21,7 @@ class Database:
 
 	@classmethod
 	def get_verified_users(cls):
-		return db.session.query(User).filter_by(specialid='verified').order_by(User.name).all()
+		return db.session.query(User).filter_by(special_id='verified').order_by(User.name).all()
 
 	@classmethod
 	def check_moderator(cls, name):
