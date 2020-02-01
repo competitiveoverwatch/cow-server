@@ -180,14 +180,14 @@ def flair_makesheets():
 	dirty_sheets = set()
 	for flair in Database.get_dirty_flair():
 		dirty_sheets.add(flair.sheet)
-		# path = 'static/data/flair_images/' + flair.short_name + '.png'
-		# if not flair.is_active:
-		# 	image = Image.open(path)
-		# 	image = fade_image(image)
-		# 	path = 'static/data/temp_faded.png'
-		# 	image.save(path)
+		path = 'static/data/flair_images/' + flair.short_name + '.png'
+		if not flair.is_active:
+			image = Image.open(path)
+			image = fade_image(image)
+			path = 'static/data/temp_faded.png'
+			image.save(path)
 
-		# Reddit.upload_emoji(flair.short_name, path)
+		Reddit.upload_emoji(flair.short_name, path)
 
 	# iterate over stylesheets
 	for sheet in dirty_sheets:

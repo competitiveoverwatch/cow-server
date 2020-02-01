@@ -15,5 +15,7 @@
 -single category
 -upload stylesheet
 -finish fixing /redditflair
-update other bots that use flair json
 
+update other bots that use flair json
+write up news post
+push new flair emoji's/sheets

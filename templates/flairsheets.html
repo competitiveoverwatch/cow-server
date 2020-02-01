@@ -39,6 +39,8 @@
                     {% endfor %}
                 </table>
                 <br><br>
+                <a href="/flairsheets/makesheets">Push changes</a><br>
+                <br><br>
             {% endif %}
             <table>
                 <h1>Current flairs</h1>
@@ -57,11 +59,6 @@
                     </tr>
                 {% endfor %}
             </table>
-            <br><br>
-            {% if dirty_flairs %}
-                <a href="/flairsheets/makesheets">Push changes</a><br>
-            {% endif %}
-            <a href="{{ url_for('static', filename='data/flairsheets.zip') }}">Download current sheets</a>
         </main>
 	</body>
 </html>
