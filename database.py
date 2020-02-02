@@ -112,7 +112,7 @@ class User(db.Model):
 	special_id = db.Column(db.String(60))
 	special_text = db.Column(db.String(60))
 
-	def __init__(self, name, battletag='', psn='', xbl='', flair1='', flair2='', flairtext='', sr=0, rank=0):
+	def __init__(self, name, battletag='', psn='', xbl='', flair1='', flair2='', flairtext='', sr=0, rank=0, is_mod=False, special_id=None, special_text=None):
 		self.name = name
 		self.battletag = battletag
 		self.psn = psn
@@ -122,6 +122,9 @@ class User(db.Model):
 		self.flairtext = flairtext
 		self.sr = sr
 		self.rank = rank
+		self.is_mod = is_mod
+		self.special_id = special_id
+		self.special_text = special_text
 
 
 class Flair(db.Model):
