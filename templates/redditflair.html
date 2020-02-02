@@ -216,12 +216,14 @@
                     <div class="container"> 
                         <div class="category-label">Rank Flairs</div>
                             <div class="flex-container-flairs">
-                            {% for item in ranks %}
-                                {% set flair = flairs[item] %}
-                                {% if loop.index <= rankNum %}
-                                    <div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-s{{flair.sheet}}-c{{flair.col}}-r{{flair.row}}"></div>{{flair.name}}</div>
-                                {% endif %}
-                            {% endfor %}
+                            {% if rankNum %}
+                                {% for item in ranks %}
+                                    {% set flair = flairs[item] %}
+                                    {% if loop.index <= rankNum %}
+                                        <div class="flair-item" onclick="setFlair(event, '{{item}}')"><div class="flair flair-small flair-s{{flair.sheet}}-c{{flair.col}}-r{{flair.row}}"></div>{{flair.name}}</div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
                             </div>
                             <div class="flex-container-verification">
                                 <div class="flair-verification-button" onClick="location.href = '/redditflair/rankverification'">Verify your rank</div>
