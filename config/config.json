@@ -1,6 +1,6 @@
 {
 	"ranks": ["bronze","silver","gold","platinum","diamond","master","grandmaster"],
-	"subreddit": "CompetitiveOverwatch",
+	"subreddit": "CO_Test",
 	"flair_sheets": ["teams", "special", "ranks", "flags", "logos", "miscellaneous"],
 	"categories": [
 		"Overwatch League Teams",
