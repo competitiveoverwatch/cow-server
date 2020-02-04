@@ -25,7 +25,7 @@
             <meta http-equiv="refresh" content="0;url={{redditLink}}" />
         {% endif %}
         {% if session.get('updated') %}
-            <meta http-equiv="refresh" content="2;url=https://competitiveoverwatch.reddit.com" />
+            <meta http-equiv="refresh" content="2;url=https://{{subreddit}}.reddit.com" />
         {% endif %}
     </head>
     <script>
@@ -138,11 +138,11 @@
         {% if session.get('redditname') %}
             {% if session.get('updated') %}
                 <header role="banner">
-                    <h2>Your flair was updated, you will be redirected to <a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> in a few seconds.</h2>
+                    <h2>Your flair was updated, you will be redirected to <a href="https://{{subreddit}}.reddit.com">r/{{subreddit}}</a> in a few seconds.</h2>
                 </header>
             {% else %}
                 <header role="banner">
-                    <h2>Hey, u/{{session.get('redditname')}}! Choose your <a href="https://competitiveoverwatch.reddit.com">r/CompetitiveOverwatch</a> flairs.</h2>
+                    <h2>Hey, u/{{session.get('redditname')}}! Choose your <a href="https://{{subreddit}}.reddit.com">r/{{subreddit}}</a> flairs.</h2>
                 </header>
                 <!-- Flair Selectors -->
                 <form action="/redditflair/updateflair" method="get">

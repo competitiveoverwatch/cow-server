@@ -57,7 +57,8 @@ def reddit_flair():
 	response = make_response(
 		render_template(
 			'redditflair.html', **response_params, flairs=flairs, categories=categories, user=user_object,
-			ranks=config_data['config']['ranks'], category_names=config_data['config']['categories'])
+			ranks=config_data['config']['ranks'], category_names=config_data['config']['categories'],
+			subreddit=config_data['config']['subreddit'])
 	)
 
 	if session.get('updated'):

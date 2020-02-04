@@ -220,7 +220,11 @@ def parse_console_profile(blizzard_id, xbl_name, psn_name, platform):
 	if not scripts:
 		return None, console_url
 	last_script = scripts[-1]
-	found_id = re.match(r'window.app.career.init\((\d+),', last_script.get_text(strip=True)).group(1)
+	matches = re.match(r'window.app.career.init\((\d+),', last_script.get_text(strip=True))
+	if not matches:
+		return None, console_url
+
+	found_id = matches.group(1)
 
 	if int(found_id) != int(blizzard_id):
 		return None, console_url
