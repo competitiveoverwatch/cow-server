@@ -196,8 +196,8 @@ def update_flair():
 		if (flair1_name and not flair1) or (flair2_name and not flair2):
 			raise Exception('Unknown flair ID')
 		redditname = session.get('redditname')
-		# current_app.logger.info(
-		# 	f"Flair update u/{redditname}: {flair1_name} : {flair2_name} : {custom_text}")
+		current_app.logger.warning(
+			f"Flair update u/{redditname}: {flair1_name} : {flair2_name} : {custom_text}")
 		user = Database.get_or_add_user(redditname)
 		user.flair1 = flair1_name
 		user.flair2 = flair2_name
