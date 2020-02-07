@@ -27,6 +27,8 @@ class Reddit:
 			css_class += 's' + flair1.sheet + '-c' + flair1.col + '-r' + flair1.row
 			text += ':' + flair1.short_name + ':'
 		if user_object.flair2:
+			if user_object.flair1:
+				text += ' '
 			flair2 = Database.get_flair_by_short_name(user_object.flair2)
 			css_class += '-2s' + flair2.sheet + '-2c' + flair2.col + '-2r' + flair2.row
 			text += ':' + flair2.short_name + ':'

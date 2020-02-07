@@ -203,10 +203,10 @@ def parse_ow_profile(battletag, blizzard_id, xbl_name, psn_name, platform):
 
 def parse_console_profile(blizzard_id, xbl_name, psn_name, platform):
 	if platform == 'psn':
-		psn_name = urllib.parse.quote(psn_name.replace('#', '-'))
+		psn_name = urllib.parse.quote(psn_name.replace('+', ' ').replace('#', '-'))
 		console_url = 'https://playoverwatch.com/en-us/career/psn/' + psn_name
 	else:
-		xbl_name = urllib.parse.quote(xbl_name.replace('#', '-'))
+		xbl_name = urllib.parse.quote(xbl_name.replace('+', ' ').replace('#', '-'))
 		console_url = 'https://playoverwatch.com/en-us/career/xbl/' + xbl_name
 
 	try:
