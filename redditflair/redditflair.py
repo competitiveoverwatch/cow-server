@@ -125,28 +125,27 @@ def fetch_rank():
 	region = session.get('region', None)
 	battletag = session.get('battletag', None)
 	blizzard_id = session.get('blizzardid', None)
-	platform = request.args.get('platform')
-	xbl_name = request.args.get('xblname')
-	psn_name = request.args.get('psnname')
+	#platform = request.args.get('platform')
+	#xbl_name = request.args.get('xblname')
+	#psn_name = request.args.get('psnname')
 
-	if region and battletag and blizzard_id and platform:
+	if region and battletag and blizzard_id:# and platform:
 		current_app.logger.info(
-			f"Parsing blizzard profile u/{redditname} - {battletag} - {blizzard_id} "
-			f"- {xbl_name} - {psn_name} - {platform}")
-		rank, url = parse_ow_profile(battletag, blizzard_id, xbl_name, psn_name, platform)
+			f"Parsing blizzard profile u/{redditname} - {battletag} - {blizzard_id}")
+		rank, url = parse_ow_profile(battletag, blizzard_id, None, None, "pc")
 		current_app.logger.info(
 			f"Blizzard profile result u/{redditname} - {rank}")
 		if rank:
 			session['rank'] = rank
 
 			# platform
-			session['platform'] = platform
-			if platform == 'pc':
-				session['platform'] = 'PC'
-			elif platform == 'xbl':
-				session['platform'] = 'PS4'
-			elif platform == 'psn':
-				session['platform'] = 'Xbox'
+			session['platform'] = 'PC'
+			# if platform == 'pc':
+			# 	session['platform'] = 'PC'
+			# elif platform == 'xbl':
+			# 	session['platform'] = 'PS4'
+			# elif platform == 'psn':
+			# 	session['platform'] = 'Xbox'
 
 			# rank number
 			rank_int = int(rank)
@@ -172,8 +171,8 @@ def fetch_rank():
 				if userObject:
 					userObject.battletag = battletag
 					userObject.blizzardid = blizzard_id
-					userObject.xbl = xbl_name
-					userObject.psn = psn_name
+					userObject.xbl = ""
+					userObject.psn = ""
 					userObject.sr = rank_int
 					userObject.rank = session['ranknum']
 					db.session.commit()

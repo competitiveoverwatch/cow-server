@@ -108,41 +108,7 @@
 					<span role="img" aria-label="Step 2 {{ 'complete' if step > 2 }}" class="circle">2</span>
 
 					<form action="/redditflair/fetchrank" method="get">
-						<select
-							name="platform"
-							id="platform_select"
-							title="Overwatch Platform"
-							{% if step < 2 %}
-								disabled
-							{% endif %}>
-								{% for platform in [("pc", "PC"), ("psn", "PS4"), ("xbl", "Xbox")] %}
-									<option
-										value="{{ platform[0] }}"
-										{% if session.get('platform') == platform %}
-											selected
-										{% endif %}>{{ platform[1] }}</option>
-								{% endfor %}
-						</select>
-
 						<input type="submit" value="Fetch Rank" title="Fetch Overwatch Rank" id="fetchrank_button">
-
-						<input
-							type="text"
-							autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-							pattern="[a-zA-Z0-9_-]{3,16}"
-							class="console_username"
-							id="psnname"
-							name="psnname"
-							placeholder="PSN Online ID" >
-
-						<input
-							type="text"
-							autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-							pattern="[a-zA-Z0-9 ]{1,15}"
-							class="console_username"
-							id="xblname"
-							name="xblname"
-							placeholder="Xbox Live Gamertag">
 					</form>
 				</li>
 			</ol>

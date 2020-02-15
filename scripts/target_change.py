@@ -5,16 +5,23 @@ from database import Flair, User
 
 dbConn = sqlite3.connect("cowserver.db")
 SUBREDDIT = "CompetitiveOverwatch"
-COMMIT_CHANGES = False
+COMMIT_CHANGES = True
 
 
 def update_user(user):
 	c = dbConn.cursor()
 	c.execute('''
 		UPDATE user
-		(name, flair1, flair2, flairtext, sr, rank, is_mod, special_id, special_text)
-		VALUES (?, ?, ?, ?, ?, ?, ?)
-	''', (user.name, user.flair1, user.flair2, user.flairtext, user.sr, user.rank, user.is_mod, user.special_id, user.special_text))
+		SET flair1 = ?,
+			flair2 = ?,
+			flairtext = ?,
+			sr = ?,
+			rank = ?,
+			is_mod = ?,
+			special_id = ?,
+			special_text = ?
+		WHERE name = ?
+	''', (user.flair1, user.flair2, user.flairtext, user.sr, user.rank, user.is_mod, user.special_id, user.special_text, user.name))
 	dbConn.commit()
 
 
