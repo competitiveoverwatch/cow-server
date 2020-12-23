@@ -96,11 +96,11 @@ def flair_edit(id):
 				flair.name = name
 			else:
 				changes.append(f"name: {flair.name}")
-			if faded == 'yes' and not flair.is_active:
-				changes.append(f"faded: yes - no")
-				flair.is_active = False
-			elif faded == 'no' and flair.is_active:
+			if faded == 'yes' and flair.is_active:
 				changes.append(f"faded: no - yes")
+				flair.is_active = False
+			elif faded == 'no' and not flair.is_active:
+				changes.append(f"faded: yes - no")
 				flair.is_active = True
 			if flair.category != category:
 				changes.append(f"category: {flair.category} - {category}")
@@ -109,9 +109,10 @@ def flair_edit(id):
 			Database.commit()
 			# Upload image if necessary
 			if 'file' in request.files:
-				changes.append(f"image updated")
 				file = request.files['file']
-				save_image(file, flair.short_name)
+				if file.filename != '':
+					changes.append(f"image updated")
+					save_image(file, flair.short_name)
 
 			current_app.logger.warning(f"u/{redditname} updated flair: {', '.join(changes)}")
 
