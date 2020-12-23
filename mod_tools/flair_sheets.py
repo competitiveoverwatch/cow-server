@@ -5,7 +5,7 @@ import tinify
 import zipfile
 
 from PIL import Image, ImageEnhance
-from flask import Blueprint, make_response, render_template, session, redirect, request
+from flask import Blueprint, make_response, render_template, session, redirect, request, current_app
 
 import redditflair.reddit as reddit
 from config import data as config_data
@@ -88,19 +88,32 @@ def flair_edit(id):
 			if not flair.is_dirty:
 				flair = Database.clone_flair(flair)
 
+			changes = []
+
 			# update flair and json
-			flair.name = name
-			if faded == 'yes':
-				flair.is_active = False
+			if flair.name != name:
+				changes.append(f"name: {flair.name} - {name}")
+				flair.name = name
 			else:
+				changes.append(f"name: {flair.name}")
+			if faded == 'yes' and not flair.is_active:
+				changes.append(f"faded: yes - no")
+				flair.is_active = False
+			elif faded == 'no' and flair.is_active:
+				changes.append(f"faded: no - yes")
 				flair.is_active = True
-			flair.category = category
+			if flair.category != category:
+				changes.append(f"category: {flair.category} - {category}")
+				flair.category = category
 
 			Database.commit()
 			# Upload image if necessary
 			if 'file' in request.files:
+				changes.append(f"image updated")
 				file = request.files['file']
 				save_image(file, flair.short_name)
+
+			current_app.logger.warning(f"u/{redditname} updated flair: {', '.join(changes)}")
 
 			return redirect('/flairsheets')
 
@@ -120,6 +133,7 @@ def flair_new():
 		if not Database.check_moderator(redditname):
 			return redirect('/redditflair')
 
+	current_app.logger.warning(f"u/{redditname} updated flair")
 	# process request
 	if request.method == 'POST':
 		short_name = request.form['short_name']
@@ -142,6 +156,8 @@ def flair_new():
 				category=category,
 				is_active=faded != 'yes'
 			)
+
+			current_app.logger.warning(f"u/{redditname} added flair: {short_name}, {name}, {flairsheet}, {category}, {faded}")
 
 			matrix = make_flair_matrix(flairsheet)
 			find_place(matrix, flair)
@@ -221,6 +237,8 @@ def flair_makesheets():
 		}
 	with open('static/data/flairs.json', 'w') as flair_data:
 		json.dump(flairs_table, flair_data, indent=4)
+
+	current_app.logger.warning(f"u/{redditname} pushed flairsheets")
 
 	return redirect('/flairsheets')
 

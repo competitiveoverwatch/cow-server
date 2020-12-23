@@ -1,4 +1,4 @@
-from flask import Blueprint, make_response, render_template, session, redirect, request
+from flask import Blueprint, make_response, render_template, session, redirect, request, current_app
 from redditflair.reddit import Reddit
 from database import db, User, Flair, Database
 
@@ -31,7 +31,14 @@ def user_verification_verify():
 	user_name = request.args.get('user', '')
 	description = request.args.get('description', '')
 
+	# moderator check
+	redditname = session.get('redditname')
+	if redditname:
+		if not Database.check_moderator(redditname):
+			return redirect('/redditflair')
+
 	user = Database.get_or_add_user(user_name)
+	current_app.logger.warning(f"u/{redditname} verified user u/{user.name} from {user.special_text} to {description}")
 	user.special_id = 'verified'
 	user.special_text = description
 	user.flair1 = 'verified'

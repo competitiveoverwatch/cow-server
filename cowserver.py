@@ -9,10 +9,34 @@ from database import db, User, Flair
 from werkzeug.utils import secure_filename
 import os
 import logging
+import requests
+from config import data as config
 
 content_security_policy = {
 	'style-src': '\'self\''
 }
+
+
+class WebhookHandler(logging.Handler):
+	def __init__(self, webhook):
+		super().__init__()
+		self.webhook = webhook
+
+	def emit(self, record):
+		try:
+			message = self.format(record)
+
+			if message is None or message == "":
+				return True
+
+			data = {"content": message[:2000]}
+			result = requests.post(self.webhook, data=data)
+
+			if not result.ok:
+				return False
+			return True
+		except Exception:
+			return False
 
 
 def setup_app():
@@ -53,6 +77,12 @@ def setup_database():
 app = setup_app()
 setup_database()
 app.logger.setLevel(logging.INFO)
+
+discord_logging_handler = WebhookHandler(config['creds']['loggingWebhook'])
+discord_logging_handler.setFormatter(logging.Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s"))
+discord_logging_handler.setLevel(logging.WARNING)
+app.logger.addHandler(discord_logging_handler)
+
 
 # cache buster
 @app.context_processor
