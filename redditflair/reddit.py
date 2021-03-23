@@ -92,6 +92,9 @@ def render_flair(user, flair1, flair2):
 			custom_text = user.flairtext[:max_len] if len(user.flairtext) > max_len else user.flairtext
 			text = custom_text + u' \u2014 ' + text
 
+	if not user.special_text and not user.flairtext:
+		text = " " + text
+
 	return text, css_class
 
 
