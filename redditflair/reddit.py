@@ -1,4 +1,5 @@
-from flask import session
+import prawcore.exceptions
+from flask import session, current_app
 from config import data as config
 from database import db, User, Flair, Database
 import praw
@@ -47,7 +48,10 @@ class Reddit:
 	def upload_emoji(cls, name, path):
 		reddit_praw = Reddit.get_global_praw()
 		subreddit = reddit_praw.subreddit(config['config']['subreddit'])
-		subreddit.emoji.add(name, path)
+		try:
+			subreddit.emoji.add(name, path)
+		except prawcore.exceptions.BadRequest:
+			current_app.logger.warning(f"BadRequest uploading emoji {name}, continuing")
 
 	@classmethod
 	def upload_stylesheet_image(cls, image_name):
