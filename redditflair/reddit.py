@@ -50,7 +50,7 @@ class Reddit:
 		subreddit = reddit_praw.subreddit(config['config']['subreddit'])
 		try:
 			subreddit.emoji.add(name, path)
-		except prawcore.exceptions.BadRequest:
+		except (prawcore.exceptions.BadRequest, KeyError):
 			current_app.logger.warning(f"BadRequest uploading emoji {name}, continuing")
 
 	@classmethod
