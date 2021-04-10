@@ -23,8 +23,21 @@ def save_image(file, short_name):
 
 		image = Image.open(path)
 		image = image.convert('RGBA')
-		image.thumbnail((64, 64), Image.ANTIALIAS)
-		image.save(path, quality=95, optimize=True)
+
+		background_color = (255, 255, 255, 0)
+		width, height = image.size
+		if width > height:
+			squared = Image.new(image.mode, (width, width), background_color)
+			squared.paste(image, (0, (width - height) // 2))
+		elif width < height:
+			squared = Image.new(image.mode, (height, height), background_color)
+			squared.paste(image, ((height - width) // 2, 0))
+		else:
+			squared = image
+
+		squared.thumbnail((64, 64), Image.ANTIALIAS)
+		squared.save(path, quality=95, optimize=True)
+
 		return True
 
 	else:
