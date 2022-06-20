@@ -114,6 +114,14 @@ def blizzard_login():
 	if state and state == 'getblizzard':
 		blizzard.blizzard_login(code)
 
+	redditname = session.get('redditname')
+	if redditname:
+		userObject = User.query.filter_by(name=redditname).first()
+		if userObject:
+			userObject.battletag = session.get('battletag', None)
+			userObject.blizzardid = session.get('blizzardid', None)
+			db.session.commit()
+
 	return redirect('/redditflair/rankverification')
 
 
