@@ -150,7 +150,7 @@ def flair_new():
 	current_app.logger.warning(f"u/{redditname} updated flair")
 	# process request
 	if request.method == 'POST':
-		short_name = request.form['short_name']
+		short_name = request.form['short_name'].lower().replace(" ", "-")
 		name = request.form['name']
 		flairsheet = request.form['flairsheet']
 		faded = request.form['faded']
