@@ -140,37 +140,15 @@ def fetch_rank():
 	if region and battletag and blizzard_id:# and platform:
 		current_app.logger.info(
 			f"Parsing blizzard profile u/{redditname} - {battletag} - {blizzard_id}")
-		rank, url = parse_ow_profile(battletag, blizzard_id, None, None, "pc")
+		rank, url = parse_ow_profile(battletag)
 		current_app.logger.info(
 			f"Blizzard profile result u/{redditname} - {rank}")
 		if rank:
 			session['rank'] = rank
 
-			# platform
-			session['platform'] = 'PC'
-			# if platform == 'pc':
-			# 	session['platform'] = 'PC'
-			# elif platform == 'xbl':
-			# 	session['platform'] = 'PS4'
-			# elif platform == 'psn':
-			# 	session['platform'] = 'Xbox'
-
 			# rank number
 			rank_int = int(rank)
-			if rank_int < 1500:
-				session['ranknum'] = 1
-			elif rank_int < 2000:
-				session['ranknum'] = 2
-			elif rank_int < 2500:
-				session['ranknum'] = 3
-			elif rank_int < 3000:
-				session['ranknum'] = 4
-			elif rank_int < 3500:
-				session['ranknum'] = 5
-			elif rank_int < 4000:
-				session['ranknum'] = 6
-			else:
-				session['ranknum'] = 7
+			session['ranknum'] = rank_int
 
 			# update database entry
 			redditname = session.get('redditname')
@@ -178,10 +156,6 @@ def fetch_rank():
 				userObject = User.query.filter_by(name=redditname).first()
 				if userObject:
 					userObject.battletag = battletag
-					userObject.blizzardid = blizzard_id
-					userObject.xbl = ""
-					userObject.psn = ""
-					userObject.sr = rank_int
 					userObject.rank = session['ranknum']
 					db.session.commit()
 
