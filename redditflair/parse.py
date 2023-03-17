@@ -29,7 +29,6 @@ def parse_ow_profile(battletag):
 				if rank > current_rank:
 					current_rank = rank
 				found = True
-				break
 		if not found:
 			pass
 			#log.warning(f"Couldn't find rank for image {image_url}")
