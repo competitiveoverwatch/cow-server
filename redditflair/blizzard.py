@@ -1,6 +1,7 @@
 from flask import session
 from config import data as config
 from requests_oauthlib import OAuth2Session
+import traceback
 
 
 def blizzard_url(region, api=False):
@@ -32,7 +33,7 @@ def blizzard_redirect_url(region):
 	return redirect_url
 
 
-def blizzard_login(code):
+def blizzard_login(code, logger):
 	session['rank'] = None
 	if code:
 		region = session.get('region', 'us')
@@ -47,7 +48,9 @@ def blizzard_login(code):
 				client_secret=config['creds']['blizzardClientSecret'],
 				timeout=8
 			)
-		except ConnectionError:
+		except Exception as err:
+			logger.warning(f"Error logging into blizzard: {err}")
+			logger.warning(traceback.format_exc())
 			session['battletag'] = "error try again"
 			return
 

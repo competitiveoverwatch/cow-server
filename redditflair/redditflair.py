@@ -112,7 +112,7 @@ def blizzard_login():
 	state = request.args.get('state', '')
 
 	if state and state == 'getblizzard':
-		blizzard.blizzard_login(code)
+		blizzard.blizzard_login(code, current_app.logger)
 
 	if session.get('battletag', None) == "error try again":
 		return redirect('/redditflair/rankverification')
