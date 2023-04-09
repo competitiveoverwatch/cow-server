@@ -114,6 +114,9 @@ def blizzard_login():
 	if state and state == 'getblizzard':
 		blizzard.blizzard_login(code)
 
+	if session.get('battletag', None) == "error try again":
+		return redirect('/redditflair/rankverification')
+
 	redditname = session.get('redditname')
 	if redditname:
 		userObject = User.query.filter_by(name=redditname).first()

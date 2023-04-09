@@ -33,16 +33,24 @@ def blizzard_redirect_url(region):
 
 
 def blizzard_login(code):
+	session['rank'] = None
 	if code:
 		region = session.get('region', 'us')
 		oauth = OAuth2Session(
 			client_id=config['creds']['blizzardClientId'],
 			redirect_uri=config['creds']['blizzardRedirectURI'],
 			scope=[])
-		token_data = oauth.fetch_token(
-			blizzard_url(region) + 'token',
-			code=code,
-			client_secret=config['creds']['blizzardClientSecret'])
+		try:
+			token_data = oauth.fetch_token(
+				blizzard_url(region) + 'token',
+				code=code,
+				client_secret=config['creds']['blizzardClientSecret'],
+				timeout=8
+			)
+		except ConnectionError:
+			session['battletag'] = "error try again"
+			return
+
 		blizzard_token = token_data['access_token']
 
 		oauth_token = OAuth2Session(
@@ -53,5 +61,3 @@ def blizzard_login(code):
 		session['battletag'] = result.json()['battletag']
 		session['blizzardid'] = result.json()['id']
 		session['step'] = 2
-
-	session['rank'] = None
