@@ -1,4 +1,6 @@
 from flask import session
+from urllib3.exceptions import ConnectTimeoutError
+
 from config import data as config
 from requests_oauthlib import OAuth2Session
 import traceback
@@ -48,6 +50,10 @@ def blizzard_login(code, logger):
 				client_secret=config['creds']['blizzardClientSecret'],
 				timeout=8
 			)
+		except ConnectTimeoutError as err:
+			logger.info(f"Timeout logging into blizzard: {err}")
+			session['battletag'] = "error try again"
+			return
 		except Exception as err:
 			logger.warning(f"Error logging into blizzard: {err}")
 			logger.warning(traceback.format_exc())
