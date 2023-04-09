@@ -1,5 +1,6 @@
 from flask import session
-from urllib3.exceptions import ConnectTimeoutError
+from urllib3.exceptions import ConnectTimeoutError, MaxRetryError, TimeoutError
+import requests
 
 from config import data as config
 from requests_oauthlib import OAuth2Session
@@ -50,7 +51,7 @@ def blizzard_login(code, logger):
 				client_secret=config['creds']['blizzardClientSecret'],
 				timeout=8
 			)
-		except ConnectTimeoutError as err:
+		except (ConnectTimeoutError, MaxRetryError, TimeoutError) as err:
 			logger.info(f"Timeout logging into blizzard: {err}")
 			session['battletag'] = "error try again"
 			return
