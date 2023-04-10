@@ -51,7 +51,7 @@ def blizzard_login(code, logger):
 				client_secret=config['creds']['blizzardClientSecret'],
 				timeout=8
 			)
-		except (ConnectTimeoutError, MaxRetryError, TimeoutError) as err:
+		except (ConnectTimeoutError, MaxRetryError, TimeoutError, requests.exceptions.ConnectTimeout) as err:
 			logger.info(f"Timeout logging into blizzard: {err}")
 			session['battletag'] = "error try again"
 			return
