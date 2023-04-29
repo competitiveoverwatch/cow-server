@@ -63,10 +63,11 @@ class Database:
 			.order_by(Flair.short_name).all()
 
 	@classmethod
-	def get_flair_by_category(cls):
+	def get_flair_by_category(cls, include_hidden=False):
 		categories = defaultdict(list)
 		for flair in Database.get_all_flair():
-			categories[flair.category].append(flair)
+			if flair.category != "hidden" or include_hidden:
+				categories[flair.category].append(flair)
 
 		return categories
 
