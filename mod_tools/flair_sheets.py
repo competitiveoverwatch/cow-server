@@ -247,7 +247,8 @@ def flair_makesheets():
 			"row": flair.row,
 			"sheet": flair.sheet,
 			"active": flair.is_active,
-			"category": flair.category
+			"category": flair.category,
+			"id": flair.id
 		}
 	with open('static/data/flairs.json', 'w') as flair_data:
 		json.dump(flairs_table, flair_data, indent=4)
