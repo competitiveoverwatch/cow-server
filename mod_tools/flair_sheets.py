@@ -186,7 +186,7 @@ def flair_new():
 
 	response = make_response(
 		render_template(
-			'flairnew.html', **response_params, flairsheets=config_data['config']['flair_sheets'],
+			'flairnew.html', **response_params, url_params=request.args, flairsheets=config_data['config']['flair_sheets'],
 			categories=config_data['config']['categories']))
 	return response
 

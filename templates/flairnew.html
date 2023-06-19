@@ -24,21 +24,21 @@
                 <table>
                         <tr>
                             <td>Flair ID:</td>
-                            <td><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Flair ID" name="short_name"></td>
+                            <td><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Flair ID" name="short_name" value="{{url_params.short_name}}"></td>
                         </tr>
                         <tr>
                             <td>Flair Sheet:</td>
                             <td>
                                 <select	name="flairsheet" id="flair_sheet" title="Flair Sheet">
                                     {% for sheet in flairsheets %}
-                                        <option value="{{ sheet }}">{{ sheet }}</option>
+                                        <option value="{{ sheet }}" {% if sheet == url_params.flairsheet %} selected {% endif %}>{{ sheet }}</option>
                                     {% endfor %}
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>Flair Name:</td>
-                            <td><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Flair name" name="name" value=""></td>
+                            <td><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Flair name" name="name" value="{{url_params.name}}"></td>
                         </tr>
                         <tr>
                             <td>Faded:</td>
@@ -60,7 +60,7 @@
                             <td>
                                 <select	name="category" id="category" title="Category">
                                     {% for category in categories %}
-                                        <option value="{{category}}">{{category}}</option>
+                                        <option value="{{category}}" {% if category == url_params.category %} selected {% endif %}>{{category}}</option>
                                     {% endfor %}
                                 </select>
                             </td>
