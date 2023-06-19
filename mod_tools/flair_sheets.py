@@ -133,7 +133,7 @@ def flair_edit(id):
 
 	response = make_response(
 		render_template(
-			'flairedit.html', **response_params, id=id, flair=flair,
+			'flairedit.html', **response_params, id=id, flair=flair, url_params=request.args,
 			flairsheets=config_data['config']['flair_sheets'],
 			categories=config_data['config']['categories']))
 	return response
@@ -248,7 +248,8 @@ def flair_makesheets():
 			"sheet": flair.sheet,
 			"active": flair.is_active,
 			"category": flair.category,
-			"id": flair.id
+			"id": flair.id,
+			"short_name": flair.short_name
 		}
 	with open('static/data/flairs.json', 'w') as flair_data:
 		json.dump(flairs_table, flair_data, indent=4)
