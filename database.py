@@ -50,7 +50,7 @@ class Database:
 			return flairs
 
 		else:
-			return db.session.query(Flair).filter_by(is_dirty=False).order_by(Flair.short_name).all()
+			return db.session.query(Flair).filter_by(is_dirty=False).order_by(Flair.name).all()
 
 	@classmethod
 	def get_dirty_flair(cls):

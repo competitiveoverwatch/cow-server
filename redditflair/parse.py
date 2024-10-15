@@ -10,6 +10,7 @@ ranks = {
 	"diamondtier": 5,
 	"mastertier": 6,
 	"grandmastertier": 7,
+	"ultimatetier": 8,
 }
 
 

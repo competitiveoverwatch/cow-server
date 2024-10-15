@@ -233,14 +233,16 @@
 
                     <!-- Categories -->
                     {% for category in category_names %}
-                        <div class="container">
-                            <div class="category-label">{{category}}</div>
-                            <div class="flex-container-flairs">
-                            {% for flair in categories[category] %}
-                                <div class="flair-item" onclick="setFlair(event, '{{flair.short_name}}', {{'true' if flair.is_active else 'false'}})"><div class="flair flair-small flair-s{{flair.sheet}}-c{{flair.col}}-r{{flair.row}}"></div>{{flair.name}}</div>
-                            {% endfor %}
+                        {% if category != "hidden" %}
+                            <div class="container">
+                                <div class="category-label">{{category}}</div>
+                                <div class="flex-container-flairs">
+                                {% for flair in categories[category] %}
+                                    <div class="flair-item" onclick="setFlair(event, '{{flair.short_name}}', {{'true' if flair.is_active else 'false'}})"><div class="flair flair-small flair-s{{flair.sheet}}-c{{flair.col}}-r{{flair.row}}"></div>{{flair.name}}</div>
+                                {% endfor %}
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
                 </form>
             {% endif %}     
