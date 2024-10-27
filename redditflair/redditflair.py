@@ -130,7 +130,7 @@ def blizzard_login():
 
 # parse playoverwatch profile and fetch rank
 @redditflair.route('/redditflair/fetchrank', methods=['GET'])
-@limiter.limit('1 per minute')
+@limiter.limit('5 per minute')
 def fetch_rank():
 	redditname = session.get('redditname')
 	region = session.get('region', None)
