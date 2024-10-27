@@ -19,7 +19,10 @@ def parse_ow_profile(battletag):
 	pc_url = 'https://overwatch.blizzard.com/en-us/career/' + battletag
 
 	current_rank = 0
-	html = urllib.request.urlopen(pc_url)
+	try:
+		html = urllib.request.urlopen(pc_url)
+	except urllib.error.HTTPError as e:
+		return None, pc_url
 	soup = BeautifulSoup(html, 'html.parser')
 	nodes = soup.find_all(class_="Profile-playerSummary--rank")
 	for node in nodes:
