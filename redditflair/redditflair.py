@@ -7,6 +7,7 @@ import redditflair.blizzard as blizzard
 from redditflair.parse import parse_ow_profile
 from config import data as config_data
 from database import db, User, Flair, Database
+import prawcore
 
 limiter = Limiter(
 	key_func=get_remote_address,
@@ -80,7 +81,11 @@ def reddit_login():
 	code = request.args.get('code', '')
 	state = request.args.get('state', '')
 
-	reddit.reddit_login(code)
+	try:
+		reddit.reddit_login(code)
+	except prawcore.exceptions.ResponseException as err:
+		current_app.logger.warning(f"Error logging into reddit with code: {code} : {state} : {err}")
+		raise
 
 	# if session redditname is set make database entry if necessary
 	reddit_name = session.get('redditname')
