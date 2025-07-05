@@ -84,8 +84,12 @@ def reddit_login():
 	try:
 		reddit.reddit_login(code)
 	except prawcore.exceptions.ResponseException as err:
-		current_app.logger.warning(f"Error logging into reddit with code: {code} : {state} : {err}")
-		raise
+		if err.response.status_code == 404:
+			current_app.logger.info(f"Error logging into reddit with code: {code} : {state} : {err}")
+			return redirect('/redditflair')
+		else:
+			current_app.logger.warning(f"Error logging into reddit with code: {code} : {state} : {err}")
+			raise
 
 	# if session redditname is set make database entry if necessary
 	reddit_name = session.get('redditname')
